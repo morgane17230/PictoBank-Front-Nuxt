@@ -3,8 +3,8 @@
     <v-navigation-drawer
       v-model="drawer"
       :mini-variant="miniVariant"
-      expand-on-hover
       :clipped="clipped"
+      class="d-flex flex-column justify-space-between"
       fixed
       app
     >
@@ -24,6 +24,33 @@
           </v-list-item-content>
         </v-list-item>
       </v-list>
+      <template v-slot:append>
+      <v-form>
+        <v-col cols="11">
+          <v-text-field
+            v-model="email"
+            :rules="emailRules"
+            label="E-mail"
+            color="cyan"
+            required
+          />
+        </v-col>
+        <v-col cols="11">
+          <v-text-field
+            v-model="password"
+            :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+            :rules="[rules.required, rules.min]"
+            :type="show1 ? 'text' : 'password'"
+            name="input-10-1"
+            label="Normal with hint text"
+            hint="At least 8 characters"
+            color="cyan"
+            counter
+            @click:append="show1 = !show1"
+          />
+        </v-col>
+      </v-form>
+      </template>
     </v-navigation-drawer>
     <v-app-bar
       :clipped-left="clipped"
@@ -89,39 +116,50 @@
 
 <script>
 export default {
-  data () {
-    return {
-      value: 'contact',
-      clipped: false,
-      drawer: false,
-      fixed: false,
-      items: [
-        {
-          icon: 'mdi-apps',
-          title: 'Accueil',
-          to: '/'
-        },
-        {
-          icon: 'mdi-magnify',
-          title: 'Chercher',
-          to: '/search'
-        },
-        {
-          icon: 'mdi-plus',
-          title: 'Ajouter',
-          to: '/add'
-        },
-        {
-          icon: 'mdi-heart',
-          title: 'Favoris',
-          to: '/favorite'
-        }
-      ],
-      miniVariant: false,
-      right: true,
-      rightDrawer: false,
-      title: 'PictoBank'
-    }
-  }
+  data: () => ({
+    value: 'contact',
+    clipped: false,
+    drawer: false,
+    fixed: false,
+    items: [
+      {
+        icon: 'mdi-apps',
+        title: 'Accueil',
+        to: '/'
+      },
+      {
+        icon: 'mdi-magnify',
+        title: 'Chercher',
+        to: '/search'
+      },
+      {
+        icon: 'mdi-plus',
+        title: 'Ajouter',
+        to: '/add'
+      },
+      {
+        icon: 'mdi-heart',
+        title: 'Favoris',
+        to: '/favorite'
+      }
+    ],
+    miniVariant: false,
+    right: true,
+    rightDrawer: false,
+    title: 'PictoBank',
+    valid: false,
+    show1: false,
+    password: 'Password',
+    rules: {
+      required: value => !!value || 'Required.',
+      min: v => v.length >= 8 || 'Min 8 characters',
+      emailMatch: () => ('The email and password you entered don\'t match')
+    },
+    email: '',
+    emailRules: [
+      v => !!v || 'E-mail is required',
+      v => /.+@.+/.test(v) || 'E-mail must be valid'
+    ]
+  })
 }
 </script>

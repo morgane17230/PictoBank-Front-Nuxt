@@ -1,7 +1,9 @@
 <template>
   <v-row>
     <v-col class="text-center">
-      Ajouter
+      <h1 class="title">
+        Ajouter
+      </h1>
     </v-col>
   </v-row>
 </template>
