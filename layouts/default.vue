@@ -1,5 +1,7 @@
 <template>
-  <v-app dark>
+  <v-app
+    dark
+  >
     <v-navigation-drawer
       v-model="drawer"
       :mini-variant="miniVariant"
@@ -9,6 +11,19 @@
       app
     >
       <v-list>
+        <v-list-item link>
+          <v-list-item-content>
+            <v-list-item-title class="text-h6">
+              Sandra Adams
+            </v-list-item-title>
+            <v-list-item-subtitle>sandra_a88@gmail.com</v-list-item-subtitle>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+      <v-divider />
+      <v-list
+        nav
+      >
         <v-list-item
           v-for="(item, i) in items"
           :key="i"
@@ -24,33 +39,6 @@
           </v-list-item-content>
         </v-list-item>
       </v-list>
-      <template v-slot:append>
-      <v-form>
-        <v-col cols="11">
-          <v-text-field
-            v-model="email"
-            :rules="emailRules"
-            label="E-mail"
-            color="cyan"
-            required
-          />
-        </v-col>
-        <v-col cols="11">
-          <v-text-field
-            v-model="password"
-            :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-            :rules="[rules.required, rules.min]"
-            :type="show1 ? 'text' : 'password'"
-            name="input-10-1"
-            label="Normal with hint text"
-            hint="At least 8 characters"
-            color="cyan"
-            counter
-            @click:append="show1 = !show1"
-          />
-        </v-col>
-      </v-form>
-      </template>
     </v-navigation-drawer>
     <v-app-bar
       :clipped-left="clipped"
@@ -66,6 +54,12 @@
       </v-btn>
       <v-toolbar-title router to="/" v-text="title" />
       <v-spacer />
+      <v-btn
+        color="cyan"
+        icon
+      >
+        <v-icon>mdi-account</v-icon>
+      </v-btn>
     </v-app-bar>
     <v-main>
       <v-container>
@@ -75,11 +69,10 @@
     <v-footer
       :absolute="!fixed"
       app
-      justify="space-around"
     >
       <v-bottom-navigation
         color="cyan"
-        :value="value"
+        grow
         absolute
       >
         <v-btn
@@ -90,13 +83,17 @@
             Contact
           </span>
 
-          <v-icon>mdi-chat</v-icon>
+          <v-icon small>
+            mdi-chat
+          </v-icon>
         </v-btn>
 
         <v-btn>
-          <span>&copy; - PictoBank - {{ new Date().getFullYear() }}</span>
+          <span>PictoBank - {{ new Date().getFullYear() }}</span>
 
-          <v-icon>mdi-copyright</v-icon>
+          <v-icon small>
+            mdi-copyright
+          </v-icon>
         </v-btn>
 
         <v-btn
@@ -107,7 +104,9 @@
             CGU
           </span>
 
-          <v-icon>mdi-map-marker</v-icon>
+          <v-icon small>
+            mdi-map-marker
+          </v-icon>
         </v-btn>
       </v-bottom-navigation>
     </v-footer>
@@ -117,7 +116,6 @@
 <script>
 export default {
   data: () => ({
-    value: 'contact',
     clipped: false,
     drawer: false,
     fixed: false,
@@ -146,20 +144,7 @@ export default {
     miniVariant: false,
     right: true,
     rightDrawer: false,
-    title: 'PictoBank',
-    valid: false,
-    show1: false,
-    password: 'Password',
-    rules: {
-      required: value => !!value || 'Required.',
-      min: v => v.length >= 8 || 'Min 8 characters',
-      emailMatch: () => ('The email and password you entered don\'t match')
-    },
-    email: '',
-    emailRules: [
-      v => !!v || 'E-mail is required',
-      v => /.+@.+/.test(v) || 'E-mail must be valid'
-    ]
+    title: 'PictoBank'
   })
 }
 </script>
