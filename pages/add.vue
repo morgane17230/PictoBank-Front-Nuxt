@@ -83,11 +83,9 @@ export default {
   },
   methods: {
     removeFile (fileName) {
-      // Find the index of the
       const index = this.uploadedFiles.findIndex(
         file => file.name === fileName
       )
-      // If file is in uploaded files remove it
       if (index > -1) { this.uploadedFiles.splice(index, 1) }
     },
 
@@ -97,19 +95,6 @@ export default {
         this.uploadedFiles.push(element)
       })
     },
-
-    // submit () {
-    // If there aren't any files to be uploaded throw error
-    // if (!this.uploadedFiles.length > 0) {
-    // this.$store.dispatch('addNotification', {
-    //   message: 'There are no files to upload',
-    //   colour: 'error'
-    // })
-    // } else {
-    // Send uploaded files to parent component
-    //  this.$emit('filesUploaded', this.uploadedFiles)
-    // }
-    // },
 
     onUpload () {
       this.isSelecting = true
@@ -128,11 +113,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-@import '~assets/variables.scss';
-
-#my-font {
-  font-family: $perso-font;
-}
-</style>
