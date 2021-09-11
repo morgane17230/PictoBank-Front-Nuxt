@@ -65,7 +65,7 @@
         <v-icon>mdi-account</v-icon>
       </v-btn>
     </v-app-bar>
-    <v-main>
+    <v-main class="pb-10">
       <v-container>
         <Nuxt />
       </v-container>
@@ -78,6 +78,7 @@
         color="cyan"
         grow
         absolute
+
       >
         <v-btn
           value="contact"

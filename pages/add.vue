@@ -1,71 +1,82 @@
 /* eslint-disable no-console */
 <template>
   <v-container>
-    <v-row>
-      <v-col class="text-center">
-        <h1 id="my-font" class="display-2">
-          Ajouter un picto
-        </h1>
-      </v-col>
-    </v-row>
-    <v-container>
-      <v-container max-width="450px">
-        <v-card
-          :class="{ 'grey darken-3': dragover }"
-          :loading="isSelecting"
-          @drop.prevent="onDrop($event)"
-          @dragover.prevent="dragover = true"
-          @dragenter.prevent="dragover = true"
-          @dragleave.prevent="dragover = false"
-          @click="onUpload"
-        >
-          <v-card-text>
-            <v-row class="d-flex flex-column" dense align="center" justify="center">
-              <v-icon :class="[dragover ? 'mt-2, mb-6' : 'mt-5']" size="150">
-                mdi-cloud-upload
-              </v-icon>
-              <p>
-                Glissez-déposez votre pictogramme ou cliquez pour en sélectionner un
-              </p>
-              <input
-                ref="uploader"
-                class="d-none"
-                type="file"
-                accept="image/*"
-                @change="onFileChanged"
-              >
-            </v-row>
-          </v-card-text>
-        </v-card>
-        <v-virtual-scroll
-          v-if="uploadedFiles.length > 0"
-          :items="uploadedFiles"
-          height="500"
-          item-height="60"
-        >
-          <template #default="{ item }">
-            <v-list-item :key="item.name">
-              <v-list-item-avatar>
-                <v-img :src="item.url" />
-              </v-list-item-avatar>
-              <v-list-item-content>
-                <v-list-item-title>
-                  {{ item.name }}
-                  <span class="ml-3 text--secondary">
-                    {{ item.size }} bytes</span>
-                </v-list-item-title>
-              </v-list-item-content>
-              <v-list-item-action>
-                <v-btn icon @click.stop="removeFile(item.name)">
-                  <v-icon> mdi-close-circle </v-icon>
-                </v-btn>
-              </v-list-item-action>
-            </v-list-item>
-            <v-divider />
-          </template>
-        </v-virtual-scroll>
+    <v-form v-model="valid" enctype="multipart/form-data">
+      <v-row class="text-center">
+        <v-col>
+          <h1 id="my-font" class="display-1 my-5">
+            Ajouter un picto
+          </h1>
+        </v-col>
+      </v-row>
+      <v-container>
+        <v-container max-width="450px">
+          <v-card
+            :class="{ 'grey darken-3': dragover }"
+            :loading="isSelecting"
+            @drop.prevent="onDrop($event)"
+            @dragover.prevent="dragover = true"
+            @dragenter.prevent="dragover = true"
+            @dragleave.prevent="dragover = false"
+            @click="onUpload"
+          >
+            <v-card-text>
+              <v-row class="d-flex flex-column" dense align="center" justify="center">
+                <v-icon :class="[dragover ? 'mt-2, mb-6' : 'mt-5']" size="150">
+                  mdi-cloud-upload
+                </v-icon>
+                <p>
+                  Glissez-déposez votre pictogramme ou cliquez pour en sélectionner un
+                </p>
+                <input
+                  ref="uploader"
+                  class="d-none"
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  @change="onFileChanged"
+                >
+              </v-row>
+            </v-card-text>
+          </v-card>
+          <v-btn
+            block
+            color="cyan"
+            class="mr-4"
+            @click="addPictos"
+          >
+            Valider
+          </v-btn>
+          <v-virtual-scroll
+            v-if="uploadedFiles.length > 0"
+            :items="uploadedFiles"
+            height="500"
+            item-height="60"
+          >
+            <template #default="{ item }">
+              <v-list-item :key="item.name">
+                <v-list-item-avatar>
+                  <v-img :src="item.url" />
+                </v-list-item-avatar>
+                <v-list-item-content>
+                  <v-list-item-title>
+                    {{ item.name }}
+                    <span class="ml-3 text--secondary">
+                      {{ item.size }} bytes</span>
+                  </v-list-item-title>
+                </v-list-item-content>
+                <v-list-item-action>
+                  <v-btn icon @click.stop="removeFile(item.name)">
+                    <v-icon> mdi-close-circle </v-icon>
+                  </v-btn>
+                </v-list-item-action>
+              </v-list-item>
+              <v-divider />
+            </template>
+          </v-virtual-scroll>
+        </v-container>
       </v-container>
-    </v-container>
+    </v-form>
   </v-container>
 </template>
 
@@ -75,7 +86,8 @@ export default {
     dragover: false,
     uploadedFiles: [],
     selectedFile: null,
-    isSelecting: false
+    isSelecting: false,
+    valid: false
   }),
   multiple: {
     type: Boolean,
@@ -109,6 +121,10 @@ export default {
       this.selectedFile = e.target.files[0]
       this.selectedFile.url = URL.createObjectURL(this.selectedFile)
       this.uploadedFiles.push(this.selectedFile)
+    },
+
+    addPictos () {
+      alert('l\'image est créée')
     }
   }
 }

@@ -1,8 +1,8 @@
 <template>
   <v-container>
-    <v-row>
+    <v-row justify="center">
       <v-col class="text-center">
-        <h1 class="display-2">
+        <h1 class="display-1 my-5">
           Favoris
         </h1>
       </v-col>
