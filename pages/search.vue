@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-row justify="center my-5">
+    <v-row justify="center" class="my-5">
       <h1 class="display-1">
         Chercher
       </h1>
@@ -30,13 +30,13 @@
     </v-row>
     <v-row>
       <v-col
-        v-for="photo in photos"
-        :key="photo.id"
+        v-for="picto in pictos"
+        :key="picto.id"
         class="d-flex child-flex col-xs-6 col-sm-6 col-md-3 col-lg-2 col-xl-2"
       >
         <v-img
-          :src="`data:${photo.mimetype};base64,${photo.path}`"
-          :lazy-src="`data:${photo.mimetype};base64,${photo.path}`"
+          :src="picto.path"
+          :lazy-src="picto.path"
           aspect-ratio="1"
           class="grey lighten-2"
         >
@@ -67,8 +67,8 @@
               bottom
               right
               color="cyan"
-              :value="photo.id"
-              @click="deleteFav"
+              :value="picto.id"
+              @click="deletePicto"
             >
               <v-icon dark>
                 mdi-delete
@@ -76,24 +76,14 @@
             </v-btn>
           </v-fab-transition>
           <template #placeholder>
-            <v-row
-              class="fill-height ma-0"
-              align="center"
-              justify="center"
-            >
-              <v-progress-circular
-                indeterminate
-                color="grey lighten-5"
-              />
+            <v-row class="fill-height ma-0" align="center" justify="center">
+              <v-progress-circular indeterminate color="grey lighten-5" />
             </v-row>
           </template>
         </v-img>
       </v-col>
     </v-row>
-    <v-dialog
-      v-model="dialog"
-      max-width="500px"
-    >
+    <v-dialog v-model="dialog" max-width="500px">
       <v-card>
         <v-form v-model="valid">
           <v-card-title>
@@ -108,17 +98,10 @@
             />
           </v-card-text>
           <v-card-actions>
-            <v-btn
-              color="cyan"
-              text
-            >
+            <v-btn color="cyan" text>
               Valider
             </v-btn>
-            <v-btn
-              color="cyan"
-              text
-              @click="dialog = false"
-            >
+            <v-btn color="cyan" text @click="dialog = false">
               Annuler
             </v-btn>
           </v-card-actions>
@@ -129,14 +112,14 @@
 </template>
 
 <script>
-export default {
+import { mapState } from 'vuex'
 
+export default {
   data () {
     return {
       query: '',
       valid: false,
       lang: 'fr',
-      photos: [],
       dialog: false,
       select: [
         { text: 'State 1' },
@@ -150,17 +133,16 @@ export default {
     }
   },
 
-  async fetch () {
-    this.photos = await fetch(
-      'http://localhost:5000/getPictos'
-    ).then(res => res.json())
+  computed: mapState(['pictos']),
+
+  mounted () {
+    this.$store.dispatch('getPictos')
   },
 
   methods: {
-    deleteFav () {
-      alert('supprimé')
+    deletePicto (e) {
+      this.$store.dispatch('deletePicto', e.currentTarget.value)
     }
   }
 }
-
 </script>

@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 <template>
   <v-container>
-    <v-form v-model="valid" enctype="multipart/form-data">
+    <v-form v-model="valid">
       <v-row class="text-center">
         <v-col>
           <h1 id="my-font" class="display-1 my-5">
@@ -21,30 +21,30 @@
             @click="onUpload"
           >
             <v-card-text>
-              <v-row class="d-flex flex-column" dense align="center" justify="center">
+              <v-row
+                class="d-flex flex-column"
+                dense
+                align="center"
+                justify="center"
+              >
                 <v-icon :class="[dragover ? 'mt-2, mb-6' : 'mt-5']" size="150">
                   mdi-cloud-upload
                 </v-icon>
                 <p>
-                  Glissez-déposez votre pictogramme ou cliquez pour en sélectionner un
+                  Glissez-déposez votre pictogramme ou cliquez pour en
+                  sélectionner un
                 </p>
                 <input
                   ref="uploader"
                   class="d-none"
                   type="file"
                   accept="image/*"
-                  multiple
                   @change="onFileChanged"
                 >
               </v-row>
             </v-card-text>
           </v-card>
-          <v-btn
-            block
-            color="cyan"
-            class="mr-4"
-            @click="addPictos"
-          >
+          <v-btn block color="cyan" class="mr-4" @click="addPictos">
             Valider
           </v-btn>
           <v-virtual-scroll
@@ -81,31 +81,27 @@
 </template>
 
 <script>
+import { mapMutations, mapState } from 'vuex'
+
 export default {
   data: () => ({
     dragover: false,
-    uploadedFiles: [],
-    selectedFile: null,
     isSelecting: false,
     valid: false
   }),
-  multiple: {
-    type: Boolean,
-    default: true
+
+  computed: {
+    ...mapState(['uploadedFiles', 'selectedFile']),
+    ...mapMutations(['SET_UPLOADED_FILES', 'ON_DROP_UPLOADED_FILES'])
   },
+
   methods: {
-    removeFile (fileName) {
-      const index = this.uploadedFiles.findIndex(
-        file => file.name === fileName
-      )
-      if (index > -1) { this.uploadedFiles.splice(index, 1) }
+    removeFile (filename) {
+      this.$store.commit('DEL_UPLOADED_FILES', filename)
     },
 
     onDrop (e) {
-      e.dataTransfer.files.forEach((element) => {
-        element.url = URL.createObjectURL(element)
-        this.uploadedFiles.push(element)
-      })
+      this.$store.commit('ON_DROP_UPLOADED_FILES', e.dataTransfer.files)
     },
 
     onUpload () {
@@ -118,13 +114,11 @@ export default {
     },
 
     onFileChanged (e) {
-      this.selectedFile = e.target.files[0]
-      this.selectedFile.url = URL.createObjectURL(this.selectedFile)
-      this.uploadedFiles.push(this.selectedFile)
+      this.$store.commit('SET_UPLOADED_FILES', e.target.files[0])
     },
 
     addPictos () {
-      alert('l\'image est créée')
+      this.$store.dispatch('addPictos')
     }
   }
 }
