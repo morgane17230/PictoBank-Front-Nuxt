@@ -35,14 +35,32 @@
         class="d-flex child-flex col-xs-6 col-sm-6 col-md-3 col-lg-2 col-xl-2"
       >
         <v-img
-          :src="picto.path"
-          :lazy-src="picto.path"
+          :src="`${picto.path}`"
+          :lazy-src="`${picto.path}`"
           aspect-ratio="1"
           class="grey lighten-2"
         >
           <v-fab-transition>
             <v-btn
-              class="my-6 mx-8"
+              class="my-6 mx-16"
+              fab
+              dark
+              x-small
+              absolute
+              bottom
+              right
+              color="teal"
+              :value="picto.id"
+              @click="downloadPicto"
+            >
+              <v-icon dark>
+                mdi-download
+              </v-icon>
+            </v-btn>
+          </v-fab-transition>
+          <v-fab-transition>
+            <v-btn
+              class="my-6 mx-7"
               fab
               dark
               x-small
@@ -142,6 +160,9 @@ export default {
   methods: {
     deletePicto (e) {
       this.$store.dispatch('deletePicto', e.currentTarget.value)
+    },
+    downloadPicto (e) {
+      this.$store.dispatch('downloadPicto', e.currentTarget.value)
     }
   }
 }

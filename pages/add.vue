@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 <template>
   <v-container>
-    <v-form v-model="valid">
+    <v-form ref="forma" v-model="valid" lazy-validation>
       <v-row class="text-center">
         <v-col>
           <h1 id="my-font" class="display-1 my-5">
@@ -38,7 +38,9 @@
                   ref="uploader"
                   class="d-none"
                   type="file"
+                  name="path"
                   accept="image/*"
+                  :rules="pictoRules"
                   @change="onFileChanged"
                 >
               </v-row>
@@ -87,7 +89,8 @@ export default {
   data: () => ({
     dragover: false,
     isSelecting: false,
-    valid: false
+    valid: false,
+    pictoRules: [v => !v || v.size < 5000000 || 'Image should be less than 5MB']
   }),
 
   computed: {
@@ -117,8 +120,10 @@ export default {
       this.$store.commit('SET_UPLOADED_FILES', e.target.files[0])
     },
 
-    addPictos () {
-      this.$store.dispatch('addPictos')
+    addPictos (e) {
+      if (this.$refs.forma.validate()) {
+        this.$store.dispatch('addPictos')
+      }
     }
   }
 }
