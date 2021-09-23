@@ -46,7 +46,7 @@
               </v-row>
             </v-card-text>
           </v-card>
-          <v-btn block color="cyan" class="mr-4" @click="addPictos">
+          <v-btn block color="cyan" class="mr-4" @click.stop="addPictos">
             Valider
           </v-btn>
           <v-virtual-scroll
@@ -83,7 +83,7 @@
 </template>
 
 <script>
-import { mapMutations, mapState } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 
 export default {
   data: () => ({
@@ -94,17 +94,20 @@ export default {
   }),
 
   computed: {
-    ...mapState(['uploadedFiles', 'selectedFile']),
-    ...mapMutations(['SET_UPLOADED_FILES', 'ON_DROP_UPLOADED_FILES'])
+    ...mapState({
+      uploadedFiles: state => state.picto.uploadedFiles,
+      selectedFile: state => state.picto.selectedFile
+    }),
+    ...mapMutations(['picto/SET_UPLOADED_FILES', 'picto/ON_DROP_UPLOADED_FILES'])
   },
 
   methods: {
     removeFile (filename) {
-      this.$store.commit('DEL_UPLOADED_FILES', filename)
+      this.$store.commit('picto/DEL_UPLOADED_FILES', filename)
     },
 
     onDrop (e) {
-      this.$store.commit('ON_DROP_UPLOADED_FILES', e.dataTransfer.files)
+      this.$store.commit('picto/ON_DROP_UPLOADED_FILES', e.dataTransfer.files)
     },
 
     onUpload () {
@@ -117,12 +120,12 @@ export default {
     },
 
     onFileChanged (e) {
-      this.$store.commit('SET_UPLOADED_FILES', e.target.files[0])
+      this.$store.commit('picto/SET_UPLOADED_FILES', e.target.files[0])
     },
 
-    addPictos (e) {
+    addPictos () {
       if (this.$refs.forma.validate()) {
-        this.$store.dispatch('addPictos')
+        this.$store.dispatch('picto/addPictos')
       }
     }
   }

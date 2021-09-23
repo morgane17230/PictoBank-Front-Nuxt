@@ -1,12 +1,10 @@
-import actions from './actions'
-import state from './state'
-import mutations from './mutations'
-import getters from './getters'
+import user from './user'
+import picto from './picto'
 
 export default {
-  namespaced: true,
-  actions,
-  state,
-  mutations,
-  getters
+  modules: {
+    namespace: true,
+    user,
+    picto
+  }
 }

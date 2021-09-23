@@ -11,7 +11,7 @@ const actions = {
   },
 
   addPictos ({ commit }) {
-    this.state.uploadedFiles.forEach((selectedFile) => {
+    this.state.picto.uploadedFiles.forEach((selectedFile) => {
       const formData = new FormData()
       const blob = selectedFile
       formData.append('path', blob)
@@ -36,14 +36,28 @@ const actions = {
 
   downloadPicto ({ commit }, payload) {
     axios
-      .get(`http://localhost:5000/getPicto/${payload}`)
+      .get(`http://localhost:5000/getPicto/${payload}/download`)
       .then((response) => {
         const link = document.createElement('a')
         link.href = response.data
         link.download = `${response.data}`
         link.click()
       })
+      .catch((error) => {
+        commit('SET_ERROR', error.response)
+      })
+  },
+  searchPictos ({ commit }, payload) {
+    axios
+      .get(`http://localhost:5000/getPictos/search/${payload}`)
+      .then((response) => {
+        commit('SET_PICTOS', response.data)
+      })
+      .catch((error) => {
+        commit('SET_ERROR', error.response)
+      })
   }
+
 }
 
 export default actions

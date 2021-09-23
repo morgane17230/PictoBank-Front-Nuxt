@@ -23,6 +23,7 @@
           clearable
           outlined
           rounded
+          @input="searchPictos"
         >
           />
         </v-text-field>
@@ -131,7 +132,6 @@
 
 <script>
 import { mapState } from 'vuex'
-
 export default {
   data () {
     return {
@@ -151,18 +151,29 @@ export default {
     }
   },
 
-  computed: mapState(['pictos']),
+  computed: {
+    ...mapState({
+      pictos: state => state.picto.pictos
+    })
+  },
 
   mounted () {
-    this.$store.dispatch('getPictos')
+    this.$store.dispatch('picto/getPictos')
   },
 
   methods: {
     deletePicto (e) {
-      this.$store.dispatch('deletePicto', e.currentTarget.value)
+      this.$store.dispatch('picto/deletePicto', e.currentTarget.value)
     },
     downloadPicto (e) {
-      this.$store.dispatch('downloadPicto', e.currentTarget.value)
+      this.$store.dispatch('picto/downloadPicto', e.currentTarget.value)
+    },
+    searchPictos () {
+      if (this.query !== '') {
+        this.$store.dispatch('picto/searchPictos', this.query)
+      } else {
+        this.$store.dispatch('picto/getPictos')
+      }
     }
   }
 }
