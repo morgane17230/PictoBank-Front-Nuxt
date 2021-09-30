@@ -1,7 +1,8 @@
 const state = () => ({
-  uploadedFiles: [],
-  pictos: [],
-  selectedFile: null,
+  folderId: null,
+  folder: {},
+  foldername: '',
+  path: null,
   error: '',
   validation: ''
 })

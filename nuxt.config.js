@@ -1,10 +1,11 @@
 import colors from 'vuetify/es5/util/colors'
+require('dotenv').config()
 
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: '%s - pictobank',
-    title: 'pictobank',
+    titleTemplate: '%s',
+    title: 'Pikto',
     htmlAttrs: {
       lang: 'fr'
     },
@@ -31,18 +32,46 @@ export default {
     // https://go.nuxtjs.dev/eslint
     '@nuxtjs/eslint-module',
     // https://go.nuxtjs.dev/vuetify
-    '@nuxtjs/vuetify'
+    '@nuxtjs/vuetify',
+    '@nuxtjs/dotenv'
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/axios
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    '@nuxtjs/auth-next'
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    BaseURL: 'http://localhost:5000'
+    baseURL: 'http://localhost:5000'
+  },
+
+  auth: {
+    strategies: {
+      local: {
+        token: {
+          global: true,
+          required: true
+        },
+        user: {
+          property: false,
+          autoFetch: true
+        },
+        endpoints: {
+          login: { url: '/login', method: 'post', propertyName: 'token' },
+          user: { url: '/user', method: 'get' },
+          logout: false
+        }
+      }
+    },
+    redirect: {
+      login: '/login',
+      logout: '/',
+      home: '/search',
+      callback: '/login'
+    }
   },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify

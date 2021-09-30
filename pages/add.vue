@@ -83,9 +83,10 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
+import { mapState } from 'vuex'
 
 export default {
+  middleware: 'auth',
   data: () => ({
     dragover: false,
     isSelecting: false,
@@ -97,8 +98,7 @@ export default {
     ...mapState({
       uploadedFiles: state => state.picto.uploadedFiles,
       selectedFile: state => state.picto.selectedFile
-    }),
-    ...mapMutations(['picto/SET_UPLOADED_FILES', 'picto/ON_DROP_UPLOADED_FILES'])
+    })
   },
 
   methods: {

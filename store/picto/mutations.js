@@ -36,6 +36,10 @@ const mutations = {
     if (index > -1) {
       state.uploadedFiles.splice(index, 1)
     }
+  },
+
+  SET_VALIDATION (state, payload) {
+    state.validation = payload
   }
 }
 export default mutations

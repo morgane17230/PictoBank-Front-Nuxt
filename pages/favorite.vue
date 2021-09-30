@@ -85,6 +85,14 @@
               item-value="text"
               color="cyan"
             />
+            <v-file-input
+              ref="uploader"
+              name="path"
+              accept="image/*"
+              label="photo"
+              prepend-icon="mdi-camera"
+              :rules="pictoRules"
+            />
           </v-card-text>
           <v-card-actions>
             <v-btn
@@ -109,10 +117,12 @@
 
 <script>
 export default {
+  middleware: 'auth',
   data: () => ({
     selectedItem: 0,
     dialog: false,
     valid: false,
+    pictoRules: [v => !v || v.size < 5000000 || 'Image should be less than 5MB'],
     cards: [
       {
         src: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',

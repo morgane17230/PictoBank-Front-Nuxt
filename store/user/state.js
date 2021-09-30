@@ -5,7 +5,9 @@ const state = () => ({
   email: '',
   username: '',
   password: '',
-  error: ''
+  message: '',
+  error: '',
+  validation: ''
 })
 
 export default state

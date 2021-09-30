@@ -133,6 +133,7 @@
 <script>
 import { mapState } from 'vuex'
 export default {
+  middleware: 'auth',
   data () {
     return {
       query: '',
@@ -153,7 +154,8 @@ export default {
 
   computed: {
     ...mapState({
-      pictos: state => state.picto.pictos
+      pictos: state => state.picto.pictos,
+      loggedIn: state => state.user.loggedIn
     })
   },
 

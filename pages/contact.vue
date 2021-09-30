@@ -9,48 +9,72 @@
       <v-col
         class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-4"
       >
+        <v-snackbar
+          v-model="snackbar"
+          :timeout="timeout"
+        >
+          {{ validation }}
+
+          <template #action="{ attrs }">
+            <v-btn
+              color="blue"
+              text
+              v-bind="attrs"
+              @click="snackbar = false"
+            >
+              Close
+            </v-btn>
+          </template>
+        </v-snackbar>
         <v-form
           ref="form"
           v-model="valid"
           lazy-validation
         >
           <v-text-field
-            v-model="lastname"
             :rules="nameRules"
+            name="lastname"
             label="Nom"
             color="cyan"
             required
+            :value="lastname"
+            @change="lastnameChange"
           />
 
           <v-text-field
-            v-model="firstname"
             :rules="nameRules"
+            name="firstname"
             label="Prénom"
             color="cyan"
             required
+            :value="firstname"
+            @change="firstnameChange"
           />
 
           <v-text-field
-            v-model="email"
             :rules="emailRules"
+            name="email"
             label="E-mail"
             color="cyan"
+            :value="email"
             required
+            @change="emailChange"
           />
 
           <v-textarea
             filled
-            name="input-7-4"
+            name="message"
             label="Votre message"
-            value="The Woodman set to work at once, and so sharp was his axe that the tree was soon chopped nearly through."
+            :value="message"
             color="cyan"
+            @change="messageChange"
           />
 
           <v-btn
             :disabled="!valid"
             color="cyan"
             class="mr-4"
-            @click="validate"
+            @click.stop="sendMessage"
           >
             Valider
           </v-btn>
@@ -69,12 +93,13 @@
 </template>
 
 <script>
+
+import { mapState, mapMutations } from 'vuex'
 export default {
   data: () => ({
     valid: true,
-    lastname: '',
-    firstname: '',
-    email: '',
+    snackbar: false,
+    timeout: 2000,
     nameRules: [
       v => !!v || 'Le champs est requis'
     ],
@@ -83,18 +108,34 @@ export default {
       v => /.+@.+\..+/.test(v) || 'E-mail must be valid'
     ],
     select: null,
-    items: [
-      'Item 1',
-      'Item 2',
-      'Item 3',
-      'Item 4'
-    ],
     checkbox: false
   }),
 
+  computed: {
+    ...mapState({
+      lastname: state => state.user.lastname,
+      firstname: state => state.user.firstname,
+      email: state => state.user.email,
+      message: state => state.user.message,
+      validation: state => state.user.validation
+    })
+  },
+
   methods: {
-    validate () {
-      this.$refs.form.validate()
+    ...mapMutations({
+      lastnameChange: 'user/SET_LASTNAME',
+      firstnameChange: 'user/SET_FIRSTNAME',
+      emailChange: 'user/SET_EMAIL',
+      messageChange: 'user/SET_MESSAGE'
+    }),
+
+    sendMessage () {
+      if (this.$refs.form.validate()) {
+        this.$store.dispatch('user/sendMessage')
+      }
+      if (this.validation.length > 0) {
+        this.snackbar = true
+      }
     },
     reset () {
       this.$refs.form.reset()

@@ -1,8 +1,7 @@
 <template>
-  <v-app
-    dark
-  >
+  <v-app dark>
     <v-navigation-drawer
+      v-if="$auth.loggedIn"
       v-model="drawer"
       :mini-variant="miniVariant"
       :clipped="clipped"
@@ -12,18 +11,15 @@
     >
       <v-list>
         <v-list-item link>
-          <v-list-item-content>
+          <v-list-item-content v-if="$auth.loggedIn">
             <v-list-item-title class="text-h6">
-              Sandra Adams
+              {{ $auth.user.username }}
             </v-list-item-title>
-            <v-list-item-subtitle>sandra_a88@gmail.com</v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
       </v-list>
       <v-divider />
-      <v-list
-        nav
-      >
+      <v-list nav>
         <v-list-item
           v-for="(item, i) in items"
           :key="i"
@@ -40,29 +36,31 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-    <v-app-bar
-      :clipped-left="clipped"
-      fixed
-      app
-    >
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-btn
-        icon
-        @click.stop="miniVariant = !miniVariant"
-      >
-        <v-icon>mdi-{{ `chevron-${miniVariant ? 'right' : 'left'}` }}</v-icon>
+    <v-app-bar :clipped-left="clipped" fixed app>
+      <v-app-bar-nav-icon v-if="$auth.loggedIn" @click.stop="drawer = !drawer" />
+      <v-btn v-if="$auth.loggedIn" icon @click.stop="miniVariant = !miniVariant">
+        <v-icon>mdi-{{ `chevron-${miniVariant ? "right" : "left"}` }}</v-icon>
       </v-btn>
 
-      <v-toolbar-title v-text="title" />
+      <v-toolbar-title hidden v-text="title" />
+      <v-img
+        lazy-src="/pikto.png"
+        class="mt-9"
+        max-height="100"
+        max-width="200"
+        src="/pikto.png"
+      />
 
       <v-spacer />
-
-      <v-btn
-        color="cyan"
-        icon
-        to="/connexion"
-      >
-        <v-icon>mdi-account</v-icon>
+      <v-btn v-if="$auth.loggedIn" color="cyan" icon @click="logout">
+        <v-icon>
+          mdi-logout
+        </v-icon>
+      </v-btn>
+      <v-btn v-else color="cyan" icon to="/login">
+        <v-icon>
+          mdi-account
+        </v-icon>
       </v-btn>
     </v-app-bar>
     <v-main class="pb-10">
@@ -70,20 +68,9 @@
         <Nuxt />
       </v-container>
     </v-main>
-    <v-footer
-      :absolute="!fixed"
-      app
-    >
-      <v-bottom-navigation
-        color="cyan"
-        grow
-        absolute
-
-      >
-        <v-btn
-          value="contact"
-          to="/contact"
-        >
+    <v-footer :absolute="!fixed" app>
+      <v-bottom-navigation color="cyan" grow absolute>
+        <v-btn value="contact" to="/contact">
           <span>
             Contact
           </span>
@@ -101,10 +88,7 @@
           </v-icon>
         </v-btn>
 
-        <v-btn
-          value="cgu"
-          to="/cgu"
-        >
+        <v-btn value="cgu" to="/cgu">
           <span>
             CGU
           </span>
@@ -119,6 +103,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   data () {
     return {
@@ -130,28 +116,6 @@ export default {
       dialog: false,
       show: false,
       valid: false,
-      firstname: '',
-      lastname: '',
-      username: '',
-      email: '',
-      password: '',
-      passwordConfirm: '',
-      nameRules: [
-        v => !!v || 'Le champs est requis'
-      ],
-      passwordRules: {
-        required: value => !!value || 'Requis.',
-        min: v => v.length >= 8 || 'Min 8 caractères',
-        emailMatch: () => ('Ce mot de passe ne correspond pas à cet email')
-      },
-      passwordConfirmRules: {
-        required: value => !!value || 'Requis.',
-        match: value => value === this.password || 'Les mots de passe ne correspondent pas'
-      },
-      emailRules: [
-        v => !!v || 'Un email est requis',
-        v => /.+@.+/.test(v) || 'L\'email doit être valide'
-      ],
       items: [
         {
           icon: 'mdi-apps',
@@ -177,15 +141,24 @@ export default {
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'PictoBank'
+      title: 'Pikto'
     }
+  },
+  computed: {
+    ...mapState({
+      user: state => state.user.user
+    })
   },
   methods: {
     hide () {
       this.dialog = false
       this.showSub = false
       this.showForgot = false
+    },
+    logout () {
+      this.$store.dispatch('user/logout')
     }
   }
+
 }
 </script>
