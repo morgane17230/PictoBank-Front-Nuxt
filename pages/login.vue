@@ -8,21 +8,49 @@
       flat
       class="d-flex flex-wrap"
     >
+      <v-btn
+        depressed
+        color="transparent"
+        @click="dialog = false"
+      >
+        <v-icon color cyan>
+          mdi-close
+        </v-icon>
+      </v-btn>
       <v-card flat class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 px-3">
+        <v-snackbar
+          v-model="snackbar"
+          :timeout="timeout"
+        >
+          {{ validation }}
+
+          <template #action="{ attrs }">
+            <v-btn
+              depressed
+              color="transparent"
+              v-bind="attrs"
+              @click="snackbar = false"
+            >
+              <v-icon color="cyan">
+                mdi-close
+              </v-icon>
+            </v-btn>
+          </template>
+        </v-snackbar>
         <v-form ref="formaLog" v-model="valid" lazy-validation>
           <v-card-title>
             Connexion
           </v-card-title>
           <v-card-text>
             <v-text-field
-              type="email"
+              type="username"
               :rules="nameRules"
-              label="Email"
-              name="email"
+              label="Nom d'utilisateur"
+              name="username"
               color="cyan"
               required
-              :value="email"
-              @change="emailChange"
+              :value="username"
+              @change="usernameChange"
             />
             <v-text-field
               :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
@@ -128,14 +156,6 @@
           </v-card-actions>
         </v-form>
       </v-card>
-      <v-btn
-        color="cyan"
-        class="pa-5"
-        text
-        to="/"
-      >
-        Annuler
-      </v-btn>
     </v-card>
   </v-dialog>
 </template>
@@ -149,6 +169,8 @@ export default {
       dialog: true,
       show: false,
       valid: false,
+      snackbar: false,
+      timeout: 2000,
       passwordConfirm: '',
       nameRules: [
         v => !!v || 'Le champs est requis'
@@ -174,7 +196,8 @@ export default {
       email: state => state.user.email,
       username: state => state.user.username,
       password: state => state.user.password,
-      loggedIn: state => state.auth.loggedIn
+      loggedIn: state => state.auth.loggedIn,
+      validation: state => state.user.validation
     })
   },
   methods: {
@@ -189,8 +212,10 @@ export default {
     addUser () {
       if (this.$refs.formaAdd.validate()) {
         this.$store.dispatch('user/addUser')
+        this.snackbar = true
         this.dialog = false
       }
+      setTimeout(() => this.$router.push({ path: '/' }), 5000)
     },
 
     loginUser () {

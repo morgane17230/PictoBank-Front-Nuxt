@@ -17,7 +17,7 @@
 
           <template #action="{ attrs }">
             <v-btn
-              color="blue"
+              color="cyan"
               text
               v-bind="attrs"
               @click="snackbar = false"
@@ -135,10 +135,8 @@ export default {
       }
       if (this.validation.length > 0) {
         this.snackbar = true
+        this.$refs.form.reset()
       }
-    },
-    reset () {
-      this.$refs.form.reset()
     }
   }
 }

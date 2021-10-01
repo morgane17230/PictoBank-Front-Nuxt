@@ -19,9 +19,25 @@
         </v-list-item>
       </v-list>
       <v-divider />
-      <v-list nav>
+      <v-list v-if="$auth.user.role === 'user'" nav>
         <v-list-item
           v-for="(item, i) in items"
+          :key="i"
+          :to="item.to"
+          router
+          exact
+        >
+          <v-list-item-action>
+            <v-icon>{{ item.icon }}</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title v-text="item.title" />
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+      <v-list v-else-if="$auth.user.role === 'admin'" nav>
+        <v-list-item
+          v-for="(item, i) in itemsAdmin"
           :key="i"
           :to="item.to"
           router
@@ -43,14 +59,17 @@
       </v-btn>
 
       <v-toolbar-title hidden v-text="title" />
-      <v-img
-        lazy-src="/pikto.png"
-        class="mt-9"
-        max-height="100"
-        max-width="200"
-        src="/pikto.png"
-      />
-
+      <NuxtLink
+        to="/"
+      >
+        <v-img
+          lazy-src="/pikto.png"
+          class="mt-9"
+          max-height="100"
+          max-width="200"
+          src="/pikto.png"
+        />
+      </NuxtLink>
       <v-spacer />
       <v-btn v-if="$auth.loggedIn" color="cyan" icon @click="logout">
         <v-icon>
@@ -76,7 +95,7 @@
           </span>
 
           <v-icon small>
-            mdi-chat
+            mdi-phone-outline
           </v-icon>
         </v-btn>
 
@@ -94,7 +113,7 @@
           </span>
 
           <v-icon small>
-            mdi-map-marker
+            mdi-handshake-outline
           </v-icon>
         </v-btn>
       </v-bottom-navigation>
@@ -136,6 +155,23 @@ export default {
           icon: 'mdi-heart',
           title: 'Favoris',
           to: '/favorite'
+        }
+      ],
+      itemsAdmin: [
+        {
+          icon: 'mdi-account',
+          title: 'Profil',
+          to: '/admin/profil'
+        },
+        {
+          icon: 'mdi-account-multiple',
+          title: 'Utilisateurs',
+          to: '/admin/users'
+        },
+        {
+          icon: 'mdi-image-multiple-outline',
+          title: 'Pictos',
+          to: '/admin/pictos'
         }
       ],
       miniVariant: false,

@@ -78,7 +78,6 @@
           </v-fab-transition>
           <v-fab-transition>
             <v-btn
-              v-if="picto.user_id === $auth.user.id"
               class="my-6 mx-n2"
               fab
               dark

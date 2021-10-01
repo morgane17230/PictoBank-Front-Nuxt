@@ -1,6 +1,23 @@
 /* eslint-disable no-console */
 <template>
   <v-container>
+    <v-snackbar
+      v-model="snackbar"
+      :timeout="timeout"
+    >
+      {{ validation }}
+
+      <template #action="{ attrs }">
+        <v-btn
+          color="cyan"
+          text
+          v-bind="attrs"
+          @click="snackbar = false"
+        >
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
     <v-form ref="forma" v-model="valid" lazy-validation>
       <v-row class="text-center">
         <v-col>
@@ -91,13 +108,16 @@ export default {
     dragover: false,
     isSelecting: false,
     valid: false,
+    snackbar: false,
+    timeout: 2000,
     pictoRules: [v => !v || v.size < 5000000 || 'Image should be less than 5MB']
   }),
 
   computed: {
     ...mapState({
       uploadedFiles: state => state.picto.uploadedFiles,
-      selectedFile: state => state.picto.selectedFile
+      selectedFile: state => state.picto.selectedFile,
+      validation: state => state.user.validation
     })
   },
 
@@ -126,8 +146,11 @@ export default {
     addPictos () {
       if (this.$refs.forma.validate()) {
         this.$store.dispatch('picto/addPictos')
+        this.snackbar = true
       }
+      setTimeout(() => this.$router.push({ path: '/search' }), 5000)
     }
+
   }
 }
 </script>

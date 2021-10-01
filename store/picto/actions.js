@@ -11,14 +11,16 @@ const actions = {
   },
 
   addPictos ({ commit }) {
+    const { id } = this.state.auth.user
     this.state.picto.uploadedFiles.forEach((selectedFile) => {
       const formData = new FormData()
       const blob = selectedFile
       formData.append('path', blob)
+      formData.append('user_id', id)
 
       axios
         .post('http://localhost:5000/addPictos', formData)
-        .then(response => response.data)
+        .then(response => commit('SET_VALIDATION', response.data.validation))
         .catch((error) => {
           commit('SET_ERROR', error.response)
         })

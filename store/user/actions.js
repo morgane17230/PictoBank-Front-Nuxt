@@ -11,7 +11,7 @@ const actions = {
         email,
         password
       })
-      .then(response => response.data)
+      .then(response => commit('SET_VALIDATION', response.data.validation))
       .then(this.$router.push('/'))
       .catch((error) => {
         commit('SET_ERROR', error.response)
@@ -19,15 +19,15 @@ const actions = {
   },
 
   login ({ commit }) {
-    const { email, password } = this.state.user
+    const { username, password } = this.state.user
     this.$auth
       .loginWith('local', {
         data: {
-          email,
+          username,
           password
         }
       })
-      .then(this.$router.push('/'))
+      .then(this.$router.push('/search'))
       .then(response => commit('SET_VALIDATION', response.data))
       .catch((error) => {
         commit('SET_ERROR', error.response)
