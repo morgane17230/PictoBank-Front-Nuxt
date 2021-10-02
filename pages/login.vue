@@ -11,9 +11,9 @@
       <v-btn
         depressed
         color="transparent"
-        @click="dialog = false"
+        @click="closeDialog"
       >
-        <v-icon color cyan>
+        <v-icon color="cyan">
           mdi-close
         </v-icon>
       </v-btn>
@@ -223,6 +223,11 @@ export default {
         this.$store.dispatch('user/login')
         this.dialog = false
       }
+    },
+
+    closeDialog () {
+      this.dialog = false
+      this.$router.push('/')
     }
   }
 

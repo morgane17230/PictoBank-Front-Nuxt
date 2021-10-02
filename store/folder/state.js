@@ -1,8 +1,9 @@
 const state = () => ({
   folderId: null,
+  folders: [],
   folder: {},
   foldername: '',
-  path: null,
+  photo: null,
   error: '',
   validation: ''
 })

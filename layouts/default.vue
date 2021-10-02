@@ -12,7 +12,7 @@
       <v-list>
         <v-list-item link>
           <v-list-item-content v-if="$auth.loggedIn">
-            <v-list-item-title class="text-h6">
+            <v-list-item-title class="text-h6 cyan--text">
               {{ $auth.user.username }}
             </v-list-item-title>
           </v-list-item-content>

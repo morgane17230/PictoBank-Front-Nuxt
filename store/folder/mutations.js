@@ -3,6 +3,11 @@ const mutations = {
     state.foldername = payload
   },
 
+  SET_PHOTO (state, payload) {
+    state.photo = payload
+    state.photo.url = URL.createObjectURL(payload)
+  },
+
   SET_ERROR (state, payload) {
     state.error = payload
   },
