@@ -1,27 +1,13 @@
-
 <template>
-  <v-dialog
-    v-model="dialog"
-    persistent
-  >
-    <v-card
-      flat
-      class="d-flex flex-wrap"
-    >
-      <v-btn
-        depressed
-        color="transparent"
-        @click="closeDialog"
-      >
+  <v-dialog v-model="dialog" persistent>
+    <v-card flat class="d-flex flex-wrap">
+      <v-btn depressed color="transparent" @click="closeDialog">
         <v-icon color="cyan">
           mdi-close
         </v-icon>
       </v-btn>
       <v-card flat class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 px-3">
-        <v-snackbar
-          v-model="snackbar"
-          :timeout="timeout"
-        >
+        <v-snackbar v-model="snackbar" :timeout="timeout">
           {{ validation }}
 
           <template #action="{ attrs }">
@@ -69,12 +55,7 @@
             </NuxtLink>
           </v-card-text>
           <v-card-actions>
-            <v-btn
-              color="cyan"
-              block
-              text
-              @click.stop="loginUser"
-            >
+            <v-btn color="cyan" block text @click.stop="loginUser">
               Valider
             </v-btn>
           </v-card-actions>
@@ -136,7 +117,10 @@
               @change="passwordChange"
             />
             <v-text-field
-              :rules="[passwordConfirmRules.required, passwordConfirmRules.match]"
+              :rules="[
+                passwordConfirmRules.required,
+                passwordConfirmRules.match
+              ]"
               type="password"
               color="cyan"
               name="passwordConfirm"
@@ -145,12 +129,7 @@
             />
           </v-card-text>
           <v-card-actions>
-            <v-btn
-              color="cyan"
-              block
-              text
-              @click.stop="addUser"
-            >
+            <v-btn color="cyan" block text @click.stop="addUser">
               Valider
             </v-btn>
           </v-card-actions>
@@ -163,7 +142,6 @@
 <script>
 import { mapMutations, mapState } from 'vuex'
 export default {
-
   data () {
     return {
       dialog: true,
@@ -172,20 +150,19 @@ export default {
       snackbar: false,
       timeout: 2000,
       passwordConfirm: '',
-      nameRules: [
-        v => !!v || 'Le champs est requis'
-      ],
+      nameRules: [v => !!v || 'Le champs est requis'],
       passwordRules: {
         required: value => !!value || 'Requis.',
         min: v => v.length >= 8
       },
       passwordConfirmRules: {
         required: value => !!value || 'Requis.',
-        match: value => value === this.password || 'Les mots de passe ne correspondent pas'
+        match: value =>
+          value === this.password || 'Les mots de passe ne correspondent pas'
       },
       emailRules: [
         v => !!v || 'Un email est requis',
-        v => /.+@.+/.test(v) || 'L\'email doit être valide'
+        v => /.+@.+/.test(v) || "L'email doit être valide"
       ]
     }
   },
@@ -230,6 +207,5 @@ export default {
       this.$router.push('/')
     }
   }
-
 }
 </script>

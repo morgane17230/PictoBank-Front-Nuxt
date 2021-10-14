@@ -1,6 +1,5 @@
 const state = () => ({
   folderId: null,
-  folders: [],
   folder: {},
   foldername: '',
   photo: null,

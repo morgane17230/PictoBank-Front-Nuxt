@@ -1,6 +1,14 @@
 const mutations = {
   SET_PICTOS (state, payload) {
-    state.pictos = payload
+    if (payload) {
+      state.pictos = payload
+    } else {
+      state.pictos = []
+    }
+  },
+
+  SET_PICTO_ID (state, payload) {
+    state.pictoId = payload
   },
 
   ADD_PICTOS (state, payload) {
@@ -16,6 +24,10 @@ const mutations = {
 
   SET_ERROR (state, payload) {
     state.error = payload
+  },
+
+  INITIALIZE_UPLOADED_FILES (state) {
+    state.uploadedFiles = []
   },
 
   SET_UPLOADED_FILES (state, payload) {

@@ -137,6 +137,7 @@ export default {
         this.snackbar = true
         this.$refs.form.reset()
       }
+      setTimeout(() => this.$router.push({ path: '/' }), 3000)
     }
   }
 }

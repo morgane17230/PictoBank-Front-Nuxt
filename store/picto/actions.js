@@ -20,7 +20,9 @@ const actions = {
 
       axios
         .post('http://localhost:5000/addPictos', formData)
-        .then(response => commit('SET_VALIDATION', response.data.validation))
+        .then((response) => {
+          commit('SET_VALIDATION', response.data.validation)
+        })
         .catch((error) => {
           commit('SET_ERROR', error.response)
         })

@@ -148,7 +148,7 @@ export default {
         this.$store.dispatch('picto/addPictos')
         this.snackbar = true
       }
-      setTimeout(() => this.$router.push({ path: '/search' }), 5000)
+      setTimeout(() => this.$router.push({ path: '/search' }), 3000)
     }
 
   }
