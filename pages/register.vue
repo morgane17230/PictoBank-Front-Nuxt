@@ -1,61 +1,83 @@
 <template>
   <v-dialog v-model="dialog" persistent max-width="500px">
-    <v-card flat class="pa-5">
+    <v-card flat class="d-flex flex-wrap">
       <v-btn depressed color="transparent" @click="closeDialog">
         <v-icon color="cyan">
           mdi-close
         </v-icon>
       </v-btn>
-      <v-card flat>
-        <v-snackbar v-model="snackbar" :timeout="timeout">
-          {{ validation }}
 
-          <template #action="{ attrs }">
-            <v-btn
-              depressed
-              color="transparent"
-              v-bind="attrs"
-              @click="snackbar = false"
-            >
-              <v-icon color="cyan">
-                mdi-close
-              </v-icon>
-            </v-btn>
-          </template>
-        </v-snackbar>
-        <v-form ref="formaLog" v-model="valid" lazy-validation>
+      <v-card flat class="col-xs-12 col-sm-12 col-md-6 col-lg-12 col-xl-12 px-3">
+        <v-form ref="formaAdd" v-model="valid" lazy-validation>
           <v-card-title>
-            Connexion
+            Inscription
           </v-card-title>
           <v-card-text>
             <v-text-field
-              type="username"
+              name="lastname"
               :rules="nameRules"
-              label="Nom d'utilisateur"
+              label="Nom"
+              color="cyan"
+              required
+              :value="lastname"
+              @change="lastnameChange"
+            />
+            <v-text-field
+              :rules="nameRules"
+              name="firstname"
+              label="Prénom"
+              color="cyan"
+              required
+              :value="firstname"
+              @change="firstnameChange"
+            />
+            <v-text-field
+              :rules="nameRules"
+              type="text"
               name="username"
+              label="Intitulé du compte"
               color="cyan"
               required
               :value="username"
               @change="usernameChange"
             />
             <v-text-field
+              type="email"
+              :rules="emailRules"
+              name="email"
+              label="E-mail"
+              color="cyan"
+              required
+              :value="email"
+              @change="emailChange"
+            />
+            <v-text-field
               :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
-              :rules="[passwordRules.required]"
+              :rules="[passwordRules.required, passwordRules.min]"
               :type="show ? 'text' : 'password'"
               color="cyan"
               name="password"
               label="Mot de passe"
               hint="Minimum 8 caractères"
+              counter
               :value="password"
               @click:append="show = !show"
               @change="passwordChange"
             />
-            <NuxtLink to="/resetPassword">
-              <small>Mot de passe oublié ?</small>
-            </NuxtLink>
+            <v-text-field
+              :rules="[
+                passwordConfirmRules.required,
+                passwordConfirmRules.match
+              ]"
+              type="password"
+              color="cyan"
+              name="passwordConfirm"
+              label="Retaper le mot de passe"
+              :value="passwordConfirm"
+            />
           </v-card-text>
           <v-card-actions class="justify-center">
-            <v-btn color="cyan" text @click.stop="loginUser">
+            <v-btn color="cyan" text @click.stop="addUser">
               Valider
             </v-btn>
             <v-btn color="cyan" text @click="closeDialog">
@@ -97,6 +119,9 @@ export default {
   },
   computed: {
     ...mapState({
+      lastname: state => state.user.lastname,
+      firstname: state => state.user.firstname,
+      email: state => state.user.email,
       username: state => state.user.username,
       password: state => state.user.password,
       loggedIn: state => state.auth.loggedIn,
@@ -105,15 +130,20 @@ export default {
   },
   methods: {
     ...mapMutations({
+      lastnameChange: 'user/SET_LASTNAME',
+      firstnameChange: 'user/SET_FIRSTNAME',
       usernameChange: 'user/SET_USERNAME',
+      emailChange: 'user/SET_EMAIL',
       passwordChange: 'user/SET_PASSWORD'
     }),
 
-    loginUser () {
-      if (this.$refs.formaLog.validate()) {
-        this.$store.dispatch('user/login')
+    addUser () {
+      if (this.$refs.formaAdd.validate()) {
+        this.$store.dispatch('user/addUser')
+        this.snackbar = true
         this.dialog = false
       }
+      setTimeout(() => this.$router.push({ path: '/' }), 5000)
     },
 
     closeDialog () {

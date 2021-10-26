@@ -1,65 +1,83 @@
 <template>
   <v-dialog v-model="dialog" persistent max-width="500px">
-    <v-card flat class="pa-5">
+    <v-card flat class="d-flex flex-wrap">
       <v-btn depressed color="transparent" @click="closeDialog">
         <v-icon color="cyan">
           mdi-close
         </v-icon>
       </v-btn>
-      <v-card flat>
-        <v-snackbar v-model="snackbar" :timeout="timeout">
-          {{ validation }}
 
-          <template #action="{ attrs }">
-            <v-btn
-              depressed
-              color="transparent"
-              v-bind="attrs"
-              @click="snackbar = false"
-            >
-              <v-icon color="cyan">
-                mdi-close
-              </v-icon>
-            </v-btn>
-          </template>
-        </v-snackbar>
-        <v-form ref="formaLog" v-model="valid" lazy-validation>
+      <v-card flat class="col-xs-12 col-sm-12 col-md-6 col-lg-12 col-xl-12 px-3">
+        <v-form ref="forma" v-model="valid">
           <v-card-title>
-            Connexion
+            Modifier le profil
           </v-card-title>
           <v-card-text>
             <v-text-field
-              type="username"
-              :rules="nameRules"
-              label="Nom d'utilisateur"
+              type="text"
+              name="lastname"
+              label="Nom"
+              color="cyan"
+              :value="lastname"
+              @change="lastnameChange"
+            />
+            <v-text-field
+              type="text"
+              name="firstname"
+              label="Prénom"
+              color="cyan"
+              :value="firstname"
+              @change="firstnameChange"
+            />
+            <v-text-field
+              type="text"
               name="username"
               color="cyan"
-              required
+              label="Intitulé du compte"
               :value="username"
               @change="usernameChange"
             />
             <v-text-field
+              type="email"
+              name="email"
+              label="E-mail"
+              color="cyan"
+              :value="email"
+              @change="emailChange"
+            />
+            <v-text-field
               :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
-              :rules="[passwordRules.required]"
+              :rules="[passwordRules.min]"
               :type="show ? 'text' : 'password'"
               color="cyan"
               name="password"
               label="Mot de passe"
               hint="Minimum 8 caractères"
+              counter
               :value="password"
               @click:append="show = !show"
               @change="passwordChange"
             />
-            <NuxtLink to="/resetPassword">
-              <small>Mot de passe oublié ?</small>
-            </NuxtLink>
+            <v-text-field
+              :rules="[
+                passwordConfirmRules.match
+              ]"
+              type="password"
+              color="cyan"
+              name="passwordConfirm"
+              label="Retaper le mot de passe"
+              :value="passwordConfirm"
+            />
           </v-card-text>
           <v-card-actions class="justify-center">
-            <v-btn color="cyan" text @click.stop="loginUser">
-              Valider
+            <v-btn color="red" text @click="deleteUser">
+              Supprimer le compte
             </v-btn>
             <v-btn color="cyan" text @click="closeDialog">
               Annuler
+            </v-btn>
+            <v-btn color="cyan" text @click="updateUser">
+              Valider
             </v-btn>
           </v-card-actions>
         </v-form>
@@ -71,6 +89,7 @@
 <script>
 import { mapMutations, mapState } from 'vuex'
 export default {
+  middleware: 'auth',
   data () {
     return {
       dialog: true,
@@ -79,24 +98,23 @@ export default {
       snackbar: false,
       timeout: 2000,
       passwordConfirm: '',
-      nameRules: [v => !!v || 'Le champs est requis'],
       passwordRules: {
-        required: value => !!value || 'Requis.',
         min: v => v.length >= 8
       },
       passwordConfirmRules: {
-        required: value => !!value || 'Requis.',
         match: value =>
           value === this.password || 'Les mots de passe ne correspondent pas'
       },
       emailRules: [
-        v => !!v || 'Un email est requis',
         v => /.+@.+/.test(v) || "L'email doit être valide"
       ]
     }
   },
   computed: {
     ...mapState({
+      lastname: state => state.user.lastname,
+      firstname: state => state.user.firstname,
+      email: state => state.user.email,
       username: state => state.user.username,
       password: state => state.user.password,
       loggedIn: state => state.auth.loggedIn,
@@ -105,15 +123,25 @@ export default {
   },
   methods: {
     ...mapMutations({
+      lastnameChange: 'user/SET_LASTNAME',
+      firstnameChange: 'user/SET_FIRSTNAME',
       usernameChange: 'user/SET_USERNAME',
+      emailChange: 'user/SET_EMAIL',
       passwordChange: 'user/SET_PASSWORD'
     }),
 
-    loginUser () {
-      if (this.$refs.formaLog.validate()) {
-        this.$store.dispatch('user/login')
-        this.dialog = false
-      }
+    updateUser () {
+      this.$store.dispatch('user/updateUser')
+      this.snackbar = true
+      this.dialog = false
+      setTimeout(() => this.$router.push({ path: '/' }), 5000)
+    },
+
+    deleteUser () {
+      this.$store.dispatch('user/deleteUser')
+      this.snackbar = true
+      this.dialog = false
+      setTimeout(() => this.$router.push({ path: '/' }), 5000)
     },
 
     closeDialog () {

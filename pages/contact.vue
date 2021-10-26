@@ -6,31 +6,17 @@
       </h1>
     </v-row>
     <v-row justify="center">
-      <v-col
-        class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-4"
-      >
-        <v-snackbar
-          v-model="snackbar"
-          :timeout="timeout"
-        >
+      <v-col class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
+        <v-snackbar v-model="snackbar" :timeout="timeout">
           {{ validation }}
 
           <template #action="{ attrs }">
-            <v-btn
-              color="cyan"
-              text
-              v-bind="attrs"
-              @click="snackbar = false"
-            >
+            <v-btn color="cyan" text v-bind="attrs" @click="snackbar = false">
               Close
             </v-btn>
           </template>
         </v-snackbar>
-        <v-form
-          ref="form"
-          v-model="valid"
-          lazy-validation
-        >
+        <v-form ref="form" v-model="valid" lazy-validation>
           <v-text-field
             :rules="nameRules"
             name="lastname"
@@ -69,23 +55,24 @@
             color="cyan"
             @change="messageChange"
           />
+          <div class="d-flex justify-center">
+            <v-btn
+              :disabled="!valid"
+              color="cyan"
+              class="mr-4"
+              text
+              @click.stop="sendContact"
+            >
+              Valider
+            </v-btn>
 
-          <v-btn
-            :disabled="!valid"
-            color="cyan"
-            class="mr-4"
-            @click.stop="sendMessage"
-          >
-            Valider
-          </v-btn>
-
-          <v-btn
-            color="cyan"
-            class="mr-4"
-            @click="reset"
-          >
-            Réinitialiser
-          </v-btn>
+            <v-btn color="cyan" class="mr-4" text @click="reset">
+              Réinitialiser
+            </v-btn>
+            <v-btn color="cyan" text to="/">
+              Annuler
+            </v-btn>
+          </div>
         </v-form>
       </v-col>
     </v-row>
@@ -93,16 +80,13 @@
 </template>
 
 <script>
-
 import { mapState, mapMutations } from 'vuex'
 export default {
   data: () => ({
     valid: true,
     snackbar: false,
     timeout: 2000,
-    nameRules: [
-      v => !!v || 'Le champs est requis'
-    ],
+    nameRules: [v => !!v || 'Le champs est requis'],
     emailRules: [
       v => !!v || 'E-mail is required',
       v => /.+@.+\..+/.test(v) || 'E-mail must be valid'
@@ -129,15 +113,18 @@ export default {
       messageChange: 'user/SET_MESSAGE'
     }),
 
-    sendMessage () {
+    sendContact () {
       if (this.$refs.form.validate()) {
-        this.$store.dispatch('user/sendMessage')
+        this.$store.dispatch('user/sendContact')
       }
       if (this.validation.length > 0) {
         this.snackbar = true
         this.$refs.form.reset()
       }
       setTimeout(() => this.$router.push({ path: '/' }), 3000)
+    },
+    reset () {
+      this.$refs.form.reset()
     }
   }
 }
