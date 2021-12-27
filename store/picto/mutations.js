@@ -11,6 +11,14 @@ const mutations = {
     state.pictoId = payload
   },
 
+  SET_CATEGORY_ID (state, payload) {
+    state.categoryId = payload
+  },
+
+  SET_CATEGORY_NAME (state, payload) {
+    state.categoryName = payload
+  },
+
   ADD_PICTOS (state, payload) {
     state.pictos = [...state.pictos, payload]
   },
@@ -22,10 +30,6 @@ const mutations = {
     }
   },
 
-  SET_ERROR (state, payload) {
-    state.error = payload
-  },
-
   INITIALIZE_UPLOADED_FILES (state) {
     state.uploadedFiles = []
   },
@@ -33,6 +37,8 @@ const mutations = {
   SET_UPLOADED_FILES (state, payload) {
     state.selectedFile = payload
     state.selectedFile.url = URL.createObjectURL(payload)
+    state.selectedFile.category_id = state.categoryId
+    state.selectedFile.category_name = state.categoryName
     state.uploadedFiles.push(payload)
   },
 
@@ -48,10 +54,6 @@ const mutations = {
     if (index > -1) {
       state.uploadedFiles.splice(index, 1)
     }
-  },
-
-  SET_VALIDATION (state, payload) {
-    state.validation = payload
   }
 }
 export default mutations

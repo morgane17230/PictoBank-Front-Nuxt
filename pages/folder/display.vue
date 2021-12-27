@@ -1,5 +1,13 @@
 <template>
   <v-row>
+    <v-snackbar
+      v-model="snackbar"
+      :timeout="timeout"
+      absolute
+    >
+      <span v-if="error.length > 0" class="cyan--text">{{ error }}</span>
+      <span v-if="validation.length > 0" class="cyan--text">{{ validation }}</span>
+    </v-snackbar>
     <v-col>
       <v-row justify="center" align="center">
         <v-col class="text-center">
@@ -73,13 +81,17 @@ export default {
   middleware: 'auth',
   data () {
     return {
-      lang: 'fr'
+      lang: 'fr',
+      snackbar: false,
+      timeout: 2000
     }
   },
 
   computed: {
     ...mapState({
-      folder: state => state.folder.folder
+      folder: state => state.folder.folder,
+      error: state => state.global.error,
+      validation: state => state.global.validation
     })
   },
 

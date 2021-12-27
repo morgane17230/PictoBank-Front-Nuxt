@@ -1,5 +1,13 @@
 <template>
   <v-dialog v-model="dialog" persistent max-width="500px">
+    <v-snackbar
+      v-model="snackbar"
+      :timeout="timeout"
+      absolute
+    >
+      <span v-if="error.length > 0" class="cyan--text">{{ error }}</span>
+      <span v-if="validation.length > 0" class="cyan--text">{{ validation }}</span>
+    </v-snackbar>
     <v-card flat class="d-flex flex-wrap">
       <v-btn depressed color="transparent" @click="closeDialog">
         <v-icon color="cyan">
@@ -93,14 +101,15 @@
 <script>
 import { mapMutations, mapState } from 'vuex'
 export default {
+  auth: 'guest',
   data () {
     return {
       dialog: true,
       show: false,
       valid: false,
-      snackbar: false,
-      timeout: 2000,
       passwordConfirm: '',
+      timeout: 2000,
+      snackbar: false,
       nameRules: [v => !!v || 'Le champs est requis'],
       passwordRules: {
         required: value => !!value || 'Requis.',
@@ -125,7 +134,8 @@ export default {
       username: state => state.user.username,
       password: state => state.user.password,
       loggedIn: state => state.auth.loggedIn,
-      validation: state => state.user.validation
+      validation: state => state.global.validation,
+      error: state => state.global.error
     })
   },
   methods: {
@@ -140,7 +150,6 @@ export default {
     addUser () {
       if (this.$refs.formaAdd.validate()) {
         this.$store.dispatch('user/addUser')
-        this.snackbar = true
         this.dialog = false
       }
       setTimeout(() => this.$router.push({ path: '/' }), 5000)

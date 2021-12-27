@@ -1,5 +1,13 @@
 <template>
   <v-container>
+    <v-snackbar
+      v-model="snackbar"
+      :timeout="timeout"
+      absolute
+    >
+      <span v-if="error.length > 0" class="cyan--text">{{ error }}</span>
+      <span v-if="validation.length > 0" class="cyan--text">{{ validation }}</span>
+    </v-snackbar>
     <v-row justify="center">
       <h1 class="display-1 my-5">
         Contact
@@ -7,15 +15,6 @@
     </v-row>
     <v-row justify="center">
       <v-col class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
-        <v-snackbar v-model="snackbar" :timeout="timeout">
-          {{ validation }}
-
-          <template #action="{ attrs }">
-            <v-btn color="cyan" text v-bind="attrs" @click="snackbar = false">
-              Close
-            </v-btn>
-          </template>
-        </v-snackbar>
         <v-form ref="form" v-model="valid" lazy-validation>
           <v-text-field
             :rules="nameRules"
@@ -65,10 +64,6 @@
             >
               Valider
             </v-btn>
-
-            <v-btn color="cyan" class="mr-4" text @click="reset">
-              Réinitialiser
-            </v-btn>
             <v-btn color="cyan" text to="/">
               Annuler
             </v-btn>
@@ -101,7 +96,8 @@ export default {
       firstname: state => state.user.firstname,
       email: state => state.user.email,
       message: state => state.user.message,
-      validation: state => state.user.validation
+      validation: state => state.global.validation,
+      error: state => state.global.error
     })
   },
 
@@ -116,15 +112,11 @@ export default {
     sendContact () {
       if (this.$refs.form.validate()) {
         this.$store.dispatch('user/sendContact')
+        setTimeout(() => {
+          this.$router.push({ path: '/' })
+          this.$refs.form.reset()
+        }, 3000)
       }
-      if (this.validation.length > 0) {
-        this.snackbar = true
-        this.$refs.form.reset()
-      }
-      setTimeout(() => this.$router.push({ path: '/' }), 3000)
-    },
-    reset () {
-      this.$refs.form.reset()
     }
   }
 }

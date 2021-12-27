@@ -17,10 +17,14 @@ const actions = {
         lastname,
         email
       })
-      .then(response => commit('SET_VALIDATION', response.data.validation))
+      .then(response =>
+        commit('global/SET_VALIDATION', response.data.validation, {
+          root: true
+        })
+      )
       .then(this.$router.push('/'))
       .catch((error) => {
-        commit('SET_ERROR', error.response)
+        commit('global/SET_ERROR', error.response, { root: true })
       })
   },
 
@@ -35,10 +39,10 @@ const actions = {
         email,
         password
       })
-      .then(response => commit('SET_VALIDATION', response.data.validation))
+      .then(response => commit('global/SET_VALIDATION', response.data.validation, { root: true }))
       .then(this.$router.push('/'))
       .catch((error) => {
-        commit('SET_ERROR', error.response)
+        commit('global/SET_ERROR', error.response, { root: true })
       })
   },
 
@@ -50,10 +54,10 @@ const actions = {
     })
     axios
       .delete(`http://localhost:5000/user/${id}`)
-      .then(response => commit('SET_VALIDATION', response.data.validation))
+      .then(response => commit('global/SET_VALIDATION', response.data.validation, { root: true }))
       .then(this.$router.push('/'))
       .catch((error) => {
-        commit('SET_ERROR', error.response)
+        commit('global/SET_ERROR', error.response, { root: true })
       })
   },
 
@@ -66,16 +70,16 @@ const actions = {
           password
         }
       })
-      .then(this.$router.push('/search'))
-      .then(response => commit('SET_VALIDATION', response.data))
+      .then(response => commit('SET_VALIDATION', response.data, { root: true }))
       .catch((error) => {
-        commit('SET_ERROR', error.response)
+        commit('global/SET_ERROR', error.response, { root: true })
+        this.$router.push('/')
       })
   },
 
   logout ({ commit }) {
     axios.get(this.$auth.logout()).catch((error) => {
-      commit('SET_ERROR', error.response)
+      commit('global/SET_ERROR', error.response, { root: true })
     })
   },
 
@@ -89,9 +93,9 @@ const actions = {
         email,
         message
       })
-      .then(response => commit('SET_VALIDATION', response.data))
+      .then(response => commit('global/SET_VALIDATION', response.data, { root: true }))
       .catch((error) => {
-        commit('SET_ERROR', error.response)
+        commit('global/SET_ERROR', error.response, { root: true })
       })
   },
 
@@ -103,9 +107,9 @@ const actions = {
         type: 'resetPassword',
         email
       })
-      .then(response => commit('SET_VALIDATION', response.data))
+      .then(response => commit('globa/SET_VALIDATION', response.data, { root: true }))
       .catch((error) => {
-        commit('SET_ERROR', error.response)
+        commit('global/SET_ERROR', error.response, { root: true })
       })
   },
 
@@ -116,9 +120,9 @@ const actions = {
         type: 'confirmResetPassword',
         email
       })
-      .then(response => commit('SET_VALIDATION', response.data))
+      .then(response => commit('global/SET_VALIDATION', response.data, { root: true }))
       .catch((error) => {
-        commit('SET_ERROR', error.response)
+        commit('global/SET_ERROR', error.response, { root: true })
       })
   },
 
@@ -132,9 +136,9 @@ const actions = {
         lastname,
         firstname
       })
-      .then(response => commit('SET_VALIDATION', response.data))
+      .then(response => commit('global/SET_VALIDATION', response.data, { root: true }))
       .catch((error) => {
-        commit('SET_ERROR', error.response)
+        commit('global/SET_ERROR', error.response, { root: true })
       })
   }
 }

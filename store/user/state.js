@@ -6,7 +6,6 @@ const state = () => ({
   username: '',
   password: '',
   message: '',
-  error: '',
   validation: ''
 })
 

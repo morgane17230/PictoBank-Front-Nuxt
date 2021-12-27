@@ -1,5 +1,13 @@
 <template>
   <v-dialog v-model="dialog" max-width="500px" persistent>
+    <v-snackbar
+      v-model="snackbar"
+      :timeout="timeout"
+      absolute
+    >
+      <span v-if="error.length > 0" class="cyan--text">{{ error }}</span>
+      <span v-if="validation.length > 0" class="cyan--text">{{ validation }}</span>
+    </v-snackbar>
     <v-card>
       <v-form ref="forma" v-model="valid" lazy-validation>
         <v-card-title>
@@ -34,10 +42,13 @@
 import { mapMutations, mapState } from 'vuex'
 
 export default {
+  auth: 'guest',
   data () {
     return {
       dialog: true,
       valid: false,
+      timeout: 2000,
+      snackbar: false,
       emailRules: [
         v => !!v || 'Un email est requis',
         v => /.+@.+/.test(v) || "L'email doit être valide"
@@ -49,7 +60,8 @@ export default {
     ...mapState({
       email: state => state.user.email,
       loggedIn: state => state.auth.loggedIn,
-      validation: state => state.user.validation
+      validation: state => state.global.validation,
+      error: state => state.global.error
     })
   },
 

@@ -1,5 +1,11 @@
 <template>
   <v-dialog v-model="dialog" persistent max-width="500px">
+    <v-snackbar v-model="snackbar" :timeout="timeout" absolute>
+      <span v-if="error.length > 0" class="cyan--text">{{ error }}</span>
+      <span v-if="validation.length > 0" class="cyan--text">{{
+        validation
+      }}</span>
+    </v-snackbar>
     <v-card flat class="d-flex flex-wrap">
       <v-btn depressed color="transparent" @click="closeDialog">
         <v-icon color="cyan">
@@ -7,7 +13,10 @@
         </v-icon>
       </v-btn>
 
-      <v-card flat class="col-xs-12 col-sm-12 col-md-6 col-lg-12 col-xl-12 px-3">
+      <v-card
+        flat
+        class="col-xs-12 col-sm-12 col-md-6 col-lg-12 col-xl-12 px-3"
+      >
         <v-form ref="forma" v-model="valid">
           <v-card-title>
             Modifier le profil
@@ -59,9 +68,7 @@
               @change="passwordChange"
             />
             <v-text-field
-              :rules="[
-                passwordConfirmRules.match
-              ]"
+              :rules="[passwordConfirmRules.match]"
               type="password"
               color="cyan"
               name="passwordConfirm"
@@ -95,8 +102,8 @@ export default {
       dialog: true,
       show: false,
       valid: false,
-      snackbar: false,
       timeout: 2000,
+      snackbar: false,
       passwordConfirm: '',
       passwordRules: {
         min: v => v.length >= 8
@@ -105,20 +112,19 @@ export default {
         match: value =>
           value === this.password || 'Les mots de passe ne correspondent pas'
       },
-      emailRules: [
-        v => /.+@.+/.test(v) || "L'email doit être valide"
-      ]
+      emailRules: [v => /.+@.+/.test(v) || "L'email doit être valide"]
     }
   },
   computed: {
     ...mapState({
       lastname: state => state.user.lastname,
       firstname: state => state.user.firstname,
-      email: state => state.user.email,
       username: state => state.user.username,
+      email: state => state.user.email,
       password: state => state.user.password,
       loggedIn: state => state.auth.loggedIn,
-      validation: state => state.user.validation
+      validation: state => state.global.validation,
+      error: state => state.global.error
     })
   },
   methods: {
@@ -132,14 +138,12 @@ export default {
 
     updateUser () {
       this.$store.dispatch('user/updateUser')
-      this.snackbar = true
       this.dialog = false
       setTimeout(() => this.$router.push({ path: '/' }), 5000)
     },
 
     deleteUser () {
       this.$store.dispatch('user/deleteUser')
-      this.snackbar = true
       this.dialog = false
       setTimeout(() => this.$router.push({ path: '/' }), 5000)
     },

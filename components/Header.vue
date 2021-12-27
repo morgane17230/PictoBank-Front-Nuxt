@@ -19,7 +19,7 @@
         </v-list-item>
       </v-list>
       <v-divider />
-      <v-list v-if="$auth.user.role === 'user'" nav>
+      <v-list nav>
         <v-list-item
           v-for="(item, i) in items"
           :key="i"
@@ -35,36 +35,29 @@
           </v-list-item-content>
         </v-list-item>
       </v-list>
-      <v-list v-else-if="$auth.user.role === 'admin'" nav>
-        <v-list-item
-          v-for="(item, i) in itemsAdmin"
-          :key="i"
-          :to="item.to"
-          router
-          exact
-        >
-          <v-list-item-action>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title v-text="item.title" />
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
       <template #append>
-        <UpdateUserModale />
+        <div class="pa-2">
+          <v-btn block color="cyan" outlined to="/user/update">
+            Modifier le profil
+          </v-btn>
+        </div>
       </template>
     </v-navigation-drawer>
     <v-app-bar :clipped-left="clipped" fixed app>
-      <v-app-bar-nav-icon v-if="$auth.loggedIn" @click.stop="drawer = !drawer" />
-      <v-btn v-if="$auth.loggedIn" icon @click.stop="miniVariant = !miniVariant">
+      <v-app-bar-nav-icon
+        v-if="$auth.loggedIn"
+        @click.stop="drawer = !drawer"
+      />
+      <v-btn
+        v-if="$auth.loggedIn"
+        icon
+        @click.stop="miniVariant = !miniVariant"
+      >
         <v-icon>mdi-{{ `chevron-${miniVariant ? "right" : "left"}` }}</v-icon>
       </v-btn>
 
       <v-toolbar-title hidden v-text="title" />
-      <NuxtLink
-        to="/"
-      >
+      <NuxtLink to="/">
         <v-img
           lazy-src="/pikto.png"
           class="mt-9"
@@ -80,12 +73,12 @@
         </v-icon>
       </v-btn>
       <div v-else>
-        <v-btn color="cyan" icon to="/register">
+        <v-btn color="cyan" icon to="/user/register">
           <v-icon>
             mdi-account-plus
           </v-icon>
         </v-btn>
-        <v-btn color="cyan" icon to="/login">
+        <v-btn color="cyan" icon to="/user/login">
           <v-icon>
             mdi-account-arrow-up
           </v-icon>
@@ -117,34 +110,17 @@ export default {
         {
           icon: 'mdi-magnify',
           title: 'Chercher',
-          to: '/search'
+          to: '/pictos/search'
         },
         {
           icon: 'mdi-plus',
           title: 'Ajouter',
-          to: '/add'
+          to: '/pictos/add'
         },
         {
           icon: 'mdi-heart',
           title: 'Favoris',
-          to: '/favorite'
-        }
-      ],
-      itemsAdmin: [
-        {
-          icon: 'mdi-account',
-          title: 'Profil',
-          to: '/admin/profil'
-        },
-        {
-          icon: 'mdi-account-multiple',
-          title: 'Utilisateurs',
-          to: '/admin/users'
-        },
-        {
-          icon: 'mdi-image-multiple-outline',
-          title: 'Pictos',
-          to: '/admin/pictos'
+          to: '/pictos/favorite'
         }
       ],
       miniVariant: false,
@@ -169,6 +145,5 @@ export default {
       this.$store.dispatch('user/logout')
     }
   }
-
 }
 </script>

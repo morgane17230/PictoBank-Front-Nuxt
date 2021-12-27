@@ -68,10 +68,10 @@ export default {
       }
     },
     redirect: {
-      login: '/login',
+      login: '/user/login',
       logout: '/',
-      home: '/search',
-      callback: '/login'
+      home: '/pictos/search',
+      callback: '/'
     }
   },
 

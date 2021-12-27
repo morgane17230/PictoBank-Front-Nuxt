@@ -1,10 +1,10 @@
 const state = () => ({
   pictoId: null,
+  categoryId: null,
+  categoryName: '',
   uploadedFiles: [],
   pictos: [],
-  selectedFile: null,
-  error: '',
-  validation: ''
+  selectedFile: null
 })
 
 export default state

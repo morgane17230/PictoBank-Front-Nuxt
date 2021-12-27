@@ -10,7 +10,7 @@ const actions = {
         commit('SET_FOLDER', response.data)
       })
       .catch((error) => {
-        commit('SET_ERROR', error.response)
+        commit('global/SET_ERROR', error.response, { root: true })
       })
   },
 
@@ -29,7 +29,7 @@ const actions = {
         commit('REFRESH_USER')
       })
       .catch((error) => {
-        commit('SET_ERROR', error.response)
+        commit('global/SET_ERROR', error.response, { root: true })
       })
   },
 
@@ -46,7 +46,7 @@ const actions = {
         commit('REFRESH_USER')
       })
       .catch((error) => {
-        commit('SET_ERROR', error.response)
+        commit('global/SET_ERROR', error.response, { root: true })
       })
   },
 
@@ -57,7 +57,7 @@ const actions = {
         commit('REFRESH_USER')
       })
       .catch((error) => {
-        commit('SET_ERROR', error.response)
+        commit('global/SET_ERROR', error.response, { root: true })
       })
   },
 
@@ -68,7 +68,7 @@ const actions = {
       .post(`http://localhost:5000/folder/${folderId}/picto/${pictoId}`)
       .then(response => commit('SET_VALIDATION', response.data.validation))
       .catch((error) => {
-        commit('SET_ERROR', error.response)
+        commit('global/SET_ERROR', error.response)
       })
   },
 
@@ -80,7 +80,7 @@ const actions = {
         commit('DEL_FROM_FOLDER', payload)
       })
       .catch((error) => {
-        commit('SET_ERROR', error.response)
+        commit('global/SET_ERROR', error.response)
       })
   }
 }

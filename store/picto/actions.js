@@ -3,10 +3,10 @@ import axios from 'axios'
 const actions = {
   getPictos ({ commit }) {
     axios
-      .get('http://localhost:5000/getPictos')
+      .get('http://localhost:5000/picto')
       .then(response => commit('SET_PICTOS', response.data))
       .catch((error) => {
-        commit('SET_ERROR', error.response)
+        commit('global/SET_ERROR', error.response, { root: true })
       })
   },
 
@@ -17,30 +17,31 @@ const actions = {
       const blob = selectedFile
       formData.append('path', blob)
       formData.append('user_id', id)
+      formData.append('category_id', blob.category_id)
 
       axios
-        .post('http://localhost:5000/addPictos', formData)
+        .post('http://localhost:5000/picto', formData)
         .then((response) => {
-          commit('SET_VALIDATION', response.data.validation)
+          commit('global/SET_VALIDATION', response.data.validation, { root: true })
         })
         .catch((error) => {
-          commit('SET_ERROR', error.response)
+          commit('global/SET_ERROR', error.response, { root: true })
         })
     })
   },
 
   deletePicto ({ commit }, payload) {
     axios
-      .delete(`http://localhost:5000/deletePicto/${payload}`)
+      .delete(`http://localhost:5000/picto/${payload}`)
       .then(response => commit('DEL_PICTOS', response.data))
       .catch((error) => {
-        commit('SET_ERROR', error.response)
+        commit('global/SET_ERROR', error.response, { root: true })
       })
   },
 
   downloadPicto ({ commit }, payload) {
     axios
-      .get(`http://localhost:5000/getPicto/${payload}/download`)
+      .get(`http://localhost:5000/picto/${payload}/download`)
       .then((response) => {
         const link = document.createElement('a')
         link.href = response.data
@@ -48,17 +49,17 @@ const actions = {
         link.click()
       })
       .catch((error) => {
-        commit('SET_ERROR', error.response)
+        commit('global/SET_ERROR', error.response)
       })
   },
   searchPictos ({ commit }, payload) {
     axios
-      .get(`http://localhost:5000/getPictos/search/${payload}`)
+      .get(`http://localhost:5000/picto/search/${payload}`)
       .then((response) => {
         commit('SET_PICTOS', response.data)
       })
       .catch((error) => {
-        commit('SET_ERROR', error.response)
+        commit('global/SET_ERROR', error.response, { root: true })
       })
   }
 

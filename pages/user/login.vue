@@ -1,5 +1,13 @@
 <template>
   <v-dialog v-model="dialog" persistent max-width="500px">
+    <v-snackbar
+      v-model="snackbar"
+      :timeout="timeout"
+      absolute
+    >
+      <span v-if="error.length > 0" class="cyan--text">{{ error }}</span>
+      <span v-if="validation.length > 0" class="cyan--text">{{ validation }}</span>
+    </v-snackbar>
     <v-card flat class="pa-5">
       <v-btn depressed color="transparent" @click="closeDialog">
         <v-icon color="cyan">
@@ -7,22 +15,6 @@
         </v-icon>
       </v-btn>
       <v-card flat>
-        <v-snackbar v-model="snackbar" :timeout="timeout">
-          {{ validation }}
-
-          <template #action="{ attrs }">
-            <v-btn
-              depressed
-              color="transparent"
-              v-bind="attrs"
-              @click="snackbar = false"
-            >
-              <v-icon color="cyan">
-                mdi-close
-              </v-icon>
-            </v-btn>
-          </template>
-        </v-snackbar>
         <v-form ref="formaLog" v-model="valid" lazy-validation>
           <v-card-title>
             Connexion
@@ -71,14 +63,16 @@
 <script>
 import { mapMutations, mapState } from 'vuex'
 export default {
+  middleware: 'auth',
+  auth: 'guest',
   data () {
     return {
       dialog: true,
       show: false,
       valid: false,
-      snackbar: false,
-      timeout: 2000,
       passwordConfirm: '',
+      timeout: 2000,
+      snackbar: false,
       nameRules: [v => !!v || 'Le champs est requis'],
       passwordRules: {
         required: value => !!value || 'Requis.',
@@ -100,7 +94,8 @@ export default {
       username: state => state.user.username,
       password: state => state.user.password,
       loggedIn: state => state.auth.loggedIn,
-      validation: state => state.user.validation
+      validation: state => state.global.validation,
+      error: state => state.global.error
     })
   },
   methods: {

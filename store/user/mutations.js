@@ -19,20 +19,12 @@ const mutations = {
     state.password = payload
   },
 
-  SET_ERROR (state, payload) {
-    state.error = payload
-  },
-
   SET_LOGGED (state, payload) {
     state.loggedIn = payload
   },
 
   SET_MESSAGE (state, payload) {
     state.message = payload
-  },
-
-  SET_VALIDATION (state, payload) {
-    state.validation = payload
   }
 }
 
