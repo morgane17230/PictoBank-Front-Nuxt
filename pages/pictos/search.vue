@@ -20,11 +20,7 @@
           @input="searchPictos"
         />
         <v-btn-toggle class="d-flex flex-column">
-          <v-btn
-            color="cyan"
-            depressed
-            to="/category/add"
-          >
+          <v-btn color="cyan" depressed to="/category/add">
             Ajouter une catégorie
           </v-btn>
           <v-select
@@ -39,10 +35,7 @@
         </v-btn-toggle>
       </v-col>
       <v-col class="col-xs-12 col-lg-8">
-        <div
-          v-if="pictos.length === 0"
-          class="text-h6 text-center cyan--text"
-        >
+        <div v-if="pictos.length === 0" class="text-h6 text-center cyan--text">
           Pas de pictos pour le moment
         </div>
         <v-row class="mb-6">
@@ -111,14 +104,27 @@
       </v-col>
     </v-row>
     <v-dialog v-model="dialog" max-width="500px">
-      <v-card>
+      <v-card flat class="pa-5">
+        <v-row>
+          <v-btn depressed color="transparent" @click="closeDialog">
+            <v-icon color="cyan">
+              mdi-close
+            </v-icon>
+          </v-btn>
+          <v-col>
+            <small v-if="validation" class="green--text font-weight-black">{{
+              validation
+            }}</small>
+          </v-col>
+        </v-row>
+        <v-card-title>
+          Choisir un dossier
+        </v-card-title>
         <v-form ref="forma" v-model="valid" lazy-validation>
-          <v-card-title>
-            Choisir un dossier
-          </v-card-title>
           <v-card-text>
             <v-select
               :items="$auth.user.folders"
+              :rules="nameRules"
               item-text="foldername"
               label="Choisir un dossier"
               item-value="id"
@@ -153,15 +159,18 @@ export default {
       pictoId: null,
       selected: [],
       categoryName: '',
-      addCategoryModal: false
+      addCategoryModal: false,
+      nameRules: [v => !!v || 'Veuillez choisir un dossier']
     }
   },
 
   computed: {
     ...mapState({
       pictos: state => state.picto.pictos,
+      folderId: state => state.folder.folderId,
       loggedIn: state => state.user.loggedIn,
       categories: state => state.category.categories,
+      validation: state => state.global.validation,
       collectedPictos: state => state.picto.collectedPictos
     })
   },
@@ -173,7 +182,6 @@ export default {
   },
 
   methods: {
-
     folderIdChange (e) {
       this.$store.commit('folder/SET_FOLDER_ID', e)
     },
@@ -202,12 +210,19 @@ export default {
       if (this.$refs.forma.validate()) {
         this.$store.dispatch('folder/addPictoToFolder', this.pictoId)
       }
-      setTimeout((this.dialog = false), 5000)
+      setTimeout(() => {
+        this.$store.commit('global/SET_VALIDATION', '', { root: true })
+        this.$router.push({ path: '/pictos/search' })
+      }, 3000)
     },
 
     pictoIdChange (e) {
       this.dialog = true
       this.$store.commit('picto/SET_PICTO_ID', e.currentTarget.value)
+    },
+
+    closeDialog () {
+      this.$router.push({ path: '/' })
     }
   }
 }

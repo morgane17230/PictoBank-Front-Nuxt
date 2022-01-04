@@ -10,7 +10,7 @@ const actions = {
         commit('SET_FOLDER', response.data)
       })
       .catch((error) => {
-        commit('global/SET_ERROR', error.response, { root: true })
+        commit('global/SET_ERROR', error.response.data, { root: true })
       })
   },
 
@@ -29,24 +29,24 @@ const actions = {
         commit('REFRESH_USER')
       })
       .catch((error) => {
-        commit('global/SET_ERROR', error.response, { root: true })
+        commit('global/SET_ERROR', error.response.data.error, { root: true })
       })
   },
 
-  updateFolder ({ commit }, payload) {
-    const { foldername, photo } = this.state.folder
+  updateFolder ({ commit }) {
+    const { foldername, photo, folderId } = this.state.folder
     const formData = new FormData()
 
-    formData.append('path', photo)
-    formData.append('foldername', foldername)
+    if (photo !== null) { formData.append('path', photo) }
+    if (foldername !== '') { formData.append('foldername', foldername) }
 
     axios
-      .put(`http://localhost:5000/folder/${payload}`, formData)
+      .put(`http://localhost:5000/folder/${folderId}`, formData)
       .then(() => {
         commit('REFRESH_USER')
       })
       .catch((error) => {
-        commit('global/SET_ERROR', error.response, { root: true })
+        commit('global/SET_ERROR', error.response.data, { root: true })
       })
   },
 
@@ -57,7 +57,7 @@ const actions = {
         commit('REFRESH_USER')
       })
       .catch((error) => {
-        commit('global/SET_ERROR', error.response, { root: true })
+        commit('global/SET_ERROR', error.response.data, { root: true })
       })
   },
 
@@ -72,7 +72,7 @@ const actions = {
         })
       )
       .catch((error) => {
-        commit('global/SET_ERROR', error.response)
+        commit('global/SET_ERROR', error.response.data, { root: true })
       })
   },
 
@@ -84,7 +84,7 @@ const actions = {
         commit('DEL_FROM_FOLDER', payload)
       })
       .catch((error) => {
-        commit('global/SET_ERROR', error.response)
+        commit('global/SET_ERROR', error.response.data, { root: true })
       })
   }
 }

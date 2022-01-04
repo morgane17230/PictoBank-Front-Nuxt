@@ -61,8 +61,8 @@
                   x-small
                   icon
                   color="teal"
-                  :value="(folderId = folder.id)"
-                  to="/folder/update"
+                  :value="folder.id"
+                  @click="folderChange"
                 >
                   <v-icon dark>
                     mdi-pen
@@ -75,7 +75,7 @@
                   icon
                   color="dark"
                   :value="folder.id"
-                  @click="folderChange"
+                  @click="folderDisplay"
                 >
                   <v-icon dark>
                     mdi-eye
@@ -136,9 +136,18 @@ export default {
       this.$store.dispatch('folder/deleteFolder', e.currentTarget.value)
     },
 
-    folderChange (e) {
+    folderDisplay (e) {
+      // eslint-disable-next-line no-console
+      console.log(e)
       this.$store.commit('folder/SET_FOLDER_ID', e.currentTarget.value)
       this.$router.push('/folder/display')
+    },
+
+    folderChange (e) {
+      // eslint-disable-next-line no-console
+      console.log(e.currentTarget.value)
+      this.$store.commit('folder/SET_FOLDER_ID', e.currentTarget.value)
+      this.$router.push('/folder/update')
     }
   }
 }

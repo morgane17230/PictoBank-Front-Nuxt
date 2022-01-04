@@ -6,7 +6,7 @@ const actions = {
       .get('http://localhost:5000/picto')
       .then(response => commit('SET_PICTOS', response.data))
       .catch((error) => {
-        commit('global/SET_ERROR', error.response, { root: true })
+        commit('global/SET_ERROR', error.response.data, { root: true })
       })
   },
 
@@ -29,7 +29,7 @@ const actions = {
         window.open(link)
       })
       .catch((error) => {
-        commit('global/SET_ERROR', error.response, { root: true })
+        commit('global/SET_ERROR', error.response.data, { root: true })
       })
   },
 
@@ -50,7 +50,7 @@ const actions = {
           })
         })
         .catch((error) => {
-          commit('global/SET_ERROR', error.response, { root: true })
+          commit('global/SET_ERROR', error.response.data, { root: true })
         })
     })
   },
@@ -60,23 +60,10 @@ const actions = {
       .delete(`http://localhost:5000/picto/${payload}`)
       .then(response => commit('DEL_PICTOS', response.data))
       .catch((error) => {
-        commit('global/SET_ERROR', error.response, { root: true })
+        commit('global/SET_ERROR', error.response.data, { root: true })
       })
   },
 
-  downloadPicto ({ commit }, payload) {
-    axios
-      .get(`http://localhost:5000/picto/${payload}/download`)
-      .then((response) => {
-        const link = document.createElement('a')
-        link.href = response.data
-        link.download = `${response.data}`
-        link.click()
-      })
-      .catch((error) => {
-        commit('global/SET_ERROR', error.response)
-      })
-  },
   searchPictos ({ commit }, payload) {
     axios
       .get(`http://localhost:5000/picto/search/${payload}`)
@@ -84,7 +71,7 @@ const actions = {
         commit('SET_PICTOS', response.data)
       })
       .catch((error) => {
-        commit('global/SET_ERROR', error.response, { root: true })
+        commit('global/SET_ERROR', error.response.data, { root: true })
       })
   }
 }

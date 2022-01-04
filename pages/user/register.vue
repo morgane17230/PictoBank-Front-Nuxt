@@ -1,25 +1,29 @@
 <template>
   <v-dialog v-model="dialog" persistent max-width="500px">
-    <v-snackbar
-      v-model="snackbar"
-      :timeout="timeout"
-      absolute
-    >
-      <span v-if="error" class="cyan--text">{{ error }}</span>
-      <span v-if="validation" class="cyan--text">{{ validation }}</span>
-    </v-snackbar>
     <v-card flat class="d-flex flex-wrap">
-      <v-btn depressed color="transparent" @click="closeDialog">
-        <v-icon color="cyan">
-          mdi-close
-        </v-icon>
-      </v-btn>
-
-      <v-card flat class="col-xs-12 col-sm-12 col-md-6 col-lg-12 col-xl-12 px-3">
+      <v-row align="center">
+        <v-btn depressed color="transparent" @click="closeDialog">
+          <v-icon color="cyan">
+            mdi-close
+          </v-icon>
+        </v-btn>
+        <v-col class="text-right">
+          <small v-if="error" class="red--text font-weight-black">{{
+            error
+          }}</small>
+          <small v-if="validation" class="green--text font-weight-black">{{
+            validation
+          }}</small>
+        </v-col>
+      </v-row>
+      <v-card-title>
+        Inscription
+      </v-card-title>
+      <v-card
+        flat
+        class="col-xs-12 col-sm-12 col-md-6 col-lg-12 col-xl-12 px-3"
+      >
         <v-form ref="formaAdd" v-model="valid" lazy-validation>
-          <v-card-title>
-            Inscription
-          </v-card-title>
           <v-card-text>
             <v-text-field
               name="lastname"
@@ -108,8 +112,6 @@ export default {
       show: false,
       valid: false,
       passwordConfirm: '',
-      timeout: 2000,
-      snackbar: false,
       nameRules: [v => !!v || 'Le champs est requis'],
       passwordRules: {
         required: value => !!value || 'Requis.',
@@ -150,14 +152,17 @@ export default {
     addUser () {
       if (this.$refs.formaAdd.validate()) {
         this.$store.dispatch('user/addUser')
-        this.dialog = false
       }
-      setTimeout(() => this.$router.push({ path: '/' }), 5000)
+      setTimeout(() => {
+        this.$store.commit('global/SET_VALIDATION', '', { root: true })
+        this.$store.commit('global/SET_ERROR', '', { root: true })
+        this.$router.push({ path: '/pictos/search' })
+      }, 3000)
     },
 
     closeDialog () {
       this.dialog = false
-      this.$router.push('/')
+      this.$router.push({ path: '/pictos/search' })
     }
   }
 }
