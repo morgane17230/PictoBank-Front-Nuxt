@@ -1,0 +1,41 @@
+@font-face {
+  font-family: "Quicksand-VariableFont_wght";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("~assets/fonts/Quicksand-VariableFont_wght.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "FuzzyBubbles-Bold";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("~assets/fonts/FuzzyBubbles-Bold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "FuzzyBubbles-Regular";
+  font-style: bold;
+  font-weight: 600;
+  font-display: swap;
+  src: url("~assets/fonts/FuzzyBubbles-Regular.ttf") format("truetype");
+}
+
+html {
+  font-family: "Quicksand", sans-serif;
+}
+
+.body {
+  background: rgb(8, 10, 148);
+  background: linear-gradient(
+    90deg,
+    rgba(8, 10, 148, 1) 0%,
+    rgba(45, 178, 196, 1) 34%,
+    rgba(2, 73, 110, 1) 100%
+  );
+}
+
+#title {
+  font-family: "Fuzzy Bubbles", cursive;
+}

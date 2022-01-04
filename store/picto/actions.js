@@ -10,6 +10,29 @@ const actions = {
       })
   },
 
+  generatePDF ({ commit }) {
+    const { collectedPictos } = this.state.picto
+    axios
+      .get('http://localhost:5000/picto/pdf', {
+        params: {
+          collectedPictos
+        },
+        responseType: 'arraybuffer',
+        headers: {
+          Accept: 'application/pdf'
+        }
+      })
+      .then((response) => {
+        const blob = new Blob([response.data], { type: 'application/pdf' })
+        const link = document.createElement('a')
+        link.href = window.URL.createObjectURL(blob)
+        window.open(link)
+      })
+      .catch((error) => {
+        commit('global/SET_ERROR', error.response, { root: true })
+      })
+  },
+
   addPictos ({ commit }) {
     const { id } = this.state.auth.user
     this.state.picto.uploadedFiles.forEach((selectedFile) => {
@@ -22,7 +45,9 @@ const actions = {
       axios
         .post('http://localhost:5000/picto', formData)
         .then((response) => {
-          commit('global/SET_VALIDATION', response.data.validation, { root: true })
+          commit('global/SET_VALIDATION', response.data.validation, {
+            root: true
+          })
         })
         .catch((error) => {
           commit('global/SET_ERROR', error.response, { root: true })
@@ -62,7 +87,6 @@ const actions = {
         commit('global/SET_ERROR', error.response, { root: true })
       })
   }
-
 }
 
 export default actions

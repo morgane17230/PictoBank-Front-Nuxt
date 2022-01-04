@@ -70,7 +70,7 @@ const actions = {
           password
         }
       })
-      .then(response => commit('SET_VALIDATION', response.data, { root: true }))
+      .then(response => commit('global/SET_VALIDATION', response.data, { root: true }))
       .catch((error) => {
         commit('global/SET_ERROR', error.response, { root: true })
         this.$router.push('/')
@@ -119,22 +119,6 @@ const actions = {
       .post('http://localhost:5000/nodemailer', {
         type: 'confirmResetPassword',
         email
-      })
-      .then(response => commit('global/SET_VALIDATION', response.data, { root: true }))
-      .catch((error) => {
-        commit('global/SET_ERROR', error.response, { root: true })
-      })
-  },
-
-  updateProfilMail ({ commit }) {
-    const { id, email, lastname, firstname } = this.$auth.user
-    axios
-      .post('http://localhost:5000/nodemailer', {
-        type: 'updateProfil',
-        id,
-        email,
-        lastname,
-        firstname
       })
       .then(response => commit('global/SET_VALIDATION', response.data, { root: true }))
       .catch((error) => {

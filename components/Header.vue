@@ -37,7 +37,16 @@
       </v-list>
       <template #append>
         <div class="pa-2">
-          <v-btn block color="cyan" outlined to="/user/update">
+          <v-btn
+            class="my-1"
+            block
+            color="cyan"
+            outlined
+            @click="generatePDF"
+          >
+            Télécharger les pictos
+          </v-btn>
+          <v-btn class="my-1" block color="cyan" outlined to="/user/update">
             Modifier le profil
           </v-btn>
         </div>
@@ -46,12 +55,12 @@
     <v-app-bar :clipped-left="clipped" fixed app>
       <v-app-bar-nav-icon
         v-if="$auth.loggedIn"
-        @click.stop="drawer = !drawer"
+        @click="drawer = !drawer"
       />
       <v-btn
         v-if="$auth.loggedIn"
         icon
-        @click.stop="miniVariant = !miniVariant"
+        @click="miniVariant = !miniVariant"
       >
         <v-icon>mdi-{{ `chevron-${miniVariant ? "right" : "left"}` }}</v-icon>
       </v-btn>
@@ -139,6 +148,10 @@ export default {
       this.dialog = false
       this.showSub = false
       this.showForgot = false
+    },
+
+    generatePDF () {
+      this.$store.dispatch('picto/generatePDF')
     },
 
     logout () {

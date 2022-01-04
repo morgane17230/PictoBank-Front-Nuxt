@@ -4,6 +4,7 @@ const state = () => ({
   categoryName: '',
   uploadedFiles: [],
   pictos: [],
+  collectedPictos: [],
   selectedFile: null
 })
 

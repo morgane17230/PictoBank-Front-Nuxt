@@ -6,21 +6,21 @@
       absolute
       centered
     >
-      <span v-if="error.length > 0" class="text-h6 cyan--text">{{ error }}</span>
-      <span v-if="validation.length > 0" class="text-h6 cyan--text">{{ validation }}</span>
+      <span v-if="error" class="text-h6 cyan--text">{{ error }}</span>
+      <span v-if="validation" class="text-h6 cyan--text">{{ validation }}</span>
     </v-snackbar>
 
     <v-form ref="forma" v-model="valid" lazy-validation>
       <v-row class="text-center">
         <v-col>
-          <h1 id="my-font" class="display-1 my-5">
+          <h1 id="title" class="display-1 my-5">
             Ajouter un picto
           </h1>
         </v-col>
       </v-row>
 
       <v-row>
-        <v-col cols="6">
+        <v-col class="col-12 col-lg-6">
           <v-col
             class="d-flex"
             cols="12"
@@ -77,7 +77,7 @@
             </v-btn>
           </v-col>
         </v-col>
-        <v-col cols="6">
+        <v-col class="col-12 col-lg-6">
           <v-virtual-scroll
             v-if="uploadedFiles.length > 0"
             :items="uploadedFiles"
@@ -91,9 +91,9 @@
                 </v-list-item-avatar>
                 <v-list-item-content>
                   <v-list-item-title>
-                    {{ item.name }}
+                    {{ item.name.substr(0, 20) }}
                     <span
-                      class="ml-3 text--secondary"
+                      class="ml-3 cyan--text"
                     >
                       {{ item.category_name }}
                     </span>
@@ -108,6 +108,9 @@
               <v-divider />
             </template>
           </v-virtual-scroll>
+          <div v-else class="text-center text-h6 cyan--text">
+            Ici vos pictos sélectionnés
+          </div>
         </v-col>
       </v-row>
     </v-form>
@@ -155,7 +158,16 @@ export default {
     },
 
     onDrop (e) {
-      this.$store.commit('picto/ON_DROP_UPLOADED_FILES', e.dataTransfer.files)
+      const filtered = this.categories.find(category => category.id === this.categoryId)
+      if (this.categoryId) {
+        this.$store.commit('picto/SET_CATEGORY_NAME', filtered.name)
+        this.$store.commit('picto/ON_DROP_UPLOADED_FILES', e.dataTransfer.files)
+        this.$store.commit('picto/SET_CATEGORY_ID', null)
+      } else {
+        this.$store.commit('global/SET_ERROR', "Veuillez d'abord choisir une catégorie")
+        this.snackbar = true
+        setTimeout(() => this.$store.commit('global/SET_ERROR', ''), this.timeout)
+      }
     },
 
     onUpload () {

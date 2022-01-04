@@ -1,8 +1,8 @@
 <template>
   <v-dialog v-model="dialog" persistent max-width="500px">
     <v-snackbar v-model="snackbar" :timeout="timeout" absolute>
-      <span v-if="error.length > 0" class="cyan--text">{{ error }}</span>
-      <span v-if="validation.length > 0" class="cyan--text">{{
+      <span v-if="error" class="cyan--text">{{ error }}</span>
+      <span v-if="validation" class="cyan--text">{{
         validation
       }}</span>
     </v-snackbar>
@@ -144,8 +144,6 @@ export default {
 
     deleteUser () {
       this.$store.dispatch('user/deleteUser')
-      this.dialog = false
-      setTimeout(() => this.$router.push({ path: '/' }), 5000)
     },
 
     closeDialog () {

@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 <template>
   <v-container>
     <v-row justify="center" class="my-5">
@@ -7,7 +6,19 @@
       </h1>
     </v-row>
     <v-row>
-      <v-col cols="2">
+      <v-col class="col-xs-12 col-lg-4">
+        <v-text-field
+          v-model="query"
+          top
+          placeholder="Chercher un picto..."
+          label="Chercher un picto..."
+          color="cyan"
+          prepend-inner-icon="mdi-magnify"
+          clearable
+          outlined
+          rounded
+          @input="searchPictos"
+        />
         <v-btn-toggle class="d-flex flex-column">
           <v-btn
             color="cyan"
@@ -16,45 +27,29 @@
           >
             Ajouter une catégorie
           </v-btn>
-          <v-btn
-            v-for="category in categories"
-            :key="category.id"
-            depressed
-            :value="category.id"
-            @click="searchPictosByCategory"
-          >
-            {{ category.name }}
-          </v-btn>
+          <v-select
+            class="px-2"
+            :items="categories"
+            label="Choir une catégorie"
+            item-value="id"
+            item-text="name"
+            color="cyan"
+            @change="searchPictosByCategory"
+          />
         </v-btn-toggle>
       </v-col>
-      <v-col cols="10">
-        <v-col cols>
-          <v-text-field
-            v-model="query"
-            top
-            placeholder="Chercher un picto..."
-            label="Chercher un picto..."
-            color="cyan"
-            prepend-inner-icon="mdi-magnify"
-            clearable
-            outlined
-            rounded
-            @input="searchPictos"
-          >
-            />
-          </v-text-field>
-        </v-col>
-        <v-col
+      <v-col class="col-xs-12 col-lg-8">
+        <div
           v-if="pictos.length === 0"
           class="text-h6 text-center cyan--text"
         >
           Pas de pictos pour le moment
-        </v-col>
+        </div>
         <v-row class="mb-6">
           <v-col
             v-for="picto in pictos"
             :key="picto.id"
-            class="col-sm-6 col-lg-2"
+            class="col-xs-12 col-sm-6 col-md-4 col-lg-3"
           >
             <v-card class="pa-2">
               <v-img
@@ -75,20 +70,12 @@
               </v-img>
               <v-card-actions color="cyan">
                 <v-spacer />
-                <v-btn
-                  fab
-                  dark
-                  x-small
-                  icon
-                  color="teal"
+                <v-checkbox
+                  v-model="selected"
                   :value="picto.id"
-                  @click="downloadPicto"
-                >
-                  <v-icon dark>
-                    mdi-download
-                  </v-icon>
-                </v-btn>
-
+                  color="cyan"
+                  @change="collectPictos"
+                />
                 <v-btn
                   fab
                   dark
@@ -132,9 +119,9 @@
           <v-card-text>
             <v-select
               :items="$auth.user.folders"
-              :item-text="folder => folder.foldername"
+              item-text="foldername"
               label="Choisir un dossier"
-              :item-value="folder => folder.id"
+              item-value="id"
               color="cyan"
               @change="folderIdChange"
             />
@@ -154,7 +141,7 @@
 </template>
 
 <script>
-import { mapMutations, mapState } from 'vuex'
+import { mapState } from 'vuex'
 export default {
   middleware: 'auth',
   data () {
@@ -164,6 +151,7 @@ export default {
       lang: 'fr',
       dialog: false,
       pictoId: null,
+      selected: [],
       categoryName: '',
       addCategoryModal: false
     }
@@ -173,7 +161,8 @@ export default {
     ...mapState({
       pictos: state => state.picto.pictos,
       loggedIn: state => state.user.loggedIn,
-      categories: state => state.category.categories
+      categories: state => state.category.categories,
+      collectedPictos: state => state.picto.collectedPictos
     })
   },
 
@@ -184,16 +173,17 @@ export default {
   },
 
   methods: {
-    ...mapMutations({
-      folderIdChange: 'folder/SET_FOLDER_ID'
-    }),
+
+    folderIdChange (e) {
+      this.$store.commit('folder/SET_FOLDER_ID', e)
+    },
 
     deletePicto (e) {
       this.$store.dispatch('picto/deletePicto', e.currentTarget.value)
     },
 
-    downloadPicto (e) {
-      this.$store.dispatch('picto/downloadPicto', e.currentTarget.value)
+    collectPictos () {
+      this.$store.commit('picto/SET_COLLECTED_PICTOS', this.selected)
     },
 
     searchPictos () {
@@ -205,7 +195,7 @@ export default {
     },
 
     searchPictosByCategory (e) {
-      this.$store.dispatch('category/getCategory', e.currentTarget.value)
+      this.$store.dispatch('category/getCategory', e)
     },
 
     addPictoToFolder () {

@@ -91,12 +91,12 @@ export default {
     addFolder () {
       if (this.$refs.forma1.validate()) {
         this.$store.dispatch('folder/addFolder')
+        this.$router.push({ path: '/pictos/favorite' })
       }
-      setTimeout(this.dialogCreate = false, 5000)
     },
     closeDialog () {
       this.dialog = false
-      this.$router.push('/')
+      this.$router.push({ path: '/pictos/favorite' })
     }
   }
 }

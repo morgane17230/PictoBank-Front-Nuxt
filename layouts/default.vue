@@ -1,7 +1,7 @@
 <template>
   <v-app dark>
     <Header />
-    <v-main class="pb-10">
+    <v-main class="pb-10 body">
       <v-container>
         <Nuxt />
       </v-container>

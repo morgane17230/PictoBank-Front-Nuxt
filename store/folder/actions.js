@@ -66,7 +66,11 @@ const actions = {
     const { pictoId } = this.state.picto
     axios
       .post(`http://localhost:5000/folder/${folderId}/picto/${pictoId}`)
-      .then(response => commit('SET_VALIDATION', response.data.validation))
+      .then(response =>
+        commit('global/SET_VALIDATION', response.data.validation, {
+          root: true
+        })
+      )
       .catch((error) => {
         commit('global/SET_ERROR', error.response)
       })

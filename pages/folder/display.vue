@@ -5,14 +5,14 @@
       :timeout="timeout"
       absolute
     >
-      <span v-if="error.length > 0" class="cyan--text">{{ error }}</span>
-      <span v-if="validation.length > 0" class="cyan--text">{{ validation }}</span>
+      <span v-if="error" class="cyan--text">{{ error }}</span>
+      <span v-if="validation" class="cyan--text">{{ validation }}</span>
     </v-snackbar>
     <v-col>
       <v-row justify="center" align="center">
         <v-col class="text-center">
           <h1 class="display-1">
-            Vos favoris
+            {{ folder.foldername }}
           </h1>
         </v-col>
       </v-row>
@@ -22,38 +22,26 @@
           :key="picto.id"
           class="d-flex child-flex col-xs-6 col-sm-6 col-md-3 col-lg-2 col-xl-2"
         >
-          <v-img
-            :src="`${picto.path}`"
-            :lazy-src="`${picto.path}`"
-            aspect-ratio="1"
-            class="grey lighten-2"
-          >
-            <v-fab-transition>
-              <v-btn
-                class="my-6 mx-7"
-                fab
-                dark
-                x-small
-                absolute
-                bottom
-                right
-                color="teal"
+          <v-card class="pa-2">
+            <v-img
+              :src="`${picto.path}`"
+              :lazy-src="`${picto.path}`"
+              aspect-ratio="1"
+              class="grey lighten-2"
+            />
+            <v-card-actions color="cyan">
+              <v-spacer />
+              <v-checkbox
+                v-model="selected"
                 :value="picto.id"
-              >
-                <v-icon dark>
-                  mdi-download
-                </v-icon>
-              </v-btn>
-            </v-fab-transition>
-            <v-fab-transition>
+                color="cyan"
+                @change="collectPictos"
+              />
               <v-btn
-                class="my-6 mx-n2"
                 fab
                 dark
                 x-small
-                absolute
-                bottom
-                right
+                icon
                 color="dark"
                 :value="pictoId = picto.id"
                 @click="removePictoFromFolder"
@@ -62,13 +50,13 @@
                   mdi-heart-off
                 </v-icon>
               </v-btn>
-            </v-fab-transition>
-            <template #placeholder>
-              <v-row class="fill-height ma-0" align="center" justify="center">
-                <v-progress-circular indeterminate color="grey lighten-5" />
-              </v-row>
-            </template>
-          </v-img>
+            </v-card-actions>
+          </v-card>
+          <template #placeholder>
+            <v-row class="fill-height ma-0" align="center" justify="center">
+              <v-progress-circular indeterminate color="grey lighten-5" />
+            </v-row>
+          </template>
         </v-col>
       </v-row>
     </v-col>
@@ -83,13 +71,15 @@ export default {
     return {
       lang: 'fr',
       snackbar: false,
-      timeout: 2000
+      timeout: 2000,
+      selected: []
     }
   },
 
   computed: {
     ...mapState({
       folder: state => state.folder.folder,
+      collectedPictos: state => state.picto.collectedPictos,
       error: state => state.global.error,
       validation: state => state.global.validation
     })
@@ -101,7 +91,11 @@ export default {
 
   methods: {
     removePictoFromFolder (e) {
-      this.$store.dispatch('folder/removePictoFromFolder', Number(e.currentTarget.value))
+      this.$store.dispatch('folder/removePictoFromFolder', e.currentTarget.value)
+    },
+
+    collectPictos () {
+      this.$store.commit('picto/SET_COLLECTED_PICTOS', this.selected)
     }
   }
 }

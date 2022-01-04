@@ -5,8 +5,8 @@
       :timeout="timeout"
       absolute
     >
-      <span v-if="error.length > 0" class="cyan--text">{{ error }}</span>
-      <span v-if="validation.length > 0" class="cyan--text">{{ validation }}</span>
+      <span v-if="error" class="cyan--text">{{ error }}</span>
+      <span v-if="validation" class="cyan--text">{{ validation }}</span>
     </v-snackbar>
     <v-card flat class="d-flex flex-wrap">
       <v-btn depressed color="transparent" @click="closeDialog">

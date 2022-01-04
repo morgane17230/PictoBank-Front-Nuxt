@@ -11,6 +11,10 @@ const mutations = {
     state.pictoId = payload
   },
 
+  SET_COLLECTED_PICTOS (state, payload) {
+    state.collectedPictos = [...state.collectedPictos, ...payload]
+  },
+
   SET_CATEGORY_ID (state, payload) {
     state.categoryId = payload
   },
@@ -44,6 +48,8 @@ const mutations = {
 
   ON_DROP_UPLOADED_FILES (state, payload) {
     payload.forEach((element) => {
+      element.category_id = state.categoryId
+      element.category_name = state.categoryName
       element.url = URL.createObjectURL(element)
       state.uploadedFiles = [...state.uploadedFiles, element]
     })
