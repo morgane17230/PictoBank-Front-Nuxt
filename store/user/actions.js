@@ -1,63 +1,86 @@
 import axios from 'axios'
 
 const actions = {
-  addUser ({ commit }) {
-    const { lastname, firstname, username, email, password } = this.state.user
-    axios.post('http://localhost:5000/addUser', {
+  addUser () {
+    const {
       lastname,
       firstname,
-      username,
+      name,
       email,
-      password
-    })
+      password,
+      isOrganization
+    } = this.state.user
     axios
-      .post('http://localhost:5000/nodemailer', {
-        type: 'confirmRegister',
-        firstname,
+      .post('http://localhost:5000/addUser', {
         lastname,
-        email
+        firstname,
+        name,
+        email,
+        password,
+        isOrganization
       })
-      .then(response =>
-        commit('global/SET_VALIDATION', response.data.validation, {
-          root: true
+      .then((response) => {
+        this.$notifier.showSnackbar({
+          validation: response.data.validation,
+          snackbar: true
         })
-      )
-      .then(this.$router.push('/'))
+      })
       .catch((error) => {
-        commit('global/SET_ERROR', error.response.data.error, { root: true })
+        // eslint-disable-next-line no-console
+        console.log(error)
       })
   },
 
-  updateUser ({ commit }) {
+  updateUser () {
     const { id } = this.$auth.user
-    const { lastname, firstname, username, email, password } = this.state.user
+    const {
+      lastname,
+      firstname,
+      name,
+      email,
+      password,
+      teamPassword
+    } = this.state.user
+
     axios
       .put(`http://localhost:5000/user/${id}`, {
         lastname,
         firstname,
-        username,
+        name,
         email,
-        password
+        password,
+        teamPassword
       })
-      .then(response => commit('global/SET_VALIDATION', response.data.validation, { root: true }))
-      .then(this.$router.push('/'))
+      .then(response =>
+        this.$notifier.showSnackbar({
+          validation: response.data.validation,
+          snackbar: true
+        })
+      )
       .catch((error) => {
-        commit('global/SET_ERROR', error.response.data, { root: true })
+        // eslint-disable-next-line no-console
+        console.log(error)
       })
   },
 
-  deleteUser ({ commit }) {
-    const { id, email } = this.$auth.user
+  deleteUser () {
+    const { id, email } = this.$auth.user.organization
+
     axios.post('http://localhost:5000/nodemailer', {
       type: 'confirmDelete',
       email
     })
     axios
       .delete(`http://localhost:5000/user/${id}`)
-      .then(response => commit('global/SET_VALIDATION', response.data.validation, { root: true }))
-      .then(this.$router.push('/'))
+      .then((response) => {
+        this.$notifier.showSnackbar({
+          validation: response.data.validation,
+          snackbar: true
+        })
+      })
       .catch((error) => {
-        commit('global/SET_ERROR', error.response.data, { root: true })
+        // eslint-disable-next-line no-console
+        console.log(error)
       })
   },
 
@@ -71,15 +94,9 @@ const actions = {
         }
       })
       .catch((error) => {
-        commit('global/SET_ERROR', error.response.data.error, { root: true })
+        // eslint-disable-next-line no-console
+        console.log(error)
       })
-  },
-
-  logout () {
-    axios.get(this.$auth.logout()).catch((error) => {
-      // eslint-disable-next-line no-console
-      console.log(error)
-    })
   },
 
   sendContact ({ commit }) {
@@ -92,13 +109,15 @@ const actions = {
         email,
         message
       })
-      .then(response =>
-        commit('global/SET_VALIDATION', response.data.validation, {
-          root: true
+      .then((response) => {
+        this.$notifier.showSnackbar({
+          validation: response.data.validation,
+          snackbar: true
         })
-      )
+      })
       .catch((error) => {
-        commit('global/SET_ERROR', error.response.data, { root: true })
+        // eslint-disable-next-line no-console
+        console.log(error)
       })
   },
 
@@ -110,13 +129,15 @@ const actions = {
         type: 'resetPassword',
         email
       })
-      .then(response =>
-        commit('global/SET_VALIDATION', response.data.validation, {
-          root: true
+      .then((response) => {
+        this.$notifier.showSnackbar({
+          validation: response.data.validation,
+          snackbar: true
         })
-      )
+      })
       .catch((error) => {
-        commit('global/SET_ERROR', error.response.data, { root: true })
+        // eslint-disable-next-line no-console
+        console.log(error)
       })
   },
 
@@ -127,13 +148,15 @@ const actions = {
         type: 'confirmResetPassword',
         email
       })
-      .then(response =>
-        commit('global/SET_VALIDATION', response.data.validation, {
-          root: true
+      .then((response) => {
+        this.$notifier.showSnackbar({
+          validation: response.data.validation,
+          snackbar: true
         })
-      )
+      })
       .catch((error) => {
-        commit('global/SET_ERROR', error.response.data, { root: true })
+        // eslint-disable-next-line no-console
+        console.log(error)
       })
   }
 }

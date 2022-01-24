@@ -8,23 +8,25 @@
           </v-icon>
         </v-btn>
         <v-col>
-          <small v-if="error" class="red--text font-weight-black">{{ error }}</small>
+          <small v-if="error" class="red--text font-weight-black">{{
+            error
+          }}</small>
         </v-col>
       </v-row>
       <v-card-title>
         Connexion
       </v-card-title>
-      <v-form ref="formaLog" v-model="valid" lazy-validation>
+      <v-form ref="formaLog" v-model="valid" lazy-validation @submit.prevent="loginUser">
         <v-card-text>
           <v-text-field
-            type="username"
+            type="text"
             :rules="nameRules"
             label="Nom d'utilisateur"
             name="username"
             color="cyan"
             required
             :value="username"
-            @change="usernameChange"
+            @change="userNameChange"
           />
           <v-text-field
             :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
@@ -43,7 +45,7 @@
           </NuxtLink>
         </v-card-text>
         <v-card-actions class="justify-center">
-          <v-btn color="cyan" text @click="loginUser">
+          <v-btn color="cyan" type="submit">
             Valider
           </v-btn>
           <v-btn color="cyan" text @click="closeDialog">
@@ -87,15 +89,13 @@ export default {
     ...mapState({
       username: state => state.user.username,
       password: state => state.user.password,
-      loggedIn: state => state.auth.loggedIn,
-      validation: state => state.global.validation,
-      error: state => state.global.error
+      loggedIn: state => state.auth.loggedIn
     })
   },
 
   methods: {
     ...mapMutations({
-      usernameChange: 'user/SET_USERNAME',
+      userNameChange: 'user/SET_USERNAME',
       passwordChange: 'user/SET_PASSWORD'
     }),
 
@@ -103,9 +103,6 @@ export default {
       if (this.$refs.formaLog.validate()) {
         this.$store.dispatch('user/login')
       }
-      setTimeout(() => {
-        this.$store.commit('global/SET_ERROR', '', { root: true })
-      }, 3000)
     },
 
     closeDialog () {

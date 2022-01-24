@@ -1,4 +1,30 @@
 const mutations = {
+  SET_FOLDERS (state, payload) {
+    if (payload) {
+      state.folders = payload
+    } else {
+      state.folders = []
+    }
+  },
+
+  ADD_FOLDER (state, payload) {
+    state.folders = [...state.folders, payload]
+  },
+
+  DEL_FOLDER (state, payload) {
+    const index = state.folders.findIndex(folder => folder.id === payload.id)
+    if (index > -1) {
+      state.folders.splice(index, 1)
+    }
+  },
+
+  UPDATE_FOLDER (state, payload) {
+    const index = state.folders.findIndex(folder => folder.id === payload.id)
+    if (index > -1) {
+      state.folders.splice(index, 1, payload)
+    }
+  },
+
   SET_FOLDERNAME (state, payload) {
     state.foldername = payload
   },
@@ -19,10 +45,6 @@ const mutations = {
   SET_PHOTO (state, payload) {
     state.photo = payload
     state.photo.url = URL.createObjectURL(payload)
-  },
-
-  REFRESH_USER () {
-    this.$auth.fetchUser()
   }
 }
 

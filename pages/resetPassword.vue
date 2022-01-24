@@ -1,15 +1,7 @@
 <template>
   <v-dialog v-model="dialog" max-width="500px" persistent>
-    <v-snackbar
-      v-model="snackbar"
-      :timeout="timeout"
-      absolute
-    >
-      <span v-if="error" class="cyan--text">{{ error }}</span>
-      <span v-if="validation" class="cyan--text">{{ validation }}</span>
-    </v-snackbar>
     <v-card>
-      <v-form ref="forma" v-model="valid" lazy-validation>
+      <v-form ref="forma" v-model="valid" lazy-validation @submit.prevent="resetPassword">
         <v-card-title>
           Réinitialiser le mot de passe
         </v-card-title>
@@ -26,7 +18,7 @@
           />
         </v-card-text>
         <v-card-actions class="justify-center">
-          <v-btn color="cyan" text @click="resetPassword">
+          <v-btn color="cyan" text type="submit">
             Valider
           </v-btn>
           <v-btn color="cyan" text to="/register">
@@ -47,8 +39,6 @@ export default {
     return {
       dialog: true,
       valid: false,
-      timeout: 2000,
-      snackbar: false,
       emailRules: [
         v => !!v || 'Un email est requis',
         v => /.+@.+/.test(v) || "L'email doit être valide"
@@ -59,9 +49,7 @@ export default {
   computed: {
     ...mapState({
       email: state => state.user.email,
-      loggedIn: state => state.auth.loggedIn,
-      validation: state => state.global.validation,
-      error: state => state.global.error
+      loggedIn: state => state.auth.loggedIn
     })
   },
 
@@ -75,7 +63,7 @@ export default {
         this.$store.dispatch('user/resetPassword')
         this.dialog = false
       }
-      setTimeout(() => this.$router.push({ path: '/' }), 5000)
+      setTimeout(() => this.$router.push({ path: '/' }), 2000)
     }
   }
 }

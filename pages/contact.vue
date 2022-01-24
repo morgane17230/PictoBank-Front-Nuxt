@@ -1,13 +1,5 @@
 <template>
   <v-container>
-    <v-snackbar
-      v-model="snackbar"
-      :timeout="timeout"
-      absolute
-    >
-      <span v-if="error" class="cyan--text">{{ error }}</span>
-      <span v-if="validation" class="cyan--text">{{ validation }}</span>
-    </v-snackbar>
     <v-row justify="center">
       <h1 class="display-1 my-5">
         Contact
@@ -15,7 +7,7 @@
     </v-row>
     <v-row justify="center">
       <v-col class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
-        <v-form ref="form" v-model="valid" lazy-validation>
+        <v-form ref="form" v-model="valid" lazy-validation @submit.prevent="sendContact">
           <v-text-field
             :rules="nameRules"
             name="lastname"
@@ -60,7 +52,7 @@
               color="cyan"
               class="mr-4"
               text
-              @click.stop="sendContact"
+              type="submit"
             >
               Valider
             </v-btn>
@@ -79,8 +71,7 @@ import { mapState, mapMutations } from 'vuex'
 export default {
   data: () => ({
     valid: true,
-    snackbar: false,
-    timeout: 2000,
+    timeout: 1000,
     nameRules: [v => !!v || 'Le champs est requis'],
     emailRules: [
       v => !!v || 'E-mail is required',
@@ -95,9 +86,7 @@ export default {
       lastname: state => state.user.lastname,
       firstname: state => state.user.firstname,
       email: state => state.user.email,
-      message: state => state.user.message,
-      validation: state => state.global.validation,
-      error: state => state.global.error
+      message: state => state.user.message
     })
   },
 
@@ -115,7 +104,7 @@ export default {
         setTimeout(() => {
           this.$router.push({ path: '/' })
           this.$refs.form.reset()
-        }, 3000)
+        }, 1000)
       }
     }
   }

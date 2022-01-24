@@ -84,7 +84,7 @@
                 </v-btn>
 
                 <v-btn
-                  v-if="picto.user_id === $auth.user.id"
+                  v-if="picto.org_id === $auth.user.organization.id"
                   fab
                   dark
                   x-small
@@ -111,19 +111,14 @@
               mdi-close
             </v-icon>
           </v-btn>
-          <v-col>
-            <small v-if="validation" class="green--text font-weight-black">{{
-              validation
-            }}</small>
-          </v-col>
         </v-row>
         <v-card-title>
           Choisir un dossier
         </v-card-title>
-        <v-form ref="forma" v-model="valid" lazy-validation>
+        <v-form ref="forma" v-model="valid" lazy-validation @submit.prevent="addPictoToFolder">
           <v-card-text>
             <v-select
-              :items="$auth.user.folders"
+              :items="folders"
               :rules="nameRules"
               item-text="foldername"
               label="Choisir un dossier"
@@ -133,7 +128,7 @@
             />
           </v-card-text>
           <v-card-actions>
-            <v-btn color="cyan" text @click="addPictoToFolder">
+            <v-btn color="cyan" text type="submit">
               Valider
             </v-btn>
             <v-btn color="cyan" text @click="dialog = false">
@@ -168,9 +163,9 @@ export default {
     ...mapState({
       pictos: state => state.picto.pictos,
       folderId: state => state.folder.folderId,
+      folders: state => state.folder.folders,
       loggedIn: state => state.user.loggedIn,
       categories: state => state.category.categories,
-      validation: state => state.global.validation,
       collectedPictos: state => state.picto.collectedPictos
     })
   },
@@ -178,6 +173,7 @@ export default {
   mounted () {
     this.$store.dispatch('picto/getPictos')
     this.$store.dispatch('category/getCategories')
+    this.$store.dispatch('folder/getFoldersByOrg')
     this.$store.commit('picto/INITIALIZE_UPLOADED_FILES')
   },
 
@@ -211,9 +207,8 @@ export default {
         this.$store.dispatch('folder/addPictoToFolder', this.pictoId)
       }
       setTimeout(() => {
-        this.$store.commit('global/SET_VALIDATION', '', { root: true })
-        this.$router.push({ path: '/pictos/search' })
-      }, 3000)
+        this.dialog = false
+      }, 1000)
     },
 
     pictoIdChange (e) {

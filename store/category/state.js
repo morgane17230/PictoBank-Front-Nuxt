@@ -1,7 +1,7 @@
 const state = () => ({
+  categoryId: null,
   name: '',
-  categories: [],
-  validation: ''
+  categories: []
 })
 
 export default state

@@ -1,11 +1,5 @@
 <template>
   <v-container>
-    <v-snackbar v-model="snackbar" :timeout="timeout" absolute>
-      <span v-if="error" class="cyan--text">{{ error }}</span>
-      <span v-if="validation" class="cyan--text">{{
-        validation
-      }}</span>
-    </v-snackbar>
     <v-row justify="center">
       <v-col class="text-center">
         <h1 class="display-1 my-5">
@@ -40,7 +34,7 @@
           </v-card>
         </v-col>
         <v-col
-          v-for="folder in $auth.user.folders"
+          v-for="folder in folders"
           :key="folder.id"
           class="col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-3"
         >
@@ -112,20 +106,22 @@ export default {
     dialogUpdate: false,
     valid: false,
     folderId: null,
-    snackbar: false,
-    timeout: 2000,
     pictoRules: [v => !v || v.size < 5000000 || 'Image should be less than 5MB']
   }),
 
   computed: {
     ...mapState({
+      folders: state => state.folder.folders,
       foldername: state => state.user.foldername,
       photo: state => state.folder.photo,
-      loggedIn: state => state.auth.loggedIn,
-      validation: state => state.global.validation,
-      error: state => state.global.error
+      loggedIn: state => state.auth.loggedIn
     })
   },
+
+  mounted () {
+    this.$store.dispatch('folder/getFoldersByOrg')
+  },
+
   methods: {
     ...mapMutations({
       foldernameChange: 'folder/SET_FOLDERNAME',
@@ -137,15 +133,11 @@ export default {
     },
 
     folderDisplay (e) {
-      // eslint-disable-next-line no-console
-      console.log(e)
       this.$store.commit('folder/SET_FOLDER_ID', e.currentTarget.value)
       this.$router.push('/folder/display')
     },
 
     folderChange (e) {
-      // eslint-disable-next-line no-console
-      console.log(e.currentTarget.value)
       this.$store.commit('folder/SET_FOLDER_ID', e.currentTarget.value)
       this.$router.push('/folder/update')
     }

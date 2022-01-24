@@ -2,6 +2,6 @@ import createPersistedState from 'vuex-persistedstate'
 
 export default ({ store }) => {
   createPersistedState({
-    paths: ['folder', 'pictos']
+    paths: ['folders', 'pictos', 'global']
   })(store)
 }

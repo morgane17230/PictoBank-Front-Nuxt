@@ -2,10 +2,11 @@
   <div>
     <v-navigation-drawer
       v-if="$auth.loggedIn"
-      v-model="drawer"
+      :value="drawer"
       :mini-variant="miniVariant"
       :clipped="clipped"
       class="d-flex flex-column justify-space-between"
+      temporary
       fixed
       app
     >
@@ -37,45 +38,41 @@
       </v-list>
       <template #append>
         <div class="pa-2">
+          <v-btn class="my-1" block color="cyan" outlined @click="generatePDF">
+            Télécharger les pictos
+          </v-btn>
           <v-btn
+            v-if="$auth.user.role === 'admin'"
             class="my-1"
             block
             color="cyan"
             outlined
-            @click="generatePDF"
+            to="/user/update"
           >
-            Télécharger les pictos
-          </v-btn>
-          <v-btn class="my-1" block color="cyan" outlined to="/user/update">
             Modifier le profil
           </v-btn>
         </div>
       </template>
     </v-navigation-drawer>
     <v-app-bar :clipped-left="clipped" fixed app>
-      <v-app-bar-nav-icon
-        v-if="$auth.loggedIn"
-        @click="drawer = !drawer"
-      />
-      <v-btn
-        v-if="$auth.loggedIn"
-        icon
-        @click="miniVariant = !miniVariant"
-      >
+      <v-app-bar-nav-icon v-if="$auth.loggedIn" @click="drawer = !drawer" />
+      <v-btn v-if="$auth.loggedIn" icon @click="miniVariant = !miniVariant">
         <v-icon>mdi-{{ `chevron-${miniVariant ? "right" : "left"}` }}</v-icon>
       </v-btn>
 
       <v-toolbar-title hidden v-text="title" />
+
       <NuxtLink to="/">
-        <v-img
-          lazy-src="/pikto.png"
-          class="mt-9"
-          max-height="100"
-          max-width="200"
-          src="/pikto.png"
-        />
+        <v-img lazy-src="/pikto.png" max-width="10rem" src="/pikto.png" />
       </NuxtLink>
       <v-spacer />
+      <v-switch
+        v-model="$vuetify.theme.dark"
+        class="pt-5"
+        prepend-icon="mdi-theme-light-dark"
+        color="cyan"
+        persistent-hint
+      />
       <v-btn v-if="$auth.loggedIn" color="cyan" icon @click="logout">
         <v-icon>
           mdi-logout
@@ -89,7 +86,7 @@
         </v-btn>
         <v-btn color="cyan" icon to="/user/login">
           <v-icon>
-            mdi-account-arrow-up
+            mdi-login
           </v-icon>
         </v-btn>
       </div>
@@ -111,11 +108,6 @@ export default {
       show: false,
       valid: false,
       items: [
-        {
-          icon: 'mdi-apps',
-          title: 'Accueil',
-          to: '/'
-        },
         {
           icon: 'mdi-magnify',
           title: 'Chercher',
@@ -143,6 +135,12 @@ export default {
       user: state => state.user.user
     })
   },
+
+  mounted () {
+    // eslint-disable-next-line no-console
+    console.log(!this.drawer)
+  },
+
   methods: {
     hide () {
       this.dialog = false
@@ -155,7 +153,7 @@ export default {
     },
 
     logout () {
-      this.$store.dispatch('user/logout')
+      this.$auth.logout('local')
     }
   }
 }

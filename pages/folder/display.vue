@@ -1,13 +1,5 @@
 <template>
   <v-row>
-    <v-snackbar
-      v-model="snackbar"
-      :timeout="timeout"
-      absolute
-    >
-      <span v-if="error" class="cyan--text">{{ error }}</span>
-      <span v-if="validation" class="cyan--text">{{ validation }}</span>
-    </v-snackbar>
     <v-col>
       <v-row justify="center" align="center">
         <v-col class="text-center">
@@ -43,7 +35,7 @@
                 x-small
                 icon
                 color="dark"
-                :value="pictoId = picto.id"
+                :value="(pictoId = picto.id)"
                 @click="removePictoFromFolder"
               >
                 <v-icon dark>
@@ -70,8 +62,6 @@ export default {
   data () {
     return {
       lang: 'fr',
-      snackbar: false,
-      timeout: 2000,
       selected: []
     }
   },
@@ -79,9 +69,7 @@ export default {
   computed: {
     ...mapState({
       folder: state => state.folder.folder,
-      collectedPictos: state => state.picto.collectedPictos,
-      error: state => state.global.error,
-      validation: state => state.global.validation
+      collectedPictos: state => state.picto.collectedPictos
     })
   },
 
@@ -91,7 +79,10 @@ export default {
 
   methods: {
     removePictoFromFolder (e) {
-      this.$store.dispatch('folder/removePictoFromFolder', e.currentTarget.value)
+      this.$store.dispatch(
+        'folder/removePictoFromFolder',
+        e.currentTarget.value
+      )
     },
 
     collectPictos () {

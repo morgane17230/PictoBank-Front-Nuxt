@@ -6,7 +6,8 @@ const actions = {
       .get('http://localhost:5000/category')
       .then(response => commit('SET_CATEGORIES', response.data))
       .catch((error) => {
-        commit('global/SET_ERROR', error.response.data, { root: true })
+        // eslint-disable-next-line no-console
+        console.log(error)
       })
   },
 
@@ -17,23 +18,26 @@ const actions = {
         commit('picto/SET_PICTOS', response.data.pictos, { root: true })
       )
       .catch((error) => {
-        commit('global/SET_ERROR', error.response.data, { root: true })
+        // eslint-disable-next-line no-console
+        console.log(error)
       })
   },
 
-  addCategory ({ commit }) {
+  addCategory () {
     const { name } = this.state.category
     axios
       .post('http://localhost:5000/category', {
         name
       })
       .then((response) => {
-        commit('global/SET_VALIDATION', response.data.validation, {
-          root: true
+        this.$notifier.showSnackbar({
+          validation: response.data.validation,
+          snackbar: true
         })
       })
       .catch((error) => {
-        commit('global/SET_ERROR', error.response.data.error, { root: true })
+        // eslint-disable-next-line no-console
+        console.log(error)
       })
   }
 }

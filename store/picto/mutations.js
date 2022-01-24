@@ -15,10 +15,6 @@ const mutations = {
     state.collectedPictos = [...state.collectedPictos, ...payload]
   },
 
-  SET_CATEGORY_ID (state, payload) {
-    state.categoryId = payload
-  },
-
   SET_CATEGORY_NAME (state, payload) {
     state.categoryName = payload
   },
@@ -27,11 +23,20 @@ const mutations = {
     state.pictos = [...state.pictos, payload]
   },
 
-  DEL_PICTOS (state, payload) {
+  DEL_PICTO (state, payload) {
     const index = state.pictos.findIndex(picto => picto.id === payload.id)
     if (index > -1) {
       state.pictos.splice(index, 1)
     }
+  },
+
+  DEL_PICTOS (state, payload) {
+    payload.forEach((deletedPicto) => {
+      const index = state.pictos.findIndex(picto => picto.id === deletedPicto.id)
+      if (index > -1) {
+        state.pictos.splice(index, 1)
+      }
+    })
   },
 
   INITIALIZE_UPLOADED_FILES (state) {

@@ -1,10 +1,9 @@
 const state = () => ({
   folderId: null,
   folder: {},
+  folders: [],
   foldername: '',
-  photo: null,
-  error: '',
-  validation: ''
+  photo: null
 })
 
 export default state

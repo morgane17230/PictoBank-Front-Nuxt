@@ -6,7 +6,7 @@
           mdi-close
         </v-icon>
       </v-btn>
-      <v-form ref="forma2" v-model="valid" lazy-validation>
+      <v-form ref="forma2" v-model="valid" lazy-validation @submit.prevent="updateFolder">
         <v-card-title>
           Modifier le dossier
         </v-card-title>
@@ -33,7 +33,7 @@
           />
         </v-card-text>
         <v-card-actions class="justify-center">
-          <v-btn color="cyan" text @click="updateFolder">
+          <v-btn color="cyan" text type="submit">
             Valider
           </v-btn>
           <v-btn color="cyan" text @click="closeDialog">
@@ -52,18 +52,15 @@ export default {
   data: () => ({
     dialog: true,
     valid: false,
-    snackbar: false,
-    timeout: 2000,
     pictoRules: [v => !v || v.size < 5000000 || 'Image should be less than 5MB']
   }),
 
   computed: {
     ...mapState({
-      foldername: state => state.user.foldername,
+      foldername: state => state.folder.foldername,
+      folderId: state => state.folder.folderId,
       photo: state => state.folder.photo,
-      loggedIn: state => state.auth.loggedIn,
-      validation: state => state.global.validation,
-      error: state => state.global.error
+      loggedIn: state => state.auth.loggedIn
     })
   },
   methods: {
@@ -79,7 +76,7 @@ export default {
       setTimeout(() => {
         this.$router.push({ path: '/pictos/favorite' })
         this.$refs.forma2.reset()
-      }, 3000)
+      }, 1000)
     },
 
     closeDialog () {

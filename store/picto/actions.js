@@ -4,9 +4,12 @@ const actions = {
   getPictos ({ commit }) {
     axios
       .get('http://localhost:5000/picto')
-      .then(response => commit('SET_PICTOS', response.data))
+      .then((response) => {
+        commit('SET_PICTOS', response.data)
+      })
       .catch((error) => {
-        commit('global/SET_ERROR', error.response.data, { root: true })
+        // eslint-disable-next-line no-console
+        console.log(error)
       })
   },
 
@@ -29,28 +32,32 @@ const actions = {
         window.open(link)
       })
       .catch((error) => {
-        commit('global/SET_ERROR', error.response.data, { root: true })
+        // eslint-disable-next-line no-console
+        console.log(error)
       })
   },
 
   addPictos ({ commit }) {
-    const { id } = this.state.auth.user
+    const { id } = this.$auth.user.organization
     this.state.picto.uploadedFiles.forEach((selectedFile) => {
       const formData = new FormData()
       const blob = selectedFile
       formData.append('path', blob)
-      formData.append('user_id', id)
+      formData.append('org_id', id)
       formData.append('category_id', blob.category_id)
 
       axios
         .post('http://localhost:5000/picto', formData)
         .then((response) => {
-          commit('global/SET_VALIDATION', response.data.validation, {
-            root: true
+          commit('ADD_PICTOS', response.data.newPictos)
+          this.$notifier.showSnackbar({
+            validation: response.data.validation,
+            snackbar: true
           })
         })
         .catch((error) => {
-          commit('global/SET_ERROR', error.response.data, { root: true })
+          // eslint-disable-next-line no-console
+          console.log(error)
         })
     })
   },
@@ -58,9 +65,33 @@ const actions = {
   deletePicto ({ commit }, payload) {
     axios
       .delete(`http://localhost:5000/picto/${payload}`)
-      .then(response => commit('DEL_PICTOS', response.data))
+      .then((response) => {
+        commit('DEL_PICTO', response.data.deletedPicto)
+        this.$notifier.showSnackbar({
+          validation: response.data.validation,
+          snackbar: true
+        })
+      })
       .catch((error) => {
-        commit('global/SET_ERROR', error.response.data, { root: true })
+        // eslint-disable-next-line no-console
+        console.log(error)
+      })
+  },
+
+  deletePictos ({ commit }) {
+    const { id } = this.$auth.user.organization
+    axios
+      .delete(`http://localhost:5000/pictos/${id}`)
+      .then((response) => {
+        commit('DEL_PICTOS', response.data.deletedPictos)
+        this.$notifier.showSnackbar({
+          validation: response.data.validation,
+          snackbar: true
+        })
+      })
+      .catch((error) => {
+        // eslint-disable-next-line no-console
+        console.log(error)
       })
   },
 
@@ -71,7 +102,8 @@ const actions = {
         commit('SET_PICTOS', response.data)
       })
       .catch((error) => {
-        commit('global/SET_ERROR', error.response.data, { root: true })
+        // eslint-disable-next-line no-console
+        console.log(error)
       })
   }
 }

@@ -7,8 +7,8 @@ const mutations = {
     state.categories = payload
   },
 
-  REFRESH_USER () {
-    this.$auth.fetchUser()
+  SET_CATEGORY_ID (state, payload) {
+    state.categoryId = payload
   }
 }
 
