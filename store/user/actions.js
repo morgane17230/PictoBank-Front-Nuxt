@@ -35,8 +35,8 @@ const actions = {
   updateUser () {
     let id
 
-    if (this.$auth.user) {
-      id = this.$auth.user
+    if (this.$auth.loggedIn) {
+      id = this.$auth.user.id
     } else {
       id = this.$router.currentRoute.query.qu
     }

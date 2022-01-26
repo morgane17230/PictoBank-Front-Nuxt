@@ -79,12 +79,12 @@
         </v-icon>
       </v-btn>
       <div v-else>
-        <v-btn color="cyan" icon to="/user/register">
+        <v-btn color="cyan" icon to="/register">
           <v-icon>
             mdi-account-plus
           </v-icon>
         </v-btn>
-        <v-btn color="cyan" icon to="/user/login">
+        <v-btn color="cyan" icon to="/login">
           <v-icon>
             mdi-login
           </v-icon>
