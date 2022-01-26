@@ -10,6 +10,7 @@ const actions = {
       password,
       isOrganization
     } = this.state.user
+
     axios
       .post('http://localhost:5000/addUser', {
         lastname,
@@ -32,7 +33,14 @@ const actions = {
   },
 
   updateUser () {
-    const { id } = this.$auth.user
+    let id
+
+    if (this.$auth.user) {
+      id = this.$auth.user
+    } else {
+      id = this.$router.currentRoute.query.qu
+    }
+
     const {
       lastname,
       firstname,
@@ -51,6 +59,17 @@ const actions = {
         password,
         teamPassword
       })
+      .then((response) => {
+        if (!this.$auth.user) {
+          axios
+            .post('http://localhost:5000/nodemailer', {
+              type: 'confirmResetPassword',
+              firstname: response.data.user.account.firstname,
+              lastname: response.data.user.account.lastname,
+              email: response.data.user.account.email
+            })
+        }
+      })
       .then(response =>
         this.$notifier.showSnackbar({
           validation: response.data.validation,
@@ -63,13 +82,10 @@ const actions = {
       })
   },
 
-  deleteUser () {
-    const { id, email } = this.$auth.user.organization
+  deleteUser ({ commit }) {
+    const { id } = this.$auth.user.account
+    const { email } = this.state.user
 
-    axios.post('http://localhost:5000/nodemailer', {
-      type: 'confirmDelete',
-      email
-    })
     axios
       .delete(`http://localhost:5000/user/${id}`)
       .then((response) => {
@@ -78,13 +94,19 @@ const actions = {
           snackbar: true
         })
       })
+      .then(() => {
+        axios.post('http://localhost:5000/nodemailer', {
+          type: 'confirmDelete',
+          email
+        })
+      })
       .catch((error) => {
         // eslint-disable-next-line no-console
         console.log(error)
       })
   },
 
-  login ({ commit }) {
+  login () {
     const { username, password } = this.state.user
     this.$auth
       .loginWith('local', {
@@ -99,7 +121,7 @@ const actions = {
       })
   },
 
-  sendContact ({ commit }) {
+  sendContact () {
     const { lastname, firstname, email, message } = this.state.user
     axios
       .post('http://localhost:5000/nodemailer', {
@@ -121,31 +143,12 @@ const actions = {
       })
   },
 
-  resetPassword ({ commit }) {
+  resetPassword () {
     const { email } = this.state.user
 
     axios
       .post('http://localhost:5000/nodemailer', {
         type: 'resetPassword',
-        email
-      })
-      .then((response) => {
-        this.$notifier.showSnackbar({
-          validation: response.data.validation,
-          snackbar: true
-        })
-      })
-      .catch((error) => {
-        // eslint-disable-next-line no-console
-        console.log(error)
-      })
-  },
-
-  confirmResetPassword ({ commit }) {
-    const { email } = this.state.$auth.user.email
-    axios
-      .post('http://localhost:5000/nodemailer', {
-        type: 'confirmResetPassword',
         email
       })
       .then((response) => {

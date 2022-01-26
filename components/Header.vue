@@ -136,11 +136,6 @@ export default {
     })
   },
 
-  mounted () {
-    // eslint-disable-next-line no-console
-    console.log(!this.drawer)
-  },
-
   methods: {
     hide () {
       this.dialog = false

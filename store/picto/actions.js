@@ -38,12 +38,12 @@ const actions = {
   },
 
   addPictos ({ commit }) {
-    const { id } = this.$auth.user.organization
+    const { id } = this.$auth.user.account
     this.state.picto.uploadedFiles.forEach((selectedFile) => {
       const formData = new FormData()
       const blob = selectedFile
       formData.append('path', blob)
-      formData.append('org_id', id)
+      formData.append('account_id', id)
       formData.append('category_id', blob.category_id)
 
       axios
@@ -79,7 +79,7 @@ const actions = {
   },
 
   deletePictos ({ commit }) {
-    const { id } = this.$auth.user.organization
+    const { id } = this.$auth.user.account
     axios
       .delete(`http://localhost:5000/pictos/${id}`)
       .then((response) => {

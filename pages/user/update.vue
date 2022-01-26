@@ -11,7 +11,7 @@
           name="lastname"
           label="Nom"
           color="cyan"
-          :value="$auth.user.organization.lastname"
+          :value="$auth.user.account.lastname"
           @change="lastnameChange"
         />
         <v-text-field
@@ -19,7 +19,7 @@
           name="firstname"
           label="Prénom"
           color="cyan"
-          :value="$auth.user.organization.firstname"
+          :value="$auth.user.account.firstname"
           @change="firstnameChange"
         />
         <v-text-field
@@ -27,7 +27,7 @@
           name="name"
           color="cyan"
           label="Intitulé du compte"
-          :value="$auth.user.organization.name"
+          :value="$auth.user.account.name"
           @change="nameChange"
         />
         <v-text-field
@@ -35,7 +35,7 @@
           name="email"
           label="E-mail"
           color="cyan"
-          :value="$auth.user.organization.email"
+          :value="$auth.user.account.email"
           @change="emailChange"
         />
         <v-text-field
@@ -89,14 +89,14 @@
         <v-row>
           <v-col>
             <v-btn
-              v-if="$auth.user.organization.pictos.length > 0"
+              v-if="$auth.user.account.pictos.length > 0"
               class="shrink mx-auto"
               @click="deletePictos"
             >
               Supprimer mes pictos
             </v-btn>
             <v-btn
-              v-if="$auth.user.organization.pictos.length === 0"
+              v-if="$auth.user.account.pictos.length === 0"
               disabled
               class="shrink"
             >
@@ -182,6 +182,7 @@ export default {
     },
 
     deleteUser () {
+      this.$store.commit('user/SET_EMAIL', this.email)
       this.$store.dispatch('user/deleteUser')
       this.dialog = false
       setTimeout(() => {

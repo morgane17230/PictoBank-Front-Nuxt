@@ -127,7 +127,7 @@ export default {
       uploadedFiles: state => state.picto.uploadedFiles,
       selectedFile: state => state.picto.selectedFile,
       categories: state => state.category.categories,
-      categoryId: state => state.category.categoryId,
+      categoryId: state => state.picto.categoryId,
       uploadedCategories: state => state.picto.uploadedCategories
     })
   },
@@ -138,7 +138,7 @@ export default {
 
   methods: {
     ...mapMutations({
-      categoryIdChange: 'category/SET_CATEGORY_ID'
+      categoryIdChange: 'picto/SET_CATEGORY_ID'
     }),
 
     removeFile (filename) {
@@ -155,7 +155,7 @@ export default {
           'picto/ON_DROP_UPLOADED_FILES',
           e.dataTransfer.files
         )
-        this.$store.commit('category/SET_CATEGORY_ID', null)
+        this.$store.commit('picto/SET_CATEGORY_ID', null)
         this.select = 0
       } else {
         this.$notifier.showSnackbar({ validation: "Veuillez d'abord choisir une catégorie", snackbar: true })
@@ -181,7 +181,7 @@ export default {
       if (this.categoryId) {
         this.$store.commit('picto/SET_CATEGORY_NAME', filtered.name)
         this.$store.commit('picto/SET_UPLOADED_FILES', e.target.files[0])
-        this.$store.commit('category/SET_CATEGORY_ID', null)
+        this.$store.commit('picto/SET_CATEGORY_ID', null)
         this.select = 0
       } else {
         this.$notifier.showSnackbar({ validation: "Veuillez d'abord choisir une catégorie", snackbar: true })

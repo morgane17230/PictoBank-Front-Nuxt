@@ -1,6 +1,4 @@
 const state = () => ({
-  orgId: null,
-  userId: null,
   lastname: '',
   firstname: '',
   email: '',
@@ -8,7 +6,8 @@ const state = () => ({
   username: '',
   password: '',
   teamPassword: '',
-  isOrganization: false
+  isOrganization: false,
+  message: ''
 })
 
 export default state

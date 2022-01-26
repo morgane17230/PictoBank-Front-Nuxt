@@ -84,7 +84,7 @@
                 </v-btn>
 
                 <v-btn
-                  v-if="picto.org_id === $auth.user.organization.id"
+                  v-if="picto.account_id === $auth.user.account.id"
                   fab
                   dark
                   x-small

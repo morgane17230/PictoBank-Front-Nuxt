@@ -7,11 +7,6 @@
             mdi-close
           </v-icon>
         </v-btn>
-        <v-col>
-          <small v-if="error" class="red--text font-weight-black">{{
-            error
-          }}</small>
-        </v-col>
       </v-row>
       <v-card-title>
         Connexion

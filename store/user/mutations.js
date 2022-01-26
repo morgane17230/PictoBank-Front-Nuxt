@@ -19,8 +19,12 @@ const mutations = {
     state.name = payload
   },
 
-  SET_ISORGANIZATION (state, payload) {
-    state.isOrganization = payload
+  SET_MESSAGE (state, payload) {
+    state.message = payload
+  },
+
+  SET_ISORGANIZATION (state) {
+    state.isOrganization = !state.isOrganization
   },
 
   SET_PASSWORD (state, payload) {

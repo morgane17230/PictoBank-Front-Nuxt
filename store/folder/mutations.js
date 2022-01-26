@@ -44,7 +44,9 @@ const mutations = {
 
   SET_PHOTO (state, payload) {
     state.photo = payload
-    state.photo.url = URL.createObjectURL(payload)
+    if (payload !== null) {
+      state.photo.url = URL.createObjectURL(payload)
+    }
   }
 }
 

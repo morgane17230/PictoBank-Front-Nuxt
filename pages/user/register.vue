@@ -15,20 +15,23 @@
         flat
         class="col-xs-12 col-sm-12 col-md-6 col-lg-12 col-xl-12 px-3"
       >
-        <v-form ref="formaAdd" v-model="valid" lazy-validation @submit.prevent="addUser">
+        <v-form
+          ref="formaAdd"
+          v-model="valid"
+          lazy-validation
+          @submit.prevent="addUser"
+        >
           <v-card-text>
             <v-switch
               v-model="switch1"
-              name="organization"
+              name="account"
               flat
               color="cyan"
               required
               :value="isOrganization"
-              :label="
-                switch1
-                  ? 'Je représente un établissement'
-                  : 'Je suis un particulier'
-              "
+              :label=" switch1
+                ? 'Je représente un établissement'
+                : 'Je suis un particulier'"
               @change="isOrganizationChange"
             />
             <v-text-field
@@ -158,7 +161,7 @@ export default {
 
     addUser () {
       if (this.$refs.formaAdd.validate()) {
-        this.$store.dispatch('user/addUser')
+        this.$store.dispatch('user/addUser', this.switch1)
       }
       setTimeout(() => {
         this.$router.push({ path: '/pictos/search' })

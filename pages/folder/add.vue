@@ -16,6 +16,8 @@
             type="text"
             color="cyan"
             name="foldername"
+            required
+            :rules="fieldRules"
             :value="foldername"
             @change="foldernameChange"
           />
@@ -27,6 +29,7 @@
             accept="image/*"
             label="photo"
             prepend-icon="mdi-camera"
+            required
             :rules="pictoRules"
             :value="photo"
             @change="photoChange"
@@ -36,7 +39,7 @@
           <v-btn color="cyan" text type="submit">
             Valider
           </v-btn>
-          <v-btn color="cyan" type="submit" text @click="closeDialog">
+          <v-btn color="cyan" text @click="closeDialog">
             Annuler
           </v-btn>
         </v-card-actions>
@@ -52,7 +55,8 @@ export default {
   data: () => ({
     dialog: true,
     valid: false,
-    pictoRules: [v => !v || v.size < 5000000 || 'Image should be less than 5MB']
+    pictoRules: [v => !v || v.size < 5000000 || 'Image should be less than 5MB'],
+    fieldRules: [v => !!v || 'Le champs est requis']
   }),
 
   computed: {
@@ -71,8 +75,8 @@ export default {
     addFolder () {
       if (this.$refs.forma1.validate()) {
         this.$store.dispatch('folder/addFolder')
+        this.$router.push({ path: '/pictos/favorite' })
       }
-      this.$router.push({ path: '/pictos/favorite' })
       this.$store.commit('folder/SET_PHOTO', null)
     },
     closeDialog () {

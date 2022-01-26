@@ -19,6 +19,10 @@ const mutations = {
     state.categoryName = payload
   },
 
+  SET_CATEGORY_ID (state, payload) {
+    state.categoryId = payload
+  },
+
   ADD_PICTOS (state, payload) {
     state.pictos = [...state.pictos, payload]
   },

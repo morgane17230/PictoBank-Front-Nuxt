@@ -72,9 +72,9 @@ export default {
     updateFolder () {
       if (this.$refs.forma2.validate()) {
         this.$store.dispatch('folder/updateFolder', this.folderId)
+        this.$router.push({ path: '/pictos/favorite' })
       }
       setTimeout(() => {
-        this.$router.push({ path: '/pictos/favorite' })
         this.$refs.forma2.reset()
       }, 1000)
     },

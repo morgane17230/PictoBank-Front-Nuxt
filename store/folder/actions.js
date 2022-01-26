@@ -16,7 +16,7 @@ const actions = {
   },
 
   getFoldersByOrg ({ commit }) {
-    const { id } = this.$auth.user.organization
+    const { id } = this.$auth.user.account
 
     axios
       .get(`http://localhost:5000/org/${id}/folders`)
@@ -31,12 +31,12 @@ const actions = {
 
   addFolder ({ commit }) {
     const { foldername, photo } = this.state.folder
-    const { id } = this.$auth.user.organization
+    const { id } = this.$auth.user.account
     const formData = new FormData()
 
     formData.append('path', photo)
     formData.append('foldername', foldername)
-    formData.append('org_id', id)
+    formData.append('account_id', id)
 
     axios
       .post('http://localhost:5000/addFolder', formData)
