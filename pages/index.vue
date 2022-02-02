@@ -21,7 +21,6 @@
 export default {
   middleware: 'auth',
   auth: 'guest',
-
   data () {
     return {
       cycle: true,
@@ -34,9 +33,6 @@ export default {
         },
         {
           src: require('~/static/background3.jpg')
-        },
-        {
-          src: 'https://cdn.vuetifyjs.com/images/carousel/planet.jpg'
         }
       ]
     }

@@ -10,8 +10,7 @@ const actions = {
         commit('SET_FOLDER', response.data)
       })
       .catch((error) => {
-        // eslint-disable-next-line no-console
-        console.log(error)
+        error.response.json()
       })
   },
 
@@ -24,8 +23,7 @@ const actions = {
         commit('SET_FOLDERS', response.data)
       })
       .catch((error) => {
-        // eslint-disable-next-line no-console
-        console.log(error)
+        error.response.json()
       })
   },
 
@@ -48,8 +46,7 @@ const actions = {
         })
       })
       .catch((error) => {
-        // eslint-disable-next-line no-console
-        console.log(error)
+        error.response.json()
       })
   },
 
@@ -74,8 +71,7 @@ const actions = {
         })
       })
       .catch((error) => {
-        // eslint-disable-next-line no-console
-        console.log(error)
+        error.response.json()
       })
   },
 
@@ -90,8 +86,7 @@ const actions = {
         })
       })
       .catch((error) => {
-        // eslint-disable-next-line no-console
-        console.log(error)
+        error.response.json()
       })
   },
 
@@ -107,8 +102,7 @@ const actions = {
         })
       })
       .catch((error) => {
-        // eslint-disable-next-line no-console
-        console.log(error)
+        error.response.json()
       })
   },
 
@@ -124,8 +118,7 @@ const actions = {
         })
       })
       .catch((error) => {
-        // eslint-disable-next-line no-console
-        console.log(error)
+        error.response.json()
       })
   }
 }

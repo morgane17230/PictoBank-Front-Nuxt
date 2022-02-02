@@ -8,8 +8,7 @@ const actions = {
         commit('SET_PICTOS', response.data)
       })
       .catch((error) => {
-        // eslint-disable-next-line no-console
-        console.log(error)
+        error.response.json()
       })
   },
 
@@ -32,8 +31,7 @@ const actions = {
         window.open(link)
       })
       .catch((error) => {
-        // eslint-disable-next-line no-console
-        console.log(error)
+        error.response.json()
       })
   },
 
@@ -55,9 +53,9 @@ const actions = {
             snackbar: true
           })
         })
+        .then(commit('INITIALIZE_UPLOADED_FILES'))
         .catch((error) => {
-          // eslint-disable-next-line no-console
-          console.log(error)
+          error.response.json()
         })
     })
   },
@@ -73,8 +71,7 @@ const actions = {
         })
       })
       .catch((error) => {
-        // eslint-disable-next-line no-console
-        console.log(error)
+        error.response.json()
       })
   },
 
@@ -90,8 +87,7 @@ const actions = {
         })
       })
       .catch((error) => {
-        // eslint-disable-next-line no-console
-        console.log(error)
+        error.response.json()
       })
   },
 
@@ -102,8 +98,7 @@ const actions = {
         commit('SET_PICTOS', response.data)
       })
       .catch((error) => {
-        // eslint-disable-next-line no-console
-        console.log(error)
+        error.response.json()
       })
   }
 }

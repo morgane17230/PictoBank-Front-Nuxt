@@ -71,9 +71,9 @@ export default {
       }
     },
     redirect: {
-      login: '/user/login',
+      login: '/',
       logout: '/',
-      home: '/pictos/search',
+      home: '/home',
       callback: '/'
     }
   },
@@ -82,11 +82,9 @@ export default {
   vuetify: {
     customVariables: ['~/assets/variables.scss', '~/assets/main.scss'],
     treeShake: true,
-
     theme: {
-      dark: true,
       themes: {
-        dark: {
+        light: {
           primary: colors.blue.darken2,
           accent: colors.grey.darken3,
           secondary: colors.amber.darken3,

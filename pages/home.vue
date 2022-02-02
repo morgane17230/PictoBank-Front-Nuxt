@@ -1,12 +1,26 @@
 <template>
   <v-container>
-    <v-row justify="center" class="my-5">
-      <h1 class="display-1">
-        Chercher
-      </h1>
+    <v-row justify="center" class="my-5 ">
+      <v-col>
+        <v-btn class="my-1" block color="cyan" outlined @click="generatePDF">
+          Télécharger les pictos
+        </v-btn>
+      </v-col>
+      <v-col>
+        <v-btn
+          v-if="$auth.user.role === 'admin'"
+          class="my-1"
+          block
+          color="cyan"
+          outlined
+          @click="openUpdateUserModal"
+        >
+          Modifier le profil
+        </v-btn>
+      </v-col>
     </v-row>
     <v-row>
-      <v-col class="col-xs-12 col-lg-4">
+      <v-col class="col-12 col-lg-2">
         <v-text-field
           v-model="query"
           top
@@ -19,30 +33,35 @@
           rounded
           @input="searchPictos"
         />
-        <v-btn-toggle class="d-flex flex-column">
-          <v-btn color="cyan" depressed to="/category/add">
-            Ajouter une catégorie
-          </v-btn>
-          <v-select
-            class="px-2"
-            :items="categories"
-            label="Choir une catégorie"
-            item-value="id"
-            item-text="name"
-            color="cyan"
-            @change="searchPictosByCategory"
-          />
-        </v-btn-toggle>
       </v-col>
-      <v-col class="col-xs-12 col-lg-8">
+      <v-col class="col-xs-12 col-lg-10">
         <div v-if="pictos.length === 0" class="text-h6 text-center cyan--text">
           Pas de pictos pour le moment
         </div>
         <v-row class="mb-6">
           <v-col
+            class="d-flex child-flex col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-2"
+          >
+            <v-card class="d-flex flex-column justify-space-between">
+              <v-card-actions class="d-flex justify-center">
+                <v-btn
+                  icon
+                  class="d-flex"
+                  width="200"
+                  height="200"
+                  @click="openAddPictosModal"
+                >
+                  <v-icon color="cyan" size="150">
+                    mdi-plus
+                  </v-icon>
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-col>
+          <v-col
             v-for="picto in pictos"
             :key="picto.id"
-            class="col-xs-12 col-sm-6 col-md-4 col-lg-3"
+            class="col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-2"
           >
             <v-card class="pa-2">
               <v-img
@@ -62,6 +81,9 @@
                 </template>
               </v-img>
               <v-card-actions color="cyan">
+                <v-chip :value="picto.category_id" @click="searchPictosByCategory(picto.category_id)">
+                  {{ categories.find(cat => cat.id === picto.category_id).name }}
+                </v-chip>
                 <v-spacer />
                 <v-checkbox
                   v-model="selected"
@@ -74,7 +96,7 @@
                   dark
                   x-small
                   icon
-                  color="dark"
+                  color="cyan"
                   :value="picto.id"
                   @click="pictoIdChange"
                 >
@@ -103,41 +125,11 @@
         </v-row>
       </v-col>
     </v-row>
-    <v-dialog v-model="dialog" max-width="500px">
-      <v-card flat class="pa-5">
-        <v-row>
-          <v-btn depressed color="transparent" @click="closeDialog">
-            <v-icon color="cyan">
-              mdi-close
-            </v-icon>
-          </v-btn>
-        </v-row>
-        <v-card-title>
-          Choisir un dossier
-        </v-card-title>
-        <v-form ref="forma" v-model="valid" lazy-validation @submit.prevent="addPictoToFolder">
-          <v-card-text>
-            <v-select
-              :items="folders"
-              :rules="nameRules"
-              item-text="foldername"
-              label="Choisir un dossier"
-              item-value="id"
-              color="cyan"
-              @change="folderIdChange"
-            />
-          </v-card-text>
-          <v-card-actions>
-            <v-btn color="cyan" text type="submit">
-              Valider
-            </v-btn>
-            <v-btn color="cyan" text @click="dialog = false">
-              Annuler
-            </v-btn>
-          </v-card-actions>
-        </v-form>
-      </v-card>
-    </v-dialog>
+    <Profile />
+    <AddPictosModal />
+    <AddFolderModal />
+    <UpdateFolderModal />
+    <AddCategoryModal />
   </v-container>
 </template>
 
@@ -150,11 +142,9 @@ export default {
       query: '',
       valid: false,
       lang: 'fr',
-      dialog: false,
       pictoId: null,
       selected: [],
       categoryName: '',
-      addCategoryModal: false,
       nameRules: [v => !!v || 'Veuillez choisir un dossier']
     }
   },
@@ -174,14 +164,16 @@ export default {
     this.$store.dispatch('picto/getPictos')
     this.$store.dispatch('category/getCategories')
     this.$store.dispatch('folder/getFoldersByOrg')
-    this.$store.commit('picto/INITIALIZE_UPLOADED_FILES')
   },
 
   methods: {
-    folderIdChange (e) {
-      this.$store.commit('folder/SET_FOLDER_ID', e)
+    openUpdateUserModal () {
+      this.$store.commit('global/SET_USER_UDATE_MODAL', true)
     },
 
+    openAddPictosModal () {
+      this.$store.commit('global/SET_ADD_PICTOS_MODAL', true)
+    },
     deletePicto (e) {
       this.$store.dispatch('picto/deletePicto', e.currentTarget.value)
     },
@@ -199,25 +191,19 @@ export default {
     },
 
     searchPictosByCategory (e) {
+      console.log(e)
+      if (e.type === 'click') {
+        this.$store.dispatch('category/getCategory', e.currentTarget.value)
+      }
       this.$store.dispatch('category/getCategory', e)
     },
 
-    addPictoToFolder () {
-      if (this.$refs.forma.validate()) {
-        this.$store.dispatch('folder/addPictoToFolder', this.pictoId)
-      }
-      setTimeout(() => {
-        this.dialog = false
-      }, 1000)
-    },
-
     pictoIdChange (e) {
-      this.dialog = true
       this.$store.commit('picto/SET_PICTO_ID', e.currentTarget.value)
     },
 
-    closeDialog () {
-      this.$router.push({ path: '/' })
+    generatePDF () {
+      this.$store.dispatch('picto/generatePDF')
     }
   }
 }

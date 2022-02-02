@@ -5,6 +5,10 @@ const mutations = {
 
   SET_CATEGORIES (state, payload) {
     state.categories = payload
+  },
+
+  ADD_CATEGORY (state, payload) {
+    state.categories = [...state.categories, payload]
   }
 }
 

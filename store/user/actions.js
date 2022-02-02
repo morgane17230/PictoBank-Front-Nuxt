@@ -28,15 +28,15 @@ const actions = {
       })
       .catch((error) => {
         // eslint-disable-next-line no-console
-        console.log(error)
+        error.response.json()
       })
   },
 
   updateUser () {
     let id
 
-    if (this.$auth.user) {
-      id = this.$auth.user
+    if (this.$auth.loggedIn) {
+      id = this.$auth.user.id
     } else {
       id = this.$router.currentRoute.query.qu
     }
@@ -78,7 +78,7 @@ const actions = {
       )
       .catch((error) => {
         // eslint-disable-next-line no-console
-        console.log(error)
+        error.response.json()
       })
   },
 
@@ -93,8 +93,6 @@ const actions = {
           validation: response.data.validation,
           snackbar: true
         })
-      })
-      .then(() => {
         axios.post('http://localhost:5000/nodemailer', {
           type: 'confirmDelete',
           email
@@ -102,7 +100,7 @@ const actions = {
       })
       .catch((error) => {
         // eslint-disable-next-line no-console
-        console.log(error)
+        error.response.json()
       })
   },
 
@@ -117,7 +115,7 @@ const actions = {
       })
       .catch((error) => {
         // eslint-disable-next-line no-console
-        console.log(error)
+        error.response.json()
       })
   },
 
@@ -139,7 +137,7 @@ const actions = {
       })
       .catch((error) => {
         // eslint-disable-next-line no-console
-        console.log(error)
+        error.response.json()
       })
   },
 
@@ -159,7 +157,7 @@ const actions = {
       })
       .catch((error) => {
         // eslint-disable-next-line no-console
-        console.log(error)
+        error.response.json()
       })
   }
 }

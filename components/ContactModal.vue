@@ -1,12 +1,16 @@
 <template>
-  <v-container>
-    <v-row justify="center">
-      <h1 class="display-1 my-5">
-        Contact
-      </h1>
-    </v-row>
-    <v-row justify="center">
-      <v-col class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
+  <v-dialog v-model="contactModal" persistent max-width="500px">
+    <v-card flat>
+      <v-toolbar color="cyan" dark>
+        <v-toolbar-title>Contact</v-toolbar-title>
+        <v-spacer />
+        <v-btn depressed color="transparent" @click="closeContactModal">
+          <v-icon>
+            mdi-close
+          </v-icon>
+        </v-btn>
+      </v-toolbar>
+      <v-card-text>
         <v-form ref="form" v-model="valid" lazy-validation @submit.prevent="sendContact">
           <v-text-field
             :rules="nameRules"
@@ -46,39 +50,35 @@
             color="cyan"
             @change="messageChange"
           />
-          <div class="d-flex justify-center">
+          <div>
+            <v-btn color="cyan" outlined @click="closeContactModal">
+              Annuler
+            </v-btn>
             <v-btn
               :disabled="!valid"
               color="cyan"
               class="mr-4"
-              text
               type="submit"
             >
               Valider
             </v-btn>
-            <v-btn color="cyan" text to="/">
-              Annuler
-            </v-btn>
           </div>
         </v-form>
-      </v-col>
-    </v-row>
-  </v-container>
+      </v-card-text>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script>
 import { mapState, mapMutations } from 'vuex'
 export default {
   data: () => ({
-    valid: true,
-    timeout: 1000,
+    valid: false,
     nameRules: [v => !!v || 'Le champs est requis'],
     emailRules: [
       v => !!v || 'E-mail is required',
       v => /.+@.+\..+/.test(v) || 'E-mail must be valid'
-    ],
-    select: null,
-    checkbox: false
+    ]
   }),
 
   computed: {
@@ -86,7 +86,8 @@ export default {
       lastname: state => state.user.lastname,
       firstname: state => state.user.firstname,
       email: state => state.user.email,
-      message: state => state.user.message
+      message: state => state.user.message,
+      contactModal: state => state.global.contactModal
     })
   },
 
@@ -98,11 +99,15 @@ export default {
       messageChange: 'user/SET_MESSAGE'
     }),
 
+    closeContactModal () {
+      this.$store.commit('global/SET_CONTACT_MODAL', false)
+    },
+
     sendContact () {
       if (this.$refs.form.validate()) {
         this.$store.dispatch('user/sendContact')
         setTimeout(() => {
-          this.$router.push({ path: '/' })
+          this.$store.commit('global/SET_CONTACT_MODAL', false)
           this.$refs.form.reset()
         }, 1000)
       }

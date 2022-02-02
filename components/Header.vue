@@ -1,96 +1,32 @@
 <template>
   <div>
-    <v-navigation-drawer
-      v-if="$auth.loggedIn"
-      :value="drawer"
-      :mini-variant="miniVariant"
-      :clipped="clipped"
-      class="d-flex flex-column justify-space-between"
-      temporary
-      fixed
-      app
-    >
-      <v-list>
-        <v-list-item link>
-          <v-list-item-content v-if="$auth.loggedIn">
-            <v-list-item-title class="text-h6 cyan--text">
-              {{ $auth.user.username }}
-            </v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-      <v-divider />
-      <v-list nav>
-        <v-list-item
-          v-for="(item, i) in items"
-          :key="i"
-          :to="item.to"
-          router
-          exact
-        >
-          <v-list-item-action>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title v-text="item.title" />
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-      <template #append>
-        <div class="pa-2">
-          <v-btn class="my-1" block color="cyan" outlined @click="generatePDF">
-            Télécharger les pictos
-          </v-btn>
-          <v-btn
-            v-if="$auth.user.role === 'admin'"
-            class="my-1"
-            block
-            color="cyan"
-            outlined
-            to="/user/update"
-          >
-            Modifier le profil
-          </v-btn>
-        </div>
-      </template>
-    </v-navigation-drawer>
-    <v-app-bar :clipped-left="clipped" fixed app>
-      <v-app-bar-nav-icon v-if="$auth.loggedIn" @click="drawer = !drawer" />
-      <v-btn v-if="$auth.loggedIn" icon @click="miniVariant = !miniVariant">
-        <v-icon>mdi-{{ `chevron-${miniVariant ? "right" : "left"}` }}</v-icon>
-      </v-btn>
-
+    <Toast />
+    <v-app-bar fixed app>
       <v-toolbar-title hidden v-text="title" />
-
-      <NuxtLink to="/">
-        <v-img lazy-src="/pikto.png" max-width="10rem" src="/pikto.png" />
-      </NuxtLink>
+      <v-img lazy-src="/pikto.png" max-width="5rem" src="/pikto.png" />
       <v-spacer />
-      <v-switch
-        v-model="$vuetify.theme.dark"
-        class="pt-5"
-        prepend-icon="mdi-theme-light-dark"
-        color="cyan"
-        persistent-hint
-      />
       <v-btn v-if="$auth.loggedIn" color="cyan" icon @click="logout">
         <v-icon>
           mdi-logout
         </v-icon>
       </v-btn>
       <div v-else>
-        <v-btn color="cyan" icon to="/user/register">
+        <v-btn color="cyan" icon @click="openRegisterUserModal">
           <v-icon>
             mdi-account-plus
           </v-icon>
         </v-btn>
-        <v-btn color="cyan" icon to="/user/login">
+        <v-btn color="cyan" icon @click="openLoginUserModal">
           <v-icon>
             mdi-login
           </v-icon>
         </v-btn>
       </div>
     </v-app-bar>
+    <Login />
+    <Register />
+    <ResetPasswordModal />
+    <ResetPasswordConfirmation />
   </div>
 </template>
 
@@ -100,33 +36,6 @@ import { mapState } from 'vuex'
 export default {
   data () {
     return {
-      showSub: false,
-      showForgot: false,
-      clipped: false,
-      drawer: false,
-      dialog: false,
-      show: false,
-      valid: false,
-      items: [
-        {
-          icon: 'mdi-magnify',
-          title: 'Chercher',
-          to: '/pictos/search'
-        },
-        {
-          icon: 'mdi-plus',
-          title: 'Ajouter',
-          to: '/pictos/add'
-        },
-        {
-          icon: 'mdi-heart',
-          title: 'Favoris',
-          to: '/pictos/favorite'
-        }
-      ],
-      miniVariant: false,
-      right: true,
-      rightDrawer: false,
       title: 'Pikto'
     }
   },
@@ -137,10 +46,12 @@ export default {
   },
 
   methods: {
-    hide () {
-      this.dialog = false
-      this.showSub = false
-      this.showForgot = false
+    openLoginUserModal () {
+      this.$store.commit('global/SET_USER_LOGIN_MODAL', true)
+    },
+
+    openRegisterUserModal () {
+      this.$store.commit('global/SET_USER_REGISTER_MODAL', true)
     },
 
     generatePDF () {
@@ -149,6 +60,7 @@ export default {
 
     logout () {
       this.$auth.logout('local')
+      this.$router.push('/')
     }
   }
 }

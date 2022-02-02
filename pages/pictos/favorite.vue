@@ -21,7 +21,6 @@
                 class="d-flex"
                 width="200"
                 height="200"
-                to="/folder/add"
               >
                 <v-icon color="cyan" size="150">
                   mdi-plus
@@ -103,7 +102,6 @@ export default {
   middleware: 'auth',
   data: () => ({
     selectedItem: 0,
-    dialogUpdate: false,
     valid: false,
     folderId: null,
     pictoRules: [v => !v || v.size < 5000000 || 'Image should be less than 5MB']
@@ -134,12 +132,10 @@ export default {
 
     folderDisplay (e) {
       this.$store.commit('folder/SET_FOLDER_ID', e.currentTarget.value)
-      this.$router.push('/folder/display')
     },
 
     folderChange (e) {
       this.$store.commit('folder/SET_FOLDER_ID', e.currentTarget.value)
-      this.$router.push('/folder/update')
     }
   }
 }

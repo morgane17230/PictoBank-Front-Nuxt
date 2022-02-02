@@ -1,8 +1,8 @@
 <template>
-  <v-dialog v-model="dialog" persistent max-width="500px">
+  <v-dialog v-model="registerUserModal" persistent max-width="500px">
     <v-card flat class="d-flex flex-wrap">
       <v-row align="center">
-        <v-btn depressed color="transparent" @click="closeDialog">
+        <v-btn depressed color="transparent" @click="closeRegisterUserModal">
           <v-icon color="cyan">
             mdi-close
           </v-icon>
@@ -101,7 +101,7 @@
             <v-btn color="cyan" text type="submit">
               Valider
             </v-btn>
-            <v-btn color="cyan" text @click="closeDialog">
+            <v-btn color="cyan" text @click="closeRegisterUserModal">
               Annuler
             </v-btn>
           </v-card-actions>
@@ -117,7 +117,6 @@ export default {
   auth: 'guest',
   data () {
     return {
-      dialog: true,
       show: false,
       valid: false,
       switch1: false,
@@ -145,8 +144,8 @@ export default {
       email: state => state.user.email,
       name: state => state.user.name,
       password: state => state.user.password,
-      loggedIn: state => state.auth.loggedIn,
-      isOrganization: state => state.user.isOrganization
+      isOrganization: state => state.user.isOrganization,
+      registerUserModal: state => state.global.registerUserModal
     })
   },
   methods: {
@@ -159,18 +158,17 @@ export default {
       isOrganizationChange: 'user/SET_ISORGANIZATION'
     }),
 
+    closeRegisterUserModal () {
+      this.$store.commit('global/SET_USER_REGISTER_MODAL', false)
+    },
+
     addUser () {
       if (this.$refs.formaAdd.validate()) {
         this.$store.dispatch('user/addUser', this.switch1)
       }
       setTimeout(() => {
-        this.$router.push({ path: '/pictos/search' })
+        this.$store.commit('global/SET_USER_REGISTER_MODAL', false)
       }, 1000)
-    },
-
-    closeDialog () {
-      this.dialog = false
-      this.$router.push({ path: '/pictos/search' })
     }
   }
 }

@@ -1,7 +1,7 @@
 <template>
-  <v-dialog v-model="dialog" max-width="500px" persistent>
+  <v-dialog v-model="updateFolderModal" max-width="500px" persistent>
     <v-card>
-      <v-btn depressed color="transparent" @click="closeDialog">
+      <v-btn depressed color="transparent">
         <v-icon color="cyan">
           mdi-close
         </v-icon>
@@ -36,7 +36,7 @@
           <v-btn color="cyan" text type="submit">
             Valider
           </v-btn>
-          <v-btn color="cyan" text @click="closeDialog">
+          <v-btn color="cyan" text>
             Annuler
           </v-btn>
         </v-card-actions>
@@ -50,7 +50,6 @@ import { mapState, mapMutations } from 'vuex'
 export default {
   middleware: 'auth',
   data: () => ({
-    dialog: true,
     valid: false,
     pictoRules: [v => !v || v.size < 5000000 || 'Image should be less than 5MB']
   }),
@@ -60,7 +59,8 @@ export default {
       foldername: state => state.folder.foldername,
       folderId: state => state.folder.folderId,
       photo: state => state.folder.photo,
-      loggedIn: state => state.auth.loggedIn
+      loggedIn: state => state.auth.loggedIn,
+      updateFolderModal: state => state.global.updateFolderModal
     })
   },
   methods: {
@@ -72,15 +72,10 @@ export default {
     updateFolder () {
       if (this.$refs.forma2.validate()) {
         this.$store.dispatch('folder/updateFolder', this.folderId)
-        this.$router.push({ path: '/pictos/favorite' })
       }
       setTimeout(() => {
         this.$refs.forma2.reset()
       }, 1000)
-    },
-
-    closeDialog () {
-      this.$router.push({ path: '/pictos/favorite' })
     }
   }
 }

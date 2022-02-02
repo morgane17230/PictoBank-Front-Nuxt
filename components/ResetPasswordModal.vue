@@ -1,8 +1,8 @@
 <template>
-  <v-dialog v-model="dialog" persistent max-width="500px">
+  <v-dialog v-model="resetPasswordModal" persistent max-width="500px">
     <v-card flat class="d-flex flex-wrap">
-      <v-btn depressed color="transparent" @click="closeDialog">
-        <v-icon color="cyan">
+      <v-btn depressed color="transparent">
+        <v-icon color="cyan" @click="closeResetPasswordModal">
           mdi-close
         </v-icon>
       </v-btn>
@@ -44,7 +44,7 @@
             <v-btn color="cyan" text type="submit">
               Valider
             </v-btn>
-            <v-btn color="cyan" text @click="closeDialog">
+            <v-btn color="cyan" text>
               Annuler
             </v-btn>
           </v-card-actions>
@@ -60,7 +60,6 @@ export default {
   auth: 'guest',
   data () {
     return {
-      dialog: true,
       show: false,
       valid: false,
       passwordConfirm: '',
@@ -80,7 +79,8 @@ export default {
   computed: {
     ...mapState({
       password: state => state.user.password,
-      loggedIn: state => state.auth.loggedIn
+      loggedIn: state => state.auth.loggedIn,
+      resetPasswordModal: state => state.global.resetPasswordModal
     })
   },
 
@@ -89,17 +89,17 @@ export default {
       passwordChange: 'user/SET_PASSWORD'
     }),
 
+    closeResetPasswordModal () {
+      this.$store.commit('global/SET_RESET_PASSWORD_MODAL', false)
+    },
+
     changePassword () {
       if (this.$refs.forma.validate()) {
         this.$store.dispatch('user/updateUser', Number(this.$route.query.qu))
-        this.dialog = false
       }
-      setTimeout(() => this.$router.push({ path: '/' }), 2000)
-    },
-
-    closeDialog () {
-      this.dialog = false
-      this.$router.push('/')
+      setTimeout(() => {
+        this.$store.commit('global/SET_RESET_PASSWORD_MODAL', false)
+      }, 2000)
     }
   }
 }

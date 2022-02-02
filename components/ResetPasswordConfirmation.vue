@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="dialog" max-width="500px" persistent>
+  <v-dialog v-model="resetPasswordConfirmation" max-width="500px" persistent>
     <v-card>
       <v-form ref="forma" v-model="valid" lazy-validation @submit.prevent="resetPassword">
         <v-card-title>
@@ -21,7 +21,7 @@
           <v-btn color="cyan" text type="submit">
             Valider
           </v-btn>
-          <v-btn color="cyan" text to="/register">
+          <v-btn color="cyan" text @click="closeResetPasswordConfirmation">
             Annuler
           </v-btn>
         </v-card-actions>
@@ -37,7 +37,6 @@ export default {
   auth: 'guest',
   data () {
     return {
-      dialog: true,
       valid: false,
       emailRules: [
         v => !!v || 'Un email est requis',
@@ -49,7 +48,8 @@ export default {
   computed: {
     ...mapState({
       email: state => state.user.email,
-      loggedIn: state => state.auth.loggedIn
+      loggedIn: state => state.auth.loggedIn,
+      resetPasswordConfirmation: state => state.global.resetPasswordConfirmation
     })
   },
 
@@ -58,12 +58,17 @@ export default {
       emailChange: 'user/SET_EMAIL'
     }),
 
+    closeResetPasswordConfirmation () {
+      this.$store.commit('global/SET_RESET_PASSWORD_CONFIRMATION', false)
+    },
+
     resetPassword () {
       if (this.$refs.forma.validate()) {
         this.$store.dispatch('user/resetPassword')
-        this.dialog = false
       }
-      setTimeout(() => this.$router.push({ path: '/' }), 2000)
+      setTimeout(() => {
+        this.$store.commit('global/SET_RESET_PASSWORD_CONFIRMATION', false)
+      }, 2000)
     }
   }
 }
