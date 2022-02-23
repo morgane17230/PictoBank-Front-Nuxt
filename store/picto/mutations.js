@@ -11,12 +11,20 @@ const mutations = {
     state.pictoId = payload
   },
 
-  SET_COLLECTED_PICTOS (state, payload) {
-    state.collectedPictos = [...state.collectedPictos, ...payload]
+  SET_COLLECTED_PICTOS_HOME (state, payload) {
+    state.collectedPictosHome = [...payload]
+  },
+
+  SET_COLLECTED_PICTOS_FOLDER (state, payload) {
+    state.collectedPictosFolder = [...payload]
   },
 
   SET_CATEGORY_NAME (state, payload) {
     state.categoryName = payload
+  },
+
+  SET_CATEGORY_COLOR (state, payload) {
+    state.categoryColor = payload
   },
 
   SET_CATEGORY_ID (state, payload) {
@@ -52,6 +60,7 @@ const mutations = {
     state.selectedFile.url = URL.createObjectURL(payload)
     state.selectedFile.category_id = state.categoryId
     state.selectedFile.category_name = state.categoryName
+    state.selectedFile.category_color = state.categoryColor
     state.uploadedFiles.push(payload)
   },
 
@@ -59,6 +68,7 @@ const mutations = {
     payload.forEach((element) => {
       element.category_id = state.categoryId
       element.category_name = state.categoryName
+      element.category_color = state.categoryColor
       element.url = URL.createObjectURL(element)
       state.uploadedFiles = [...state.uploadedFiles, element]
     })

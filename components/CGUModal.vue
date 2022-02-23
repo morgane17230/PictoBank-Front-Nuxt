@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="cguModal" max-width="500px">
     <v-card flat>
-      <v-toolbar color="cyan" dark>
+      <v-toolbar color="cyan darken-3" dark>
         <v-toolbar-title>Conditions générales d'utilisation</v-toolbar-title>
         <v-spacer />
         <v-btn depressed color="transparent" @click="closeCGUModal">
@@ -48,7 +48,7 @@
         numquam.
       </v-card-text>
       <v-card-actions>
-        <v-btn color="cyan" end outlined @click="closeCGUModal">
+        <v-btn color="cyan darken-3" end outlined @click="closeCGUModal">
           Fermer
         </v-btn>
       </v-card-actions>

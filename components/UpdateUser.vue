@@ -4,7 +4,7 @@
       type="text"
       name="lastname"
       label="Nom"
-      color="cyan"
+      color="cyan darken-3"
       :value="$auth.user.account.lastname"
       @change="lastnameChange"
     />
@@ -12,14 +12,14 @@
       type="text"
       name="firstname"
       label="Prénom"
-      color="cyan"
+      color="cyan darken-3"
       :value="$auth.user.account.firstname"
       @change="firstnameChange"
     />
     <v-text-field
       type="text"
       name="name"
-      color="cyan"
+      color="cyan darken-3"
       label="Intitulé du compte"
       :value="$auth.user.account.name"
       @change="nameChange"
@@ -28,7 +28,7 @@
       type="email"
       name="email"
       label="E-mail"
-      color="cyan"
+      color="cyan darken-3"
       :value="$auth.user.account.email"
       @change="emailChange"
     />
@@ -36,7 +36,7 @@
       :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
       :rules="[passwordRules.min]"
       :type="show1 ? 'text' : 'password'"
-      color="cyan"
+      color="cyan darken-3"
       name="password"
       autocomplete="new-password"
       label="Mot de passe administrateur"
@@ -50,7 +50,7 @@
       :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
       :rules="[passwordRules.min]"
       :type="show2 ? 'text' : 'password'"
-      color="cyan"
+      color="cyan darken-3"
       name="teamPassword"
       label="Mot de passe de l'équipe"
       hint="Minimum 8 caractères"
@@ -60,7 +60,7 @@
       @change="teamPasswordChange"
     />
     <div class="py-5">
-      <v-btn type="submit" block color="cyan">
+      <v-btn type="submit" block color="cyan darken-3">
         Valider
       </v-btn>
     </div>
@@ -111,6 +111,9 @@ export default {
 
     updateUser () {
       this.$store.dispatch('user/updateUser')
+      setTimeout(() => {
+        this.$store.commit('global/SET_USER_UPDATE_MODAL', false)
+      }, 1000)
     }
   }
 }

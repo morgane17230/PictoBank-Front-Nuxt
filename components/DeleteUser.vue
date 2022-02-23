@@ -8,7 +8,7 @@
     >
       <h2>Suppression du compte</h2>
       <p>
-        Attention, le suppression de votre compte n'entraînera pas la
+        Attention, la suppression de votre compte n'entraînera pas la
         suppression de vos pictogrammes. Si vous ne souhaitez pas les laisser
         sur l'application, vous devez vous même les supprimer grâce au bouton
         ci-dessous. Sinon, appuyez sur supprimer le compte.

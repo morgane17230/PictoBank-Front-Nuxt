@@ -9,6 +9,7 @@ const state = () => ({
   resetPasswordConfirmation: false,
   addCategoryModal: false,
   addFolderModal: false,
+  displayFolderModal: false,
   updateFolderModal: false,
   addPictosToFolderModal: false,
   contactModal: false,

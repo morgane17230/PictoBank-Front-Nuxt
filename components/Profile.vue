@@ -1,19 +1,21 @@
 <template>
   <v-dialog v-model="updateUserModal" persistent max-width="600px">
-    <v-card>
-      <v-card-title>
-        <span class="text-h5">Modifier le profil</span>
+    <v-card flat>
+      <v-toolbar color="cyan darken-3" dark>
+        <v-toolbar-title>Gestion du profil</v-toolbar-title>
         <v-spacer />
-        <v-btn depressed color="transparent">
-          <v-icon color="cyan" @click="closeUpdateUserModal">
+        <v-btn depressed color="transparent" @click="closeUpdateUserModal">
+          <v-icon>
             mdi-close
           </v-icon>
         </v-btn>
-      </v-card-title>
-      <v-card-text>
-        <UpdateUser />
-        <DeleteUser />
-      </v-card-text>
+      </v-toolbar>
+      <v-card flat>
+        <v-card-text>
+          <UpdateUser />
+          <DeleteUser />
+        </v-card-text>
+      </v-card>
     </v-card>
   </v-dialog>
 </template>
@@ -29,7 +31,7 @@ export default {
 
   methods: {
     closeUpdateUserModal () {
-      this.$store.commit('global/SET_USER_UDATE_MODAL', false)
+      this.$store.commit('global/SET_USER_UPDATE_MODAL', false)
     }
   }
 }

@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="contactModal" persistent max-width="500px">
     <v-card flat>
-      <v-toolbar color="cyan" dark>
+      <v-toolbar color="cyan darken-3" dark>
         <v-toolbar-title>Contact</v-toolbar-title>
         <v-spacer />
         <v-btn depressed color="transparent" @click="closeContactModal">
@@ -16,7 +16,7 @@
             :rules="nameRules"
             name="lastname"
             label="Nom"
-            color="cyan"
+            color="cyan darken-3"
             required
             :value="lastname"
             @change="lastnameChange"
@@ -26,7 +26,7 @@
             :rules="nameRules"
             name="firstname"
             label="Prénom"
-            color="cyan"
+            color="cyan darken-3"
             required
             :value="firstname"
             @change="firstnameChange"
@@ -36,7 +36,7 @@
             :rules="emailRules"
             name="email"
             label="E-mail"
-            color="cyan"
+            color="cyan darken-3"
             :value="email"
             required
             @change="emailChange"
@@ -47,16 +47,16 @@
             name="message"
             label="Votre message"
             :value="message"
-            color="cyan"
+            color="cyan darken-3"
             @change="messageChange"
           />
           <div>
-            <v-btn color="cyan" outlined @click="closeContactModal">
+            <v-btn color="cyan darken-3" outlined @click="closeContactModal">
               Annuler
             </v-btn>
             <v-btn
               :disabled="!valid"
-              color="cyan"
+              color="cyan darken-3"
               class="mr-4"
               type="submit"
             >

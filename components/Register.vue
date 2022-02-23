@@ -1,16 +1,15 @@
 <template>
   <v-dialog v-model="registerUserModal" persistent max-width="500px">
-    <v-card flat class="d-flex flex-wrap">
-      <v-row align="center">
+    <v-card flat>
+      <v-toolbar color="cyan darken-3" dark>
+        <v-toolbar-title>Inscription</v-toolbar-title>
+        <v-spacer />
         <v-btn depressed color="transparent" @click="closeRegisterUserModal">
-          <v-icon color="cyan">
+          <v-icon>
             mdi-close
           </v-icon>
         </v-btn>
-      </v-row>
-      <v-card-title>
-        Inscription
-      </v-card-title>
+      </v-toolbar>
       <v-card
         flat
         class="col-xs-12 col-sm-12 col-md-6 col-lg-12 col-xl-12 px-3"
@@ -26,7 +25,7 @@
               v-model="switch1"
               name="account"
               flat
-              color="cyan"
+              color="cyan darken-3"
               required
               :value="isOrganization"
               :label=" switch1
@@ -38,7 +37,7 @@
               name="lastname"
               :rules="nameRules"
               label="Nom"
-              color="cyan"
+              color="cyan darken-3"
               required
               :value="lastname"
               @change="lastnameChange"
@@ -47,7 +46,7 @@
               :rules="nameRules"
               name="firstname"
               label="Prénom"
-              color="cyan"
+              color="cyan darken-3"
               required
               :value="firstname"
               @change="firstnameChange"
@@ -57,7 +56,7 @@
               type="text"
               name="name"
               label="Intitulé du compte"
-              color="cyan"
+              color="cyan darken-3"
               required
               :value="name"
               @change="nameChange"
@@ -67,7 +66,7 @@
               :rules="emailRules"
               name="email"
               label="E-mail"
-              color="cyan"
+              color="cyan darken-3"
               required
               :value="email"
               @change="emailChange"
@@ -76,7 +75,7 @@
               :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
               :rules="[passwordRules.required, passwordRules.min]"
               :type="show ? 'text' : 'password'"
-              color="cyan"
+              color="cyan darken-3"
               name="password"
               label="Mot de passe"
               hint="Minimum 8 caractères"
@@ -91,17 +90,17 @@
                 passwordConfirmRules.match
               ]"
               type="password"
-              color="cyan"
+              color="cyan darken-3"
               name="passwordConfirm"
               label="Retaper le mot de passe"
               :value="passwordConfirm"
             />
           </v-card-text>
           <v-card-actions class="justify-center">
-            <v-btn color="cyan" text type="submit">
+            <v-btn color="cyan darken-3" text type="submit">
               Valider
             </v-btn>
-            <v-btn color="cyan" text @click="closeRegisterUserModal">
+            <v-btn color="cyan darken-3" text @click="closeRegisterUserModal">
               Annuler
             </v-btn>
           </v-card-actions>

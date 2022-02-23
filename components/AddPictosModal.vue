@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="addPictosModal" persistent max-width="500px">
     <v-card flat class="d-flex flex-wrap">
-      <v-toolbar color="cyan" dark>
+      <v-toolbar color="cyan darken-3" dark>
         <v-toolbar-title>Ajouter de nouveaux pictos</v-toolbar-title>
         <v-spacer />
         <v-btn depressed color="transparent" @click="closeAddPictosModal">
@@ -21,8 +21,7 @@
           <v-autocomplete
             v-model="selected"
             :items="categories"
-            color="cyan"
-            chips
+            color="cyan darken-3"
             item-text="name"
             item-value="id"
             label="Catégorie"
@@ -41,9 +40,9 @@
                 @click="openAddCategoryModal"
               >
                 <v-list-item-content>
-                  <v-list-item-title class="cyan--text font-weight-bold">
+                  <v-btn color="cyan darken-3 white--text">
                     Ajouter une catégorie
-                  </v-list-item-title>
+                  </v-btn>
                 </v-list-item-content>
               </v-list-item>
               <v-divider class="mt-2" />
@@ -58,7 +57,10 @@
             @dragleave.prevent="dragover = false"
             @click="onUpload"
           >
-            <v-card-text>
+            <v-card-text v-if="categoryValidation" class="text-center">
+              {{ categoryValidation }}
+            </v-card-text>
+            <v-card-text v-else>
               <v-row
                 class="d-flex flex-column"
                 dense
@@ -68,7 +70,7 @@
                 <v-icon :class="[dragover ? 'mt-2, mb-6' : 'mt-5']" size="150">
                   mdi-cloud-upload
                 </v-icon>
-                <p>
+                <p class="text-center">
                   Glissez-déposez votre pictogramme ou cliquez pour en
                   sélectionner un
                 </p>
@@ -84,7 +86,7 @@
               </v-row>
             </v-card-text>
           </v-card>
-          <v-btn block color="cyan" class="mr-4" type="submit">
+          <v-btn block color="cyan darken-3" class="mr-4" type="submit">
             Valider
           </v-btn>
           <v-virtual-scroll
@@ -101,9 +103,9 @@
                 <v-list-item-content>
                   <v-list-item-title>
                     {{ item.name.substr(0, 20) }}
-                    <span class="ml-3 cyan--text">
+                    <v-chip class="ml-3" :color="item.category_color" small>
                       {{ item.category_name }}
-                    </span>
+                    </v-chip>
                   </v-list-item-title>
                 </v-list-item-content>
                 <v-list-item-action>
@@ -131,6 +133,7 @@ export default {
     dragover: false,
     isSelecting: false,
     valid: false,
+    categoryValidation: '',
     pictoRules: [v => !v || v.size < 5000000 || 'Image should be less than 5MB']
   }),
 
@@ -172,6 +175,7 @@ export default {
       )
       if (this.categoryId) {
         this.$store.commit('picto/SET_CATEGORY_NAME', filtered.name)
+        this.$store.commit('picto/SET_CATEGORY_COLOR', filtered.color)
         this.$store.commit(
           'picto/ON_DROP_UPLOADED_FILES',
           e.dataTransfer.files
@@ -179,9 +183,10 @@ export default {
         this.$store.commit('picto/SET_CATEGORY_ID', null)
         this.selected = 0
       } else {
-        this.$notifier.showSnackbar({
-          validation: "Veuillez d'abord choisir une catégorie"
-        })
+        this.categoryValidation = "Veuillez d'abord choisir une catégorie"
+        setTimeout(() => {
+          this.categoryValidation = ''
+        }, 2000)
       }
     },
 
@@ -203,13 +208,15 @@ export default {
       )
       if (this.categoryId) {
         this.$store.commit('picto/SET_CATEGORY_NAME', filtered.name)
+        this.$store.commit('picto/SET_CATEGORY_COLOR', filtered.color)
         this.$store.commit('picto/SET_UPLOADED_FILES', e.target.files[0])
         this.$store.commit('picto/SET_CATEGORY_ID', null)
         this.selected = 0
       } else {
-        this.$notifier.showSnackbar({
-          validation: "Veuillez d'abord choisir une catégorie"
-        })
+        this.categoryValidation = "Veuillez d'abord choisir une catégorie"
+        setTimeout(() => {
+          this.categoryValidation = ''
+        }, 2000)
       }
     },
 

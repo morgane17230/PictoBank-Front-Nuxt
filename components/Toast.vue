@@ -4,7 +4,7 @@
     absolute
     top
     elevation="24"
-    color="cyan"
+    color="cyan darken-3"
     timeout="2000"
   >
     <strong>{{ validation }}</strong>

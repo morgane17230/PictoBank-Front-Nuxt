@@ -1,51 +1,57 @@
 <template>
   <v-dialog v-model="loginUserModal" persistent max-width="500px">
-    <v-card flat class="pa-5">
-      <v-row>
+    <v-card flat>
+      <v-toolbar color="cyan darken-3" dark>
+        <v-toolbar-title>Connexion</v-toolbar-title>
+        <v-spacer />
         <v-btn depressed color="transparent" @click="closeLoginUserModal">
-          <v-icon color="cyan">
+          <v-icon>
             mdi-close
           </v-icon>
         </v-btn>
-      </v-row>
-      <v-card-title>
-        Connexion
-      </v-card-title>
-      <v-form ref="formaLog" v-model="valid" lazy-validation @submit.prevent="loginUser">
-        <v-card-text>
-          <v-text-field
-            type="text"
-            :rules="nameRules"
-            label="Nom d'utilisateur"
-            name="username"
-            color="cyan"
-            required
-            :value="username"
-            @change="userNameChange"
-          />
-          <v-text-field
-            :rules="[passwordRules.required]"
-            type="password"
-            color="cyan"
-            name="password"
-            label="Mot de passe"
-            hint="Minimum 8 caractères"
-            :value="password"
-            @change="passwordChange"
-          />
-          <a type="button" @click="openResetPasswordModal">
-            <small>Mot de passe oublié ?</small>
-          </a>
-        </v-card-text>
-        <v-card-actions class="justify-center">
-          <v-btn color="cyan" type="submit">
-            Valider
-          </v-btn>
-          <v-btn color="cyan" text @click="closeLoginUserModal">
-            Annuler
-          </v-btn>
-        </v-card-actions>
-      </v-form>
+      </v-toolbar>
+      <v-card flat>
+        <v-form
+          ref="formaLog"
+          v-model="valid"
+          lazy-validation
+          @submit.prevent="loginUser"
+        >
+          <v-card-text>
+            <v-text-field
+              type="text"
+              :rules="nameRules"
+              label="Nom d'utilisateur"
+              name="username"
+              color="cyan darken-3"
+              required
+              :value="username"
+              @change="userNameChange"
+            />
+            <v-text-field
+              :rules="[passwordRules.required]"
+              type="password"
+              color="cyan darken-3"
+              name="password"
+              label="Mot de passe"
+              hint="Minimum 8 caractères"
+              :value="password"
+              @change="passwordChange"
+            />
+            <a type="button" @click="openResetPasswordModal">
+              <small>Mot de passe oublié ?</small>
+            </a>
+          </v-card-text>
+          <v-card-actions class="justify-center">
+            <v-btn color="cyan darken-3" type="submit">
+              Valider
+            </v-btn>
+            <v-btn color="cyan darken-3" text @click="closeLoginUserModal">
+              Annuler
+            </v-btn>
+          </v-card-actions>
+        </v-form>
+      </v-card>
     </v-card>
   </v-dialog>
 </template>
@@ -84,7 +90,7 @@ export default {
     },
 
     openResetPasswordModal () {
-      this.$store.commit('global/SET_RESET_PASSWORD_MODAL', true)
+      this.$store.commit('global/SET_RESET_PASSWORD_CONFIRMATION', true)
     },
 
     loginUser () {

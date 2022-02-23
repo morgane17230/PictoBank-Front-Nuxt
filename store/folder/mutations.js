@@ -20,6 +20,7 @@ const mutations = {
 
   UPDATE_FOLDER (state, payload) {
     const index = state.folders.findIndex(folder => folder.id === payload.id)
+    state.folder = payload
     if (index > -1) {
       state.folders.splice(index, 1, payload)
     }

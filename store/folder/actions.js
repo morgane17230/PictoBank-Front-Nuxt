@@ -1,11 +1,9 @@
 import axios from 'axios'
 
 const actions = {
-  getFolder ({ commit }) {
-    const { folderId } = this.state.folder
-
+  getFolder ({ commit }, payload) {
     axios
-      .get(`http://localhost:5000/folder/${folderId}`)
+      .get(`http://localhost:5000/folder/${payload}`)
       .then((response) => {
         commit('SET_FOLDER', response.data)
       })
@@ -50,8 +48,8 @@ const actions = {
       })
   },
 
-  updateFolder ({ commit }) {
-    const { foldername, photo, folderId } = this.state.folder
+  updateFolder ({ commit }, payload) {
+    const { foldername, photo } = this.state.folder
     const formData = new FormData()
 
     if (photo) {
@@ -62,7 +60,7 @@ const actions = {
     }
 
     axios
-      .put(`http://localhost:5000/folder/${folderId}`, formData)
+      .put(`http://localhost:5000/folder/${payload}`, formData)
       .then((response) => {
         commit('UPDATE_FOLDER', response.data.updatedFolder)
         this.$notifier.showSnackbar({
@@ -107,9 +105,9 @@ const actions = {
   },
 
   removePictoFromFolder ({ commit }, payload) {
-    const { folderId } = this.state.folder
+    const { pictoId, folderId } = payload
     axios
-      .delete(`http://localhost:5000/folder/${folderId}/picto/${payload}`)
+      .delete(`http://localhost:5000/folder/${folderId}/picto/${pictoId}`)
       .then((response) => {
         commit('DEL_FROM_FOLDER', payload)
         this.$notifier.showSnackbar({

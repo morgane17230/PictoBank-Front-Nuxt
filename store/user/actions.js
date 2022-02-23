@@ -27,7 +27,6 @@ const actions = {
         })
       })
       .catch((error) => {
-        // eslint-disable-next-line no-console
         error.response.json()
       })
   },
@@ -60,34 +59,30 @@ const actions = {
         teamPassword
       })
       .then((response) => {
-        if (!this.$auth.user) {
-          axios
-            .post('http://localhost:5000/nodemailer', {
-              type: 'confirmResetPassword',
-              firstname: response.data.user.account.firstname,
-              lastname: response.data.user.account.lastname,
-              email: response.data.user.account.email
-            })
-        }
-      })
-      .then(response =>
         this.$notifier.showSnackbar({
           validation: response.data.validation,
           snackbar: true
         })
-      )
+        if (!this.$auth.user) {
+          axios.post('http://localhost:5000/nodemailer', {
+            type: 'confirmResetPassword',
+            firstname: response.data.user.account.firstname,
+            lastname: response.data.user.account.lastname,
+            email: response.data.user.account.email
+          })
+        }
+      })
       .catch((error) => {
-        // eslint-disable-next-line no-console
         error.response.json()
       })
   },
 
-  deleteUser ({ commit }) {
+  deleteUser () {
     const { id } = this.$auth.user.account
     const { email } = this.state.user
 
     axios
-      .delete(`http://localhost:5000/user/${id}`)
+      .delete(`http://localhost:5000/account/${id}`)
       .then((response) => {
         this.$notifier.showSnackbar({
           validation: response.data.validation,
@@ -99,7 +94,6 @@ const actions = {
         })
       })
       .catch((error) => {
-        // eslint-disable-next-line no-console
         error.response.json()
       })
   },
@@ -113,9 +107,14 @@ const actions = {
           password
         }
       })
+      .then((response) => {
+        this.$notifier.showSnackbar({
+          validation: response.data.validation,
+          snackbar: true
+        })
+      })
       .catch((error) => {
-        // eslint-disable-next-line no-console
-        error.response.json()
+        error.json()
       })
   },
 
@@ -136,8 +135,7 @@ const actions = {
         })
       })
       .catch((error) => {
-        // eslint-disable-next-line no-console
-        error.response.json()
+        error.json()
       })
   },
 
@@ -156,8 +154,7 @@ const actions = {
         })
       })
       .catch((error) => {
-        // eslint-disable-next-line no-console
-        error.response.json()
+        error.json()
       })
   }
 }

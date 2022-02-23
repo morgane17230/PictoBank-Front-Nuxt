@@ -1,24 +1,28 @@
 <template>
   <v-dialog v-model="addCategoryModal" persistent max-width="500px">
-    <v-card flat class="pa-5">
-      <v-row align="center">
+    <v-card flat>
+      <v-toolbar color="cyan darken-3" dark>
+        <v-toolbar-title>Ajouter une nouvelle catégorie</v-toolbar-title>
+        <v-spacer />
         <v-btn depressed color="transparent" @click="closeAddCategoryModal">
-          <v-icon color="cyan">
+          <v-icon>
             mdi-close
           </v-icon>
         </v-btn>
-      </v-row>
-      <v-card-title>
-        Ajouter une catégorie
-      </v-card-title>
+      </v-toolbar>
       <v-card flat>
-        <v-form ref="formaLog" v-model="valid" lazy-validation @submit.prevent="addCategory">
+        <v-form
+          ref="formaLog"
+          v-model="valid"
+          lazy-validation
+          @submit.prevent="addCategory"
+        >
           <v-card-text>
             <v-text-field
               type="name"
               label="Intitulé de la catégorie"
               name="name"
-              color="cyan"
+              color="cyan darken-3"
               required
               :rules="nameRules"
               :value="name"
@@ -26,10 +30,10 @@
             />
           </v-card-text>
           <v-card-actions class="justify-center">
-            <v-btn color="cyan" text type="submit">
+            <v-btn color="cyan darken-3" text type="submit">
               Valider
             </v-btn>
-            <v-btn color="cyan" text @click="closeAddCategoryModal">
+            <v-btn color="cyan darken-3" text @click="closeAddCategoryModal">
               Annuler
             </v-btn>
           </v-card-actions>
@@ -70,9 +74,7 @@ export default {
     addCategory () {
       if (this.$refs.formaLog.validate()) {
         this.$store.dispatch('category/addCategory')
-        setTimeout(() => {
-          this.$store.commit('global/SET_ADD_CATEGORY_MODAL', false)
-        }, 1000)
+        this.$store.commit('global/SET_ADD_CATEGORY_MODAL', false)
       }
     }
   }

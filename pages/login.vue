@@ -3,7 +3,7 @@
     <v-card flat class="pa-5">
       <v-row>
         <v-btn depressed color="transparent" @click="closeLoginUserModal">
-          <v-icon color="cyan">
+          <v-icon color="cyan darken-3">
             mdi-close
           </v-icon>
         </v-btn>
@@ -18,7 +18,7 @@
             :rules="nameRules"
             label="Nom d'utilisateur"
             name="username"
-            color="cyan"
+            color="cyan darken-3"
             required
             :value="username"
             @change="userNameChange"
@@ -26,7 +26,7 @@
           <v-text-field
             :rules="[passwordRules.required]"
             type="password"
-            color="cyan"
+            color="cyan darken-3"
             name="password"
             label="Mot de passe"
             hint="Minimum 8 caractères"
@@ -38,10 +38,10 @@
           </a>
         </v-card-text>
         <v-card-actions class="justify-center">
-          <v-btn color="cyan" type="submit">
+          <v-btn color="cyan darken-3" type="submit">
             Valider
           </v-btn>
-          <v-btn color="cyan" text @click="closeLoginUserModal">
+          <v-btn color="cyan darken-3" text @click="closeLoginUserModal">
             Annuler
           </v-btn>
         </v-card-actions>

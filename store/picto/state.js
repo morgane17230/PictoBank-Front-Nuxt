@@ -2,9 +2,11 @@ const state = () => ({
   pictoId: null,
   categoryId: null,
   categoryName: '',
+  categoryColor: '',
   uploadedFiles: [],
   pictos: [],
-  collectedPictos: [],
+  collectedPictosHome: [],
+  collectedPictosFolder: [],
   selectedFile: null
 })
 

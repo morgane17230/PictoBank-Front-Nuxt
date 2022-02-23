@@ -1,47 +1,37 @@
 <template>
-  <v-container>
-    <v-row justify="center" class="my-5 ">
-      <v-col>
-        <v-btn class="my-1" block color="cyan" outlined @click="generatePDF">
-          Télécharger les pictos
-        </v-btn>
-      </v-col>
-      <v-col>
-        <v-btn
-          v-if="$auth.user.role === 'admin'"
-          class="my-1"
-          block
-          color="cyan"
-          outlined
-          @click="openUpdateUserModal"
-        >
-          Modifier le profil
-        </v-btn>
-      </v-col>
-    </v-row>
+  <v-container fluid>
     <v-row>
-      <v-col class="col-12 col-lg-2">
-        <v-text-field
-          v-model="query"
-          top
-          placeholder="Chercher un picto..."
-          label="Chercher un picto..."
-          color="cyan"
-          prepend-inner-icon="mdi-magnify"
-          clearable
-          outlined
-          rounded
-          @input="searchPictos"
-        />
-      </v-col>
-      <v-col class="col-xs-12 col-lg-10">
-        <div v-if="pictos.length === 0" class="text-h6 text-center cyan--text">
-          Pas de pictos pour le moment
+      <v-col cols="12" md="3" class="border-end">
+        <div class="mb-2">
+          <FolderSearch />
         </div>
-        <v-row class="mb-6">
-          <v-col
-            class="d-flex child-flex col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-2"
+        <div><PictoSearch /></div>
+        <div>
+          <v-btn
+            block
+            color="cyan darken-3"
+            class="white--text mb-2"
+            :disabled="
+              [...collectedPictosHome, ...collectedPictosFolder].length === 0
+            "
+            @click="generatePDF"
           >
+            Télécharger les pictos
+          </v-btn>
+          <v-btn
+            v-if="$auth.user.role === 'admin'"
+            block
+            color="cyan darken-3"
+            class="white--text"
+            @click="openUpdateUserModal"
+          >
+            Modifier le profil
+          </v-btn>
+        </div>
+      </v-col>
+      <v-col cols="12" md="9">
+        <v-row class="mb-6">
+          <v-col class="d-flex child-flex col-xs-12 col-sm-4 col-lg-3 col-xl-2">
             <v-card class="d-flex flex-column justify-space-between">
               <v-card-actions class="d-flex justify-center">
                 <v-btn
@@ -51,17 +41,22 @@
                   height="200"
                   @click="openAddPictosModal"
                 >
-                  <v-icon color="cyan" size="150">
+                  <v-icon color="cyan darken-3" size="150">
                     mdi-plus
                   </v-icon>
                 </v-btn>
               </v-card-actions>
             </v-card>
           </v-col>
+          <v-col v-if="pictos.length === 0" class="col-12 col-md">
+            <v-card class="text-h6 text-center py-10 cyan lighten-5">
+              Pas de pictos pour le moment
+            </v-card>
+          </v-col>
           <v-col
             v-for="picto in pictos"
             :key="picto.id"
-            class="col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-2"
+            class="col-xs-12 col-sm-4 col-lg-3 col-xl-2"
           >
             <v-card class="pa-2">
               <v-img
@@ -80,15 +75,24 @@
                   </v-row>
                 </template>
               </v-img>
-              <v-card-actions color="cyan">
-                <v-chip :value="picto.category_id" @click="searchPictosByCategory(picto.category_id)">
-                  {{ categories.find(cat => cat.id === picto.category_id).name }}
+              <v-card-actions color="cyan darken-3">
+                <v-chip
+                  small
+                  :color="
+                    categories.find(cat => cat.id === picto.category_id).color
+                  "
+                  :value="picto.category_id"
+                  @click="searchPictosByCategory(picto.category_id)"
+                >
+                  {{
+                    categories.find(cat => cat.id === picto.category_id).name
+                  }}
                 </v-chip>
                 <v-spacer />
                 <v-checkbox
                   v-model="selected"
                   :value="picto.id"
-                  color="cyan"
+                  color="cyan darken-3"
                   @change="collectPictos"
                 />
                 <v-btn
@@ -96,7 +100,7 @@
                   dark
                   x-small
                   icon
-                  color="cyan"
+                  color="cyan darken-3"
                   :value="picto.id"
                   @click="pictoIdChange"
                 >
@@ -111,7 +115,7 @@
                   dark
                   x-small
                   icon
-                  color="cyan"
+                  color="cyan darken-3"
                   :value="picto.id"
                   @click="deletePicto"
                 >
@@ -125,11 +129,13 @@
         </v-row>
       </v-col>
     </v-row>
+    <Toast />
     <Profile />
     <AddPictosModal />
     <AddFolderModal />
-    <UpdateFolderModal />
     <AddCategoryModal />
+    <AddPictosToFolder />
+    <DisplayFolder />
   </v-container>
 </template>
 
@@ -152,34 +158,32 @@ export default {
   computed: {
     ...mapState({
       pictos: state => state.picto.pictos,
-      folderId: state => state.folder.folderId,
-      folders: state => state.folder.folders,
-      loggedIn: state => state.user.loggedIn,
       categories: state => state.category.categories,
-      collectedPictos: state => state.picto.collectedPictos
+      collectedPictosHome: state => state.picto.collectedPictosHome,
+      collectedPictosFolder: state => state.picto.collectedPictosFolder
     })
   },
 
   mounted () {
-    this.$store.dispatch('picto/getPictos')
     this.$store.dispatch('category/getCategories')
-    this.$store.dispatch('folder/getFoldersByOrg')
+    this.$store.dispatch('picto/getPictos')
   },
 
   methods: {
     openUpdateUserModal () {
-      this.$store.commit('global/SET_USER_UDATE_MODAL', true)
+      this.$store.commit('global/SET_USER_UPDATE_MODAL', true)
     },
 
     openAddPictosModal () {
       this.$store.commit('global/SET_ADD_PICTOS_MODAL', true)
     },
+
     deletePicto (e) {
       this.$store.dispatch('picto/deletePicto', e.currentTarget.value)
     },
 
     collectPictos () {
-      this.$store.commit('picto/SET_COLLECTED_PICTOS', this.selected)
+      this.$store.commit('picto/SET_COLLECTED_PICTOS_HOME', this.selected)
     },
 
     searchPictos () {
@@ -191,7 +195,6 @@ export default {
     },
 
     searchPictosByCategory (e) {
-      console.log(e)
       if (e.type === 'click') {
         this.$store.dispatch('category/getCategory', e.currentTarget.value)
       }
@@ -200,6 +203,7 @@ export default {
 
     pictoIdChange (e) {
       this.$store.commit('picto/SET_PICTO_ID', e.currentTarget.value)
+      this.$store.commit('global/SET_ADD_PICTOS_TO_FOLDER_MODAL', true)
     },
 
     generatePDF () {

@@ -1,6 +1,6 @@
 <template>
-  <v-footer absolute fixed padless app>
-    <v-bottom-navigation color="cyan" grow absolute>
+  <v-footer fixed app>
+    <v-bottom-navigation color="cyan darken-3" grow absolute>
       <v-btn value="contact" @click="openContactModal">
         <span>
           Contact

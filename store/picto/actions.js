@@ -12,12 +12,13 @@ const actions = {
       })
   },
 
-  generatePDF ({ commit }) {
-    const { collectedPictos } = this.state.picto
+  generatePDF () {
+    const { collectedPictosHome, collectedPictosFolder } = this.state.picto
+    const collected = [...collectedPictosHome, ...collectedPictosFolder]
     axios
       .get('http://localhost:5000/picto/pdf', {
         params: {
-          collectedPictos
+          collectedPictos: [...new Set(collected)]
         },
         responseType: 'arraybuffer',
         headers: {

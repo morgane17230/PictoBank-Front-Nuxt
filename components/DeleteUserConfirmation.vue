@@ -12,7 +12,7 @@
         <v-btn color="dark" outlined @click="closeDeleteUserModal">
           Annuler
         </v-btn>
-        <v-btn color="cyan" text @click="deleteUser">
+        <v-btn color="cyan darken-3" text @click="deleteUser">
           Valider
         </v-btn>
       </v-card-actions>
@@ -39,6 +39,7 @@ export default {
       this.$store.commit('user/SET_EMAIL', this.email)
       this.$store.dispatch('user/deleteUser')
       this.$store.commit('global/SET_USER_DELETE_MODAL', false)
+      this.$store.commit('global/SET_USER_UPDATE_MODAL', false)
       setTimeout(() => {
         this.$auth.logout('local')
       }, 1000)

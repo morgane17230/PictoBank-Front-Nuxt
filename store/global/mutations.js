@@ -4,7 +4,7 @@ const mutations = {
     state.snackbar = payload.snackbar
   },
 
-  SET_USER_UDATE_MODAL (state, payload) {
+  SET_USER_UPDATE_MODAL (state, payload) {
     state.updateUserModal = payload
   },
 
@@ -38,6 +38,10 @@ const mutations = {
 
   SET_ADD_FOLDER_MODAL (state, payload) {
     state.addFolderModal = payload
+  },
+
+  SET_DISPLAY_FOLDER_MODAL (state, payload) {
+    state.displayFolderModal = payload
   },
 
   SET_UPDATE_FOLDER_MODAL (state, payload) {

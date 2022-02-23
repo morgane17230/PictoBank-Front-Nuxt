@@ -2,7 +2,7 @@
   <v-dialog v-model="resetPasswordModal" persistent max-width="500px">
     <v-card flat class="d-flex flex-wrap">
       <v-btn depressed color="transparent">
-        <v-icon color="cyan" @click="closeResetPasswordModal">
+        <v-icon color="cyan darken-3" @click="closeResetPasswordModal">
           mdi-close
         </v-icon>
       </v-btn>
@@ -19,7 +19,7 @@
               :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
               :rules="[passwordRules.required, passwordRules.min]"
               :type="show ? 'text' : 'password'"
-              color="cyan"
+              color="cyan darken-3"
               name="password"
               label="Mot de passe"
               hint="Minimum 8 caractères"
@@ -34,17 +34,17 @@
                 passwordConfirmRules.match
               ]"
               type="password"
-              color="cyan"
+              color="cyan darken-3"
               name="passwordConfirm"
               label="Retaper le mot de passe"
               :value="passwordConfirm"
             />
           </v-card-text>
           <v-card-actions class="justify-center">
-            <v-btn color="cyan" text type="submit">
+            <v-btn color="cyan darken-3" text type="submit">
               Valider
             </v-btn>
-            <v-btn color="cyan" text>
+            <v-btn color="cyan darken-3" text>
               Annuler
             </v-btn>
           </v-card-actions>
