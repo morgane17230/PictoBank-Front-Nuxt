@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="addPictosModal" persistent max-width="500px">
+  <v-dialog v-model="addPictosModal" persistent max-width="600px">
     <v-card flat class="d-flex flex-wrap">
       <v-toolbar color="cyan darken-3" dark>
         <v-toolbar-title>Ajouter de nouveaux pictos</v-toolbar-title>
@@ -26,6 +26,7 @@
             item-value="id"
             label="Catégorie"
             full-width
+            required
             persistent-hint
             hide-details
             hide-selected
@@ -33,6 +34,13 @@
             class="mb-5"
             @change="categoryIdChange"
           >
+            <template #no-data>
+              <v-list-item>
+                <v-list-item-title class="text-center">
+                  Pas de catégorie avec ce nom
+                </v-list-item-title>
+              </v-list-item>
+            </template>
             <template #prepend-item>
               <v-list-item
                 ripple
@@ -48,45 +56,90 @@
               <v-divider class="mt-2" />
             </template>
           </v-autocomplete>
-          <v-card
-            :class="{ 'blue lighten-5': dragover }"
-            :loading="isSelecting"
-            @drop.prevent="onDrop($event)"
-            @dragover.prevent="dragover = true"
-            @dragenter.prevent="dragover = true"
-            @dragleave.prevent="dragover = false"
-            @click="onUpload"
-          >
-            <v-card-text v-if="categoryValidation" class="text-center">
-              {{ categoryValidation }}
-            </v-card-text>
-            <v-card-text v-else>
-              <v-row
-                class="d-flex flex-column"
-                dense
-                align="center"
-                justify="center"
+          <v-text-field
+            type="name"
+            label="Nom du picto"
+            name="name"
+            color="cyan darken-3"
+            :value="pictoName"
+            @change="pictoNameChange"
+          />
+          <v-row class="mb-5">
+            <v-col class="col-12 col-lg-6">
+              <croppa
+                v-model="selectedFile"
+                canvas-color="transparent"
+                :width="290"
+                :height="290"
+                :placeholder="
+                  pictoName === '' || categoryId === null
+                    ? 'Veuillez choisir une catégorie et un nom'
+                    : 'Sélectionnez une image'
+                "
+                :disabled="pictoName === '' || categoryId === null"
+                :placeholder-font-size="15"
+                :placeholder-color="'default'"
+                :accept="'image/*'"
+                :show-loading="true"
+                :file-size-limit="0"
+                :quality="2"
+                :zoom-speed="3"
+                :reverse-scroll-to-zoom="false"
+                :show-remove-button="true"
+                :remove-button-color="'cyan darken-3'"
+                :remove-button-size="0"
+              />
+            </v-col>
+            <v-col class="col-12 col-lg-6 pa-lg-6">
+              <v-btn
+                text
+                small
+                block
+                left
+                :color="selectedFile.chosenFile ? 'cyan' : ''"
+                :disabled="selectedFile === null"
+                @click="onFileChanged"
               >
-                <v-icon :class="[dragover ? 'mt-2, mb-6' : 'mt-5']" size="150">
-                  mdi-cloud-upload
+                <v-icon>
+                  mdi-check
                 </v-icon>
-                <p class="text-center">
-                  Glissez-déposez votre pictogramme ou cliquez pour en
-                  sélectionner un
-                </p>
-                <input
-                  ref="uploader"
-                  class="d-none"
-                  type="file"
-                  name="path"
-                  accept="image/*"
-                  :rules="pictoRules"
-                  @change="onFileChanged"
-                >
-              </v-row>
-            </v-card-text>
-          </v-card>
-          <v-btn block color="cyan darken-3" class="mr-4" type="submit">
+                <span>Valider</span>
+              </v-btn>
+              <v-btn
+                text
+                small
+                block
+                class="text-start"
+                :disabled="selectedFile === null"
+                @click="selectedFile.rotate(-1)"
+              >
+                <v-icon>
+                  mdi-rotate-left
+                </v-icon>
+                <span>Rotation gauche 90°</span>
+              </v-btn>
+              <v-btn
+                text
+                small
+                block
+                left
+                :disabled="selectedFile === null"
+                @click="selectedFile.rotate()"
+              >
+                <v-icon>
+                  mdi-rotate-right
+                </v-icon>
+                <span>Rotation droite 90°</span>
+              </v-btn>
+            </v-col>
+          </v-row>
+          <v-btn
+            :disabled="uploadedFiles.length === 0"
+            block
+            color="cyan darken-3"
+            class="mr-4"
+            type="submit"
+          >
             Valider
           </v-btn>
           <v-virtual-scroll
@@ -97,14 +150,18 @@
           >
             <template #default="{ item }">
               <v-list-item :key="item.name">
-                <v-list-item-avatar>
+                <v-list-item-avatar class="profile">
                   <v-img :src="item.url" />
                 </v-list-item-avatar>
                 <v-list-item-content>
                   <v-list-item-title>
-                    {{ item.name.substr(0, 20) }}
-                    <v-chip class="ml-3" :color="item.category_color" small>
-                      {{ item.category_name }}
+                    {{ item.originalname.split("-")[1] }}
+                    <v-chip
+                      :class="`ml-3 ${item.category_color.text}--text`"
+                      :color="item.category_color.background"
+                      small
+                    >
+                      <span>{{ item.category_name }}</span>
                     </v-chip>
                   </v-list-item-title>
                 </v-list-item-content>
@@ -125,22 +182,26 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex'
-
+import Vue from 'vue'
+import Croppa from 'vue-croppa'
+import 'vue-croppa/dist/vue-croppa.css'
+Vue.use(Croppa)
 export default {
   middleware: 'auth',
   data: () => ({
+    selectedFile: {},
     selected: [],
-    dragover: false,
-    isSelecting: false,
     valid: false,
-    categoryValidation: '',
-    pictoRules: [v => !v || v.size < 5000000 || 'Image should be less than 5MB']
+    pictoRules: [
+      v => !v || v.size < 5000000 || 'Image should be less than 5MB'
+    ],
+    nameRules: [v => !!v || 'Le champs est requis']
   }),
 
   computed: {
     ...mapState({
+      pictoName: state => state.picto.name,
       uploadedFiles: state => state.picto.uploadedFiles,
-      selectedFile: state => state.picto.selectedFile,
       categories: state => state.category.categories,
       categoryId: state => state.picto.categoryId,
       uploadedCategories: state => state.picto.uploadedCategories,
@@ -154,7 +215,8 @@ export default {
 
   methods: {
     ...mapMutations({
-      categoryIdChange: 'picto/SET_CATEGORY_ID'
+      categoryIdChange: 'picto/SET_CATEGORY_ID',
+      pictoNameChange: 'picto/SET_PICTO_NAME'
     }),
 
     openAddCategoryModal () {
@@ -169,54 +231,18 @@ export default {
       this.$store.commit('picto/DEL_UPLOADED_FILES', filename)
     },
 
-    onDrop (e) {
+    onFileChanged () {
       const filtered = this.categories.find(
         category => category.id === this.categoryId
       )
       if (this.categoryId) {
         this.$store.commit('picto/SET_CATEGORY_NAME', filtered.name)
         this.$store.commit('picto/SET_CATEGORY_COLOR', filtered.color)
-        this.$store.commit(
-          'picto/ON_DROP_UPLOADED_FILES',
-          e.dataTransfer.files
-        )
-        this.$store.commit('picto/SET_CATEGORY_ID', null)
+        this.selectedFile.generateBlob((blob) => {
+          this.$store.commit('picto/SET_UPLOADED_FILES', blob)
+        })
         this.selected = 0
-      } else {
-        this.categoryValidation = "Veuillez d'abord choisir une catégorie"
-        setTimeout(() => {
-          this.categoryValidation = ''
-        }, 2000)
-      }
-    },
-
-    onUpload () {
-      this.isSelecting = true
-      window.addEventListener(
-        'focus',
-        () => {
-          this.isSelecting = false
-        },
-        { once: true }
-      )
-      this.$refs.uploader.click()
-    },
-
-    onFileChanged (e) {
-      const filtered = this.categories.find(
-        category => category.id === this.categoryId
-      )
-      if (this.categoryId) {
-        this.$store.commit('picto/SET_CATEGORY_NAME', filtered.name)
-        this.$store.commit('picto/SET_CATEGORY_COLOR', filtered.color)
-        this.$store.commit('picto/SET_UPLOADED_FILES', e.target.files[0])
-        this.$store.commit('picto/SET_CATEGORY_ID', null)
-        this.selected = 0
-      } else {
-        this.categoryValidation = "Veuillez d'abord choisir une catégorie"
-        setTimeout(() => {
-          this.categoryValidation = ''
-        }, 2000)
+        this.selectedFile.remove()
       }
     },
 

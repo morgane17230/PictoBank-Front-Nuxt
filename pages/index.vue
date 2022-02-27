@@ -24,25 +24,25 @@
       S'inscrire
     </v-btn>
     <v-row class="py-5">
-      <v-col>
+      <v-col class="col-12 col-lg-4">
         <v-card flat tile>
-          <v-img src="/image-multiple-outline.svg" max-width="10rem" />
+          <v-img src="/image-multiple-outline.svg" max-width="20%" />
           <v-card-text class="text-subtitle-1">
             Accédez à une bibliothèque de pictogrammes en libre service et alimentez le stock de pictogrammes disponibles
           </v-card-text>
         </v-card>
       </v-col>
-      <v-col>
+      <v-col class="col-12 col-lg-4">
         <v-card flat tile>
-          <v-img src="/printer-outline.svg" max-width="10rem" />
+          <v-img src="/printer-outline.svg" max-width="20%" />
           <v-card-text class="text-subtitle-1">
             Sélectionnez et imprimez vos planches de pictogrammes déjà dimensionnés
           </v-card-text>
         </v-card>
       </v-col>
-      <v-col>
+      <v-col class="col-12 col-lg-4">
         <v-card flat tile>
-          <v-img src="/account-group-outline.svg" max-width="10rem" />
+          <v-img src="/account-group-outline.svg" max-width="20%" />
           <v-card-text class="text-subtitle-1">
             Profitez de Pikto que vous soyez particuliers ou établissement
           </v-card-text>
@@ -50,11 +50,14 @@
       </v-col>
     </v-row>
     <Toast />
+    <ResetPasswordModal />
   </div>
 </template>
 
 <script>
+import ResetPasswordModal from '~/components/ResetPasswordModal.vue'
 export default {
+  components: { ResetPasswordModal },
   middleware: 'auth',
   auth: 'guest',
   data () {
@@ -63,8 +66,7 @@ export default {
       items: [
         {
           src: require('~/static/background1.jpg'),
-          text:
-            'Pikto aide les soignants et les proches à renouer le contact...'
+          text: 'Pikto aide les soignants et les proches à renouer le contact...'
         },
         {
           src: require('~/static/background2.jpg'),
@@ -72,8 +74,7 @@ export default {
         },
         {
           src: require('~/static/background3.jpg'),
-          text:
-            '...ou celles qui connaissent des troubles du spectre autistique.'
+          text: '...ou celles qui connaissent des troubles du spectre autistique.'
         }
       ]
     }

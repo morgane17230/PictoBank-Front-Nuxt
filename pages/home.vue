@@ -54,16 +54,31 @@
             </v-card>
           </v-col>
           <v-col
-            v-for="picto in pictos"
+            v-for="picto in foundPictos"
             :key="picto.id"
             class="col-xs-12 col-sm-4 col-lg-3 col-xl-2"
           >
-            <v-card class="pa-2">
+            <v-card>
+              <v-toolbar color="grey darken-3" dark>
+                <v-chip
+                  small
+                  :class="`${categories.find(cat => cat.id === picto.category_id).color.text}--text`"
+                  :color="
+                    categories.find(cat => cat.id === picto.category_id).color.background
+                  "
+                  :value="picto.category_id"
+                  @click="searchPictosByCategory(picto.category_id)"
+                >
+                  {{ picto.originalname.split("-")[0] }}
+                </v-chip>
+                <v-spacer />
+                <span class="white--text end">{{ picto.originalname.split("-")[1] }}</span>
+              </v-toolbar>
               <v-img
                 :src="`${picto.path}`"
                 :lazy-src="`${picto.path}`"
                 aspect-ratio="1"
-                class="grey lighten-2"
+                class="grey lighten-2 ma-2"
               >
                 <template #placeholder>
                   <v-row
@@ -75,22 +90,12 @@
                   </v-row>
                 </template>
               </v-img>
-              <v-card-actions color="cyan darken-3">
-                <v-chip
-                  small
-                  :color="
-                    categories.find(cat => cat.id === picto.category_id).color
-                  "
-                  :value="picto.category_id"
-                  @click="searchPictosByCategory(picto.category_id)"
-                >
-                  {{
-                    categories.find(cat => cat.id === picto.category_id).name
-                  }}
-                </v-chip>
-                <v-spacer />
+              <v-card-actions class="grey darken-3">
                 <v-checkbox
                   v-model="selected"
+                  on-icon="mdi-check"
+                  off-icon="mdi-printer"
+                  x-small
                   :value="picto.id"
                   color="cyan darken-3"
                   @change="collectPictos"
@@ -158,13 +163,15 @@ export default {
   computed: {
     ...mapState({
       pictos: state => state.picto.pictos,
+      foundPictos: state => state.picto.foundPictos,
       categories: state => state.category.categories,
       collectedPictosHome: state => state.picto.collectedPictosHome,
-      collectedPictosFolder: state => state.picto.collectedPictosFolder
+      collectedPictosFolder: state => state.picto.collectedPictosFolder,
+      selectedFile: state => state.picto.selectedFile
     })
   },
 
-  mounted () {
+  created () {
     this.$store.dispatch('category/getCategories')
     this.$store.dispatch('picto/getPictos')
   },

@@ -12,6 +12,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   middleware: 'auth',
   data () {
@@ -20,13 +22,23 @@ export default {
     }
   },
 
+  computed: {
+    ...mapState({
+      pictos: state => state.picto.pictos
+    })
+  },
+
   methods: {
     searchPictos () {
-      if (this.query !== '') {
-        this.$store.dispatch('picto/searchPictos', this.query)
-      } else {
-        this.$store.dispatch('picto/getPictos')
-      }
+      const queries = this.query.split(' ')
+      const foundPictos = []
+      this.pictos.forEach((picto) => {
+        return queries.forEach((element) => {
+          const index = picto.originalname.indexOf(element)
+          if (index !== -1) { return foundPictos.push(picto) }
+        })
+      })
+      this.$store.commit('picto/SET_FOUND_PICTOS', [...new Set(foundPictos)])
     }
   }
 }

@@ -27,7 +27,10 @@ const actions = {
         })
       })
       .catch((error) => {
-        error.response.json()
+        this.$notifier.showSnackbar({
+          validation: error.response.data.validation,
+          snackbar: true
+        })
       })
   },
 
@@ -37,7 +40,7 @@ const actions = {
     if (this.$auth.loggedIn) {
       id = this.$auth.user.id
     } else {
-      id = this.$router.currentRoute.query.qu
+      id = this.state.user.uuid
     }
 
     const {
@@ -73,7 +76,10 @@ const actions = {
         }
       })
       .catch((error) => {
-        error.response.json()
+        this.$notifier.showSnackbar({
+          validation: error.response.data.validation,
+          snackbar: true
+        })
       })
   },
 
@@ -94,7 +100,10 @@ const actions = {
         })
       })
       .catch((error) => {
-        error.response.json()
+        this.$notifier.showSnackbar({
+          validation: error.response.data.validation,
+          snackbar: true
+        })
       })
   },
 
@@ -114,7 +123,10 @@ const actions = {
         })
       })
       .catch((error) => {
-        error.json()
+        this.$notifier.showSnackbar({
+          validation: error.response.data.validation,
+          snackbar: true
+        })
       })
   },
 
@@ -135,7 +147,10 @@ const actions = {
         })
       })
       .catch((error) => {
-        error.json()
+        this.$notifier.showSnackbar({
+          validation: error.response.data.validation,
+          snackbar: true
+        })
       })
   },
 
@@ -154,7 +169,10 @@ const actions = {
         })
       })
       .catch((error) => {
-        error.json()
+        this.$notifier.showSnackbar({
+          validation: error.response.data.validation,
+          snackbar: true
+        })
       })
   }
 }

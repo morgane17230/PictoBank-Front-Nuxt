@@ -7,8 +7,24 @@ const mutations = {
     }
   },
 
+  SET_FOUND_PICTOS (state, payload) {
+    if (payload) {
+      state.foundPictos = payload
+    } else {
+      state.pictos = []
+    }
+  },
+
   SET_PICTO_ID (state, payload) {
     state.pictoId = payload
+  },
+
+  SET_PICTO_NAME (state, payload) {
+    state.name = payload
+  },
+
+  SET_SELECTED_FILE (state, payload) {
+    state.selectedFile = payload
   },
 
   SET_COLLECTED_PICTOS_HOME (state, payload) {
@@ -33,20 +49,25 @@ const mutations = {
 
   ADD_PICTOS (state, payload) {
     state.pictos = [...state.pictos, payload]
+    state.foundPictos = [...state.foundPictos, payload]
   },
 
   DEL_PICTO (state, payload) {
     const index = state.pictos.findIndex(picto => picto.id === payload.id)
     if (index > -1) {
       state.pictos.splice(index, 1)
+      state.foundPictos.splice(index, 1)
     }
   },
 
   DEL_PICTOS (state, payload) {
     payload.forEach((deletedPicto) => {
-      const index = state.pictos.findIndex(picto => picto.id === deletedPicto.id)
+      const index = state.pictos.findIndex(
+        picto => picto.id === deletedPicto.id
+      )
       if (index > -1) {
         state.pictos.splice(index, 1)
+        state.foundPictos.splice(index, 1)
       }
     })
   },
@@ -60,18 +81,12 @@ const mutations = {
     state.selectedFile.url = URL.createObjectURL(payload)
     state.selectedFile.category_id = state.categoryId
     state.selectedFile.category_name = state.categoryName
+    state.selectedFile.originalname = `${state.categoryName}-${state.name}`
     state.selectedFile.category_color = state.categoryColor
     state.uploadedFiles.push(payload)
-  },
-
-  ON_DROP_UPLOADED_FILES (state, payload) {
-    payload.forEach((element) => {
-      element.category_id = state.categoryId
-      element.category_name = state.categoryName
-      element.category_color = state.categoryColor
-      element.url = URL.createObjectURL(element)
-      state.uploadedFiles = [...state.uploadedFiles, element]
-    })
+    state.categoryId = null
+    state.name = ''
+    state.selectedFile = null
   },
 
   DEL_UPLOADED_FILES (state, payload) {

@@ -19,6 +19,7 @@
               color="cyan darken-3"
               name="foldername"
               required
+              autofocus
               :rules="fieldRules"
               :value="foldername"
               @change="foldernameChange"

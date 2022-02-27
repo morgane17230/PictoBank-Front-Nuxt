@@ -6,9 +6,13 @@ const actions = {
       .get('http://localhost:5000/picto')
       .then((response) => {
         commit('SET_PICTOS', response.data)
+        commit('SET_FOUND_PICTOS', response.data)
       })
       .catch((error) => {
-        error.response.json()
+        this.$notifier.showSnackbar({
+          validation: error.response.data.validation,
+          snackbar: true
+        })
       })
   },
 
@@ -32,7 +36,10 @@ const actions = {
         window.open(link)
       })
       .catch((error) => {
-        error.response.json()
+        this.$notifier.showSnackbar({
+          validation: error.response.data.validation,
+          snackbar: true
+        })
       })
   },
 
@@ -41,9 +48,10 @@ const actions = {
     this.state.picto.uploadedFiles.forEach((selectedFile) => {
       const formData = new FormData()
       const blob = selectedFile
-      formData.append('path', blob)
+      formData.append('path', blob, blob.originalname)
       formData.append('account_id', id)
       formData.append('category_id', blob.category_id)
+      formData.append('originalname', blob.originalname)
 
       axios
         .post('http://localhost:5000/picto', formData)
@@ -56,7 +64,10 @@ const actions = {
         })
         .then(commit('INITIALIZE_UPLOADED_FILES'))
         .catch((error) => {
-          error.response.json()
+          this.$notifier.showSnackbar({
+            validation: error.response.data.validation,
+            snackbar: true
+          })
         })
     })
   },
@@ -72,7 +83,10 @@ const actions = {
         })
       })
       .catch((error) => {
-        error.response.json()
+        this.$notifier.showSnackbar({
+          validation: error.response.data.validation,
+          snackbar: true
+        })
       })
   },
 
@@ -88,7 +102,10 @@ const actions = {
         })
       })
       .catch((error) => {
-        error.response.json()
+        this.$notifier.showSnackbar({
+          validation: error.response.data.validation,
+          snackbar: true
+        })
       })
   },
 
@@ -99,7 +116,10 @@ const actions = {
         commit('SET_PICTOS', response.data)
       })
       .catch((error) => {
-        error.response.json()
+        this.$notifier.showSnackbar({
+          validation: error.response.data.validation,
+          snackbar: true
+        })
       })
   }
 }

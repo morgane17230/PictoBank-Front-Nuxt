@@ -1,4 +1,8 @@
 const mutations = {
+  SET_UUID (state, payload) {
+    state.uuid = payload
+  },
+
   SET_LASTNAME (state, payload) {
     state.lastname = payload
   },

@@ -8,7 +8,10 @@ const actions = {
         commit('SET_FOLDER', response.data)
       })
       .catch((error) => {
-        error.response.json()
+        this.$notifier.showSnackbar({
+          validation: error.response.data.validation,
+          snackbar: true
+        })
       })
   },
 
@@ -21,7 +24,10 @@ const actions = {
         commit('SET_FOLDERS', response.data)
       })
       .catch((error) => {
-        error.response.json()
+        this.$notifier.showSnackbar({
+          validation: error.response.data.validation,
+          snackbar: true
+        })
       })
   },
 
@@ -44,7 +50,10 @@ const actions = {
         })
       })
       .catch((error) => {
-        error.response.json()
+        this.$notifier.showSnackbar({
+          validation: error.response.data.validation,
+          snackbar: true
+        })
       })
   },
 
@@ -69,7 +78,10 @@ const actions = {
         })
       })
       .catch((error) => {
-        error.response.json()
+        this.$notifier.showSnackbar({
+          validation: error.response.data.validation,
+          snackbar: true
+        })
       })
   },
 
@@ -84,7 +96,10 @@ const actions = {
         })
       })
       .catch((error) => {
-        error.response.json()
+        this.$notifier.showSnackbar({
+          validation: error.response.data.validation,
+          snackbar: true
+        })
       })
   },
 
@@ -100,7 +115,10 @@ const actions = {
         })
       })
       .catch((error) => {
-        error.response.json()
+        this.$notifier.showSnackbar({
+          validation: error.response.data.validation,
+          snackbar: true
+        })
       })
   },
 
@@ -116,7 +134,10 @@ const actions = {
         })
       })
       .catch((error) => {
-        error.response.json()
+        this.$notifier.showSnackbar({
+          validation: error.response.data.validation,
+          snackbar: true
+        })
       })
   }
 }

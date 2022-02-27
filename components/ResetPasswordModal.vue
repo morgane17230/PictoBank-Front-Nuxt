@@ -1,19 +1,22 @@
 <template>
-  <v-dialog v-model="resetPasswordModal" persistent max-width="500px">
-    <v-card flat class="d-flex flex-wrap">
-      <v-btn depressed color="transparent">
-        <v-icon color="cyan darken-3" @click="closeResetPasswordModal">
-          mdi-close
-        </v-icon>
-      </v-btn>
-      <v-card
-        flat
-        class="col-xs-12 col-sm-12 col-md-6 col-lg-12 col-xl-12 px-3"
-      >
-        <v-form ref="forma" v-model="valid" lazy-validation @submit.prevent="changePassword">
-          <v-card-title>
-            Changement de mot de passe
-          </v-card-title>
+  <v-dialog v-model="$route.query.uuid" persistent max-width="500px">
+    <v-card flat>
+      <v-toolbar color="cyan darken-3" dark>
+        <v-toolbar-title>Changement de mot de passe</v-toolbar-title>
+        <v-spacer />
+        <v-btn depressed color="transparent" @click="closeResetPasswordModal">
+          <v-icon>
+            mdi-close
+          </v-icon>
+        </v-btn>
+      </v-toolbar>
+      <v-card flat>
+        <v-form
+          ref="forma"
+          v-model="valid"
+          lazy-validation
+          @submit.prevent="changePassword"
+        >
           <v-card-text>
             <v-text-field
               :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
@@ -44,7 +47,7 @@
             <v-btn color="cyan darken-3" text type="submit">
               Valider
             </v-btn>
-            <v-btn color="cyan darken-3" text>
+            <v-btn color="cyan darken-3" text @click="closeResetPasswordModal">
               Annuler
             </v-btn>
           </v-card-actions>
@@ -84,22 +87,24 @@ export default {
     })
   },
 
+  created () {
+    this.$store.commit('user/SET_UUID', this.$route.query.uuid)
+  },
+
   methods: {
     ...mapMutations({
       passwordChange: 'user/SET_PASSWORD'
     }),
 
     closeResetPasswordModal () {
-      this.$store.commit('global/SET_RESET_PASSWORD_MODAL', false)
+      this.$router.push('/')
     },
 
     changePassword () {
       if (this.$refs.forma.validate()) {
-        this.$store.dispatch('user/updateUser', Number(this.$route.query.qu))
+        this.$store.dispatch('user/updateUser')
+        this.$router.push('/')
       }
-      setTimeout(() => {
-        this.$store.commit('global/SET_RESET_PASSWORD_MODAL', false)
-      }, 2000)
     }
   }
 }

@@ -23,6 +23,7 @@
               label="Intitulé de la catégorie"
               name="name"
               color="cyan darken-3"
+              autofocus
               required
               :rules="nameRules"
               :value="name"

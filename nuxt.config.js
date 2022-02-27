@@ -24,7 +24,7 @@ export default {
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     { src: '~/plugins/persistedState.client.js' },
-    '~/plugins/notifier.js'
+    { src: '~/plugins/notifier.js' }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

@@ -6,7 +6,10 @@ const actions = {
       .get('http://localhost:5000/category')
       .then(response => commit('SET_CATEGORIES', response.data))
       .catch((error) => {
-        error.response.json()
+        this.$notifier.showSnackbar({
+          validation: error.response.data.validation,
+          snackbar: true
+        })
       })
   },
 
@@ -17,7 +20,10 @@ const actions = {
         commit('picto/SET_PICTOS', response.data.pictos, { root: true })
       )
       .catch((error) => {
-        error.response.json()
+        this.$notifier.showSnackbar({
+          validation: error.response.data.validation,
+          snackbar: true
+        })
       })
   },
 
@@ -35,7 +41,10 @@ const actions = {
         })
       })
       .catch((error) => {
-        error.response.json()
+        this.$notifier.showSnackbar({
+          validation: error.response.data.validation,
+          snackbar: true
+        })
       })
   }
 }
