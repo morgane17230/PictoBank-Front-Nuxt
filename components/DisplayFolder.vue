@@ -70,24 +70,56 @@
               </v-btn>
             </div>
           </v-form>
-          <div v-if="folder.pictos && folder.pictos.length > 0">
-            <v-card-text
+          <v-row v-if="folder.pictos && folder.pictos.length > 0">
+            <v-col
               v-for="picto in folder.pictos"
               :key="picto.id"
-              class="d-flex child-flex col-xs-6 col-sm-6 col-md-4"
+              class="d-flex child-flex col-sm-4 col-md-3"
             >
-              <v-card class="pa-2">
+              <v-card>
+                <v-toolbar color="grey darken-3" dark>
+                  <v-chip
+                    small
+                    :class="
+                      `${
+                        categories.find(cat => cat.id === picto.category_id)
+                          .color.text
+                      }--text`
+                    "
+                    :color="
+                      categories.find(cat => cat.id === picto.category_id).color
+                        .background
+                    "
+                  >
+                    {{ picto.originalname.split("-")[0] }}
+                  </v-chip>
+                  <v-spacer />
+                  <span class="white--text end">{{
+                    picto.originalname.split("-")[1]
+                  }}</span>
+                </v-toolbar>
                 <v-img
                   :src="`${picto.path}`"
                   :lazy-src="`${picto.path}`"
                   aspect-ratio="1"
-                  class="grey lighten-2"
+                  class="grey lighten-2 ma-2"
                 />
-                <v-card-actions color="cyan darken-3">
-                  <v-spacer />
+                <template #placeholder>
+                  <v-row
+                    class="fill-height ma-0"
+                    align="center"
+                    justify="center"
+                  >
+                    <v-progress-circular indeterminate color="grey lighten-5" />
+                  </v-row>
+                </template>
+                <v-card-actions class="grey darken-3">
                   <v-checkbox
                     v-model="selected"
                     :value="picto.id"
+                    on-icon="mdi-check"
+                    off-icon="mdi-printer"
+                    x-small
                     color="cyan darken-3"
                     @change="collectPictos"
                   />
@@ -106,18 +138,13 @@
                   </v-btn>
                 </v-card-actions>
               </v-card>
-              <template #placeholder>
-                <v-row class="fill-height ma-0" align="center" justify="center">
-                  <v-progress-circular indeterminate color="grey lighten-5" />
-                </v-row>
-              </template>
-            </v-card-text>
-          </div>
-          <div v-else>
+            </v-col>
+          </v-row>
+          <v-row v-else>
             <v-card-text class="text-center">
               <div>Pas encore de pictos dans ce dossier</div>
             </v-card-text>
-          </div>
+          </v-row>
         </div>
       </v-card>
     </v-card>
@@ -144,6 +171,7 @@ export default {
     ...mapState({
       displayFolderModal: state => state.global.displayFolderModal,
       foldername: state => state.folder.foldername,
+      categories: state => state.category.categories,
       photo: state => state.folder.photo,
       folder: state => state.folder.folder
     })

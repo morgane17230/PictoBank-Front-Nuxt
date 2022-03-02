@@ -1,5 +1,6 @@
 const state = () => ({
   name: '',
+  picto: null,
   pictoId: null,
   categoryId: null,
   categoryName: '',

@@ -31,11 +31,20 @@
             />
           </v-card-text>
           <v-card-actions class="justify-center">
-            <v-btn color="cyan darken-3" text type="submit">
-              Valider
-            </v-btn>
-            <v-btn color="cyan darken-3" text @click="closeAddCategoryModal">
+            <v-btn
+              color="cyan darken-3"
+              small
+              outlined
+              @click="closeAddCategoryModal"
+            >
               Annuler
+            </v-btn><v-btn
+              color="cyan darken-3"
+              small
+              class="white--text"
+              type="submit"
+            >
+              Valider
             </v-btn>
           </v-card-actions>
         </v-form>

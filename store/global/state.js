@@ -13,7 +13,8 @@ const state = () => ({
   updateFolderModal: false,
   addPictosToFolderModal: false,
   contactModal: false,
-  cguModal: false
+  cguModal: false,
+  zoomModal: false
 })
 
 export default state

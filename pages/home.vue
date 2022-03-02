@@ -22,16 +22,25 @@
             v-if="$auth.user.role === 'admin'"
             block
             color="cyan darken-3"
-            class="white--text"
+            class="white--text mb-2"
             @click="openUpdateUserModal"
           >
             Modifier le profil
+          </v-btn>
+          <v-btn
+            v-if="$auth.user.role === 'admin'"
+            block
+            color="cyan darken-3"
+            class="white--text"
+            @click="getAllPictos"
+          >
+            Voir tous les pictos
           </v-btn>
         </div>
       </v-col>
       <v-col cols="12" md="9">
         <v-row class="mb-6">
-          <v-col class="d-flex child-flex col-xs-12 col-sm-4 col-lg-3 col-xl-2">
+          <v-col class="d-flex child-flex col-6 col-sm-4 col-lg-3 col-xl-2">
             <v-card class="d-flex flex-column justify-space-between">
               <v-card-actions class="d-flex justify-center">
                 <v-btn
@@ -56,7 +65,7 @@
           <v-col
             v-for="picto in foundPictos"
             :key="picto.id"
-            class="col-xs-12 col-sm-4 col-lg-3 col-xl-2"
+            class="col-6 col-sm-4 col-lg-3 col-xl-2"
           >
             <v-card>
               <v-toolbar color="grey darken-3" dark>
@@ -78,18 +87,18 @@
                 :src="`${picto.path}`"
                 :lazy-src="`${picto.path}`"
                 aspect-ratio="1"
-                class="grey lighten-2 ma-2"
-              >
-                <template #placeholder>
-                  <v-row
-                    class="fill-height ma-0"
-                    align="center"
-                    justify="center"
-                  >
-                    <v-progress-circular indeterminate color="grey lighten-5" />
-                  </v-row>
-                </template>
-              </v-img>
+                class="grey lighten-2 ma-2 pointer"
+                @click="$store.commit('picto/SET_PICTO', picto)"
+              />
+              <template #placeholder>
+                <v-row
+                  class="fill-height ma-0"
+                  align="center"
+                  justify="center"
+                >
+                  <v-progress-circular indeterminate color="grey lighten-5" />
+                </v-row>
+              </template>
               <v-card-actions class="grey darken-3">
                 <v-checkbox
                   v-model="selected"
@@ -134,6 +143,7 @@
         </v-row>
       </v-col>
     </v-row>
+    <ZoomModal />
     <Toast />
     <Profile />
     <AddPictosModal />
@@ -193,19 +203,12 @@ export default {
       this.$store.commit('picto/SET_COLLECTED_PICTOS_HOME', this.selected)
     },
 
-    searchPictos () {
-      if (this.query !== '') {
-        this.$store.dispatch('picto/searchPictos', this.query)
-      } else {
-        this.$store.dispatch('picto/getPictos')
-      }
-    },
-
     searchPictosByCategory (e) {
-      if (e.type === 'click') {
-        this.$store.dispatch('category/getCategory', e.currentTarget.value)
-      }
-      this.$store.dispatch('category/getCategory', e)
+      this.categories.forEach((category) => {
+        if (category.id === e) {
+          this.$store.commit('picto/SET_FOUND_PICTOS', category.pictos)
+        }
+      })
     },
 
     pictoIdChange (e) {
@@ -215,6 +218,10 @@ export default {
 
     generatePDF () {
       this.$store.dispatch('picto/generatePDF')
+    },
+
+    getAllPictos () {
+      this.$store.commit('picto/SET_FOUND_PICTOS', this.pictos)
     }
   }
 }

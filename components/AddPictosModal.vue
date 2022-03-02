@@ -65,7 +65,7 @@
             @change="pictoNameChange"
           />
           <v-row class="mb-5">
-            <v-col class="col-12 col-lg-6">
+            <v-col class="col-12 col-sm-6">
               <croppa
                 v-model="selectedFile"
                 canvas-color="transparent"
@@ -90,47 +90,75 @@
                 :remove-button-size="0"
               />
             </v-col>
-            <v-col class="col-12 col-lg-6 pa-lg-6">
-              <v-btn
-                text
-                small
-                block
-                left
-                :color="selectedFile.chosenFile ? 'cyan' : ''"
-                :disabled="selectedFile === null"
-                @click="onFileChanged"
-              >
-                <v-icon>
-                  mdi-check
-                </v-icon>
-                <span>Valider</span>
-              </v-btn>
-              <v-btn
-                text
-                small
-                block
-                class="text-start"
-                :disabled="selectedFile === null"
-                @click="selectedFile.rotate(-1)"
-              >
-                <v-icon>
-                  mdi-rotate-left
-                </v-icon>
-                <span>Rotation gauche 90°</span>
-              </v-btn>
-              <v-btn
-                text
-                small
-                block
-                left
-                :disabled="selectedFile === null"
-                @click="selectedFile.rotate()"
-              >
-                <v-icon>
-                  mdi-rotate-right
-                </v-icon>
-                <span>Rotation droite 90°</span>
-              </v-btn>
+            <v-col
+              class="d-flex flex-sm-column justify-space-between align-center col-6 pa-lg-6"
+            >
+              <v-tooltip bottom>
+                <template #activator="{ on, attrs }">
+                  <v-btn
+                    text
+                    fab
+                    :disabled="selectedFile === null"
+                    @click="selectedFile.rotate(-1)"
+                  >
+                    <v-icon color="grey" dark v-bind="attrs" v-on="on">
+                      mdi-rotate-left
+                    </v-icon>
+                  </v-btn>
+                </template>
+                <span>Pivoter le picto vers la gauche</span>
+              </v-tooltip>
+              <v-tooltip bottom>
+                <template #activator="{ on, attrs }">
+                  <v-btn
+                    text
+                    fab
+                    :disabled="selectedFile === null"
+                    @click="selectedFile.rotate()"
+                  >
+                    <v-icon color="grey" dark v-bind="attrs" v-on="on">
+                      mdi-rotate-right
+                    </v-icon>
+                  </v-btn>
+                </template>
+                <span>Pivoter le picto vers la droite</span>
+              </v-tooltip>
+              <v-tooltip bottom>
+                <template #activator="{ on, attrs }">
+                  <v-btn text fab>
+                    <v-icon color="grey" dark v-bind="attrs" v-on="on">
+                      mdi-drag-variant
+                    </v-icon>
+                  </v-btn>
+                </template>
+                <span>Cliquer-glisser le picto pour ajuster le cadrage</span>
+              </v-tooltip>
+              <v-tooltip bottom>
+                <template #activator="{ on, attrs }">
+                  <v-btn text fab>
+                    <v-icon color="grey" dark v-bind="attrs" v-on="on">
+                      mdi-magnify-plus
+                    </v-icon>
+                  </v-btn>
+                </template>
+                <span>Utilisez la roulette de la souris pour ajuster le zoom</span>
+              </v-tooltip>
+              <v-tooltip bottom>
+                <template #activator="{ on, attrs }">
+                  <v-btn
+                    text
+                    fab
+                    :color="selectedFile.chosenFile ? 'cyan' : ''"
+                    :disabled="selectedFile === null"
+                    @click="onFileChanged"
+                  >
+                    <v-icon color="grey" dark v-bind="attrs" v-on="on">
+                      mdi-check
+                    </v-icon>
+                  </v-btn>
+                </template>
+                <span>Si vous êtes satisfait, validez le picto tel qu'affiché</span>
+              </v-tooltip>
             </v-col>
           </v-row>
           <v-btn

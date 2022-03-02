@@ -58,6 +58,10 @@ const mutations = {
 
   SET_CGU_MODAL (state, payload) {
     state.cguModal = payload
+  },
+
+  SET_ZOOM_MODAL (state, payload) {
+    state.zoomModal = payload
   }
 }
 

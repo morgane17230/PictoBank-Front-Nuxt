@@ -6,7 +6,9 @@
       color="red lighten-2"
       dark
     >
-      <h2>Suppression du compte</h2>
+      <p class="text-h5">
+        Suppression du compte
+      </p>
       <p>
         Attention, la suppression de votre compte n'entraînera pas la
         suppression de vos pictogrammes. Si vous ne souhaitez pas les laisser

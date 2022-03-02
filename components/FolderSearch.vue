@@ -33,7 +33,7 @@
     </template>
     <template #item="{ item }">
       <v-list-item-content>
-        <v-list-item-title>
+        <v-list-item-title class="d-flex justify-space-between align-center">
           <v-avatar>
             <img :src="item.path">
           </v-avatar>

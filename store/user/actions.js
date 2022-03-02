@@ -85,18 +85,12 @@ const actions = {
 
   deleteUser () {
     const { id } = this.$auth.user.account
-    const { email } = this.state.user
-
     axios
       .delete(`http://localhost:5000/account/${id}`)
       .then((response) => {
         this.$notifier.showSnackbar({
           validation: response.data.validation,
           snackbar: true
-        })
-        axios.post('http://localhost:5000/nodemailer', {
-          type: 'confirmDelete',
-          email
         })
       })
       .catch((error) => {

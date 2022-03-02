@@ -15,6 +15,15 @@ const mutations = {
     }
   },
 
+  SET_PICTO (state, payload) {
+    state.picto = payload
+    if (state.picto === null) {
+      this.commit('global/SET_ZOOM_MODAL', false, { root: true })
+    } else {
+      this.commit('global/SET_ZOOM_MODAL', true, { root: true })
+    }
+  },
+
   SET_PICTO_ID (state, payload) {
     state.pictoId = payload
   },

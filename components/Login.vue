@@ -43,11 +43,20 @@
             </a>
           </v-card-text>
           <v-card-actions class="justify-center">
-            <v-btn color="cyan darken-3" type="submit">
-              Valider
-            </v-btn>
-            <v-btn color="cyan darken-3" text @click="closeLoginUserModal">
+            <v-btn
+              color="cyan darken-3"
+              outlined
+              small
+              @click="closeLoginUserModal"
+            >
               Annuler
+            </v-btn><v-btn
+              color="cyan darken-3"
+              class="white--text"
+              small
+              type="submit"
+            >
+              Valider
             </v-btn>
           </v-card-actions>
         </v-form>

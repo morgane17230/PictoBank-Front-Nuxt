@@ -1,5 +1,11 @@
 <template>
-  <v-form ref="forma" v-model="valid" lazy-validation class="mt-5" @submit.prevent="updateUser">
+  <v-form
+    ref="forma"
+    v-model="valid"
+    lazy-validation
+    class="mt-5"
+    @submit.prevent="updateUser"
+  >
     <v-text-field
       type="text"
       name="lastname"
@@ -59,11 +65,19 @@
       @click:append="show2 = !show2"
       @change="teamPasswordChange"
     />
-    <div class="py-5">
-      <v-btn type="submit" block color="cyan darken-3">
+    <v-card-actions class="justify-center">
+      <v-btn
+        color="cyan darken-3"
+        outlined
+        small
+        @click="closeUpdateUserModale"
+      >
+        Annuler
+      </v-btn>
+      <v-btn type="submit" color="cyan darken-3" small class="white--text">
         Valider
       </v-btn>
-    </div>
+    </v-card-actions>
   </v-form>
 </template>
 
@@ -109,11 +123,13 @@ export default {
       teamPasswordChange: 'user/SET_TEAM_PASSWORD'
     }),
 
+    closeUpdateUserModale () {
+      this.$store.commit('global/SET_USER_UPDATE_MODAL', false)
+    },
+
     updateUser () {
       this.$store.dispatch('user/updateUser')
-      setTimeout(() => {
-        this.$store.commit('global/SET_USER_UPDATE_MODAL', false)
-      }, 1000)
+      this.$store.commit('global/SET_USER_UPDATE_MODAL', false)
     }
   }
 }

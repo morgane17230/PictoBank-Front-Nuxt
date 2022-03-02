@@ -24,13 +24,14 @@
             <v-switch
               v-model="switch1"
               name="account"
-              flat
               color="cyan darken-3"
               required
               :value="isOrganization"
-              :label=" switch1
-                ? 'Je représente un établissement'
-                : 'Je suis un particulier'"
+              :label="
+                switch1
+                  ? 'Je représente un établissement'
+                  : 'Je suis un particulier'
+              "
               @change="isOrganizationChange"
             />
             <v-text-field
@@ -97,11 +98,20 @@
             />
           </v-card-text>
           <v-card-actions class="justify-center">
-            <v-btn color="cyan darken-3" text type="submit">
-              Valider
-            </v-btn>
-            <v-btn color="cyan darken-3" text @click="closeRegisterUserModal">
+            <v-btn
+              color="cyan darken-3"
+              outlined
+              small
+              @click="closeRegisterUserModal"
+            >
               Annuler
+            </v-btn><v-btn
+              color="cyan darken-3"
+              small
+              class="white--text"
+              type="submit"
+            >
+              Valider
             </v-btn>
           </v-card-actions>
         </v-form>
