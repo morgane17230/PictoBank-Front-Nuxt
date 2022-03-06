@@ -10,3 +10,13 @@
  {
    cursor: pointer;
  }
+
+ .index-bg {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   background-image: url('/background1.jpg');
+   height: 60vh;
+   background-position: center;
+   background-size: cover;
+ }
