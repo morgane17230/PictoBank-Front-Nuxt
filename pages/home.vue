@@ -40,7 +40,7 @@
       </v-col>
       <v-col cols="12" md="9">
         <v-row class="mb-6">
-          <v-col class="d-flex child-flex col-6 col-sm-4 col-lg-3 col-xl-2">
+          <v-col class="d-flex child-flex col-12 col-sm-4 col-lg-3 col-xl-2">
             <v-card class="d-flex flex-column justify-space-between">
               <v-card-actions class="d-flex justify-center">
                 <v-btn
@@ -64,7 +64,7 @@
           </v-col>
           <v-col
             v-if="pictos.length === 0"
-            class="col-6 col-sm-8 col-lg-9 col-xl-10"
+            class="col-12 col-sm-8 col-lg-9 col-xl-10"
           >
             <v-card class="text-h6 text-center py-10 cyan lighten-5">
               Pas de pictos pour le moment
