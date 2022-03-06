@@ -1,5 +1,11 @@
 <template>
-  <v-dialog v-model="displayFolderModal" max-width="800px" persistent>
+  <v-dialog
+    v-model="displayFolderModal"
+    fullscreen
+    hide-overlay
+    transition="dialog-bottom-transition"
+    persistent
+  >
     <v-card flat>
       <v-toolbar color="cyan darken-3" dark>
         <v-toolbar-title>
@@ -74,7 +80,7 @@
             <v-col
               v-for="picto in folder.pictos"
               :key="picto.id"
-              class="d-flex child-flex col-sm-4 col-md-3"
+              class="col-6 col-sm-4 col-lg-3 col-xl-2"
             >
               <v-card>
                 <v-toolbar color="grey darken-3" dark>
@@ -102,7 +108,8 @@
                   :src="`${picto.path}`"
                   :lazy-src="`${picto.path}`"
                   aspect-ratio="1"
-                  class="grey lighten-2 ma-2"
+                  class="grey lighten-2 ma-2 pointer"
+                  @click="$store.commit('picto/SET_PICTO', picto)"
                 />
                 <template #placeholder>
                   <v-row
@@ -142,7 +149,14 @@
           </v-row>
           <v-row v-else>
             <v-card-text class="text-center">
-              <div>Pas encore de pictos dans ce dossier</div>
+              <v-alert
+                color="grey darken-1"
+                dark
+                border="bottom"
+                class="text-h6"
+              >
+                Pas encore de pictos dans ce dossier
+              </v-alert>
             </v-card-text>
           </v-row>
         </div>
