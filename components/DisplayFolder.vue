@@ -1,15 +1,14 @@
 <template>
   <v-dialog
     v-model="displayFolderModal"
-    fullscreen
-    hide-overlay
     transition="dialog-bottom-transition"
+    fullscreen
     persistent
   >
-    <v-card flat>
-      <v-toolbar color="cyan darken-3" dark>
+    <v-card flat tile>
+      <v-toolbar class="mb-3" color="cyan darken-3" dark>
         <v-toolbar-title>
-          <v-avatar left class="me-2">
+          <v-avatar left>
             <v-img :src="folder.path" />
           </v-avatar>
           <span>
@@ -33,134 +32,132 @@
           </v-icon>
         </v-btn>
       </v-toolbar>
-      <v-card flat>
-        <div class="pa-2">
-          <v-form
-            v-if="openForm"
-            ref="form"
-            v-model="valid"
-            lazy-validation
-            class="d-sm-flex"
-            @submit.prevent="updateFolder"
+      <v-card-text>
+        <v-form
+          v-if="openForm"
+          ref="form"
+          v-model="valid"
+          lazy-validation
+          class="d-sm-flex"
+          @submit.prevent="updateFolder"
+        >
+          <v-text-field
+            label="Nom du dossier"
+            type="text"
+            color="cyan darken-3"
+            name="foldername"
+            :value="folder.foldername"
+            @change="foldernameChange"
+          />
+          <v-file-input
+            ref="uploader"
+            name="path"
+            type="file"
+            color="cyan darken-3"
+            accept="image/*"
+            label="photo"
+            prepend-icon="mdi-camera"
+            :rules="pictoRules"
+            :value="photo"
+            @change="photoChange"
+          />
+          <div class="text-center d-flex align-center">
+            <v-btn icon type="submit">
+              <v-icon color="green">
+                mdi-check
+              </v-icon>
+            </v-btn>
+            <v-btn icon @click="openForm = false">
+              <v-icon color="red">
+                mdi-close
+              </v-icon>
+            </v-btn>
+          </div>
+        </v-form>
+        <v-row v-if="folder.pictos && folder.pictos.length > 0">
+          <v-col
+            v-for="picto in folder.pictos"
+            :key="picto.id"
+            class="col-6 col-sm-4 col-lg-3 col-xl-2"
           >
-            <v-text-field
-              label="Nom du dossier"
-              type="text"
-              color="cyan darken-3"
-              name="foldername"
-              :value="folder.foldername"
-              @change="foldernameChange"
-            />
-            <v-file-input
-              ref="uploader"
-              name="path"
-              type="file"
-              color="cyan darken-3"
-              accept="image/*"
-              label="photo"
-              prepend-icon="mdi-camera"
-              :rules="pictoRules"
-              :value="photo"
-              @change="photoChange"
-            />
-            <div class="text-center d-flex align-center">
-              <v-btn icon type="submit">
-                <v-icon color="green">
-                  mdi-check
-                </v-icon>
-              </v-btn>
-              <v-btn icon @click="openForm = false">
-                <v-icon color="red">
-                  mdi-close
-                </v-icon>
-              </v-btn>
-            </div>
-          </v-form>
-          <v-row v-if="folder.pictos && folder.pictos.length > 0">
-            <v-col
-              v-for="picto in folder.pictos"
-              :key="picto.id"
-              class="col-6 col-sm-4 col-lg-3 col-xl-2"
-            >
-              <v-card>
-                <v-toolbar color="grey darken-3" dark>
-                  <v-chip
-                    small
-                    :class="
-                      `${
-                        categories.find(cat => cat.id === picto.category_id)
-                          .color.text
-                      }--text`
-                    "
-                    :color="
-                      categories.find(cat => cat.id === picto.category_id).color
-                        .background
-                    "
-                  >
-                    {{ picto.originalname.split("-")[0] }}
-                  </v-chip>
-                  <v-spacer />
-                  <span class="white--text end">{{
-                    picto.originalname.split("-")[1]
-                  }}</span>
-                </v-toolbar>
-                <v-img
-                  :src="`${picto.path}`"
-                  :lazy-src="`${picto.path}`"
-                  aspect-ratio="1"
-                  class="grey lighten-2 ma-2 pointer"
-                  @click="$store.commit('picto/SET_PICTO', picto)"
+            <v-card>
+              <v-toolbar color="grey darken-3" dark>
+                <v-chip
+                  small
+                  :class="
+                    `${
+                      categories.find(cat => cat.id === picto.category_id)
+                        .color.text
+                    }--text`
+                  "
+                  :color="
+                    categories.find(cat => cat.id === picto.category_id).color
+                      .background
+                  "
+                >
+                  {{ picto.originalname.split("-")[0] }}
+                </v-chip>
+                <v-spacer />
+                <span class="white--text end">{{
+                  picto.originalname.split("-")[1]
+                }}</span>
+              </v-toolbar>
+              <v-img
+                :src="`${picto.path}`"
+                :lazy-src="`${picto.path}`"
+                aspect-ratio="1"
+                class="grey lighten-2 ma-2 pointer"
+                @click="$store.commit('picto/SET_PICTO', picto)"
+              />
+              <template #placeholder>
+                <v-row
+                  class="fill-height ma-0"
+                  align="center"
+                  justify="center"
+                >
+                  <v-progress-circular indeterminate color="grey lighten-5" />
+                </v-row>
+              </template>
+              <v-card-actions class="grey darken-3">
+                <v-checkbox
+                  v-model="selected"
+                  :value="picto.id"
+                  on-icon="mdi-check"
+                  off-icon="mdi-printer"
+                  x-small
+                  color="cyan darken-3"
+                  @change="collectPictos"
                 />
-                <template #placeholder>
-                  <v-row
-                    class="fill-height ma-0"
-                    align="center"
-                    justify="center"
-                  >
-                    <v-progress-circular indeterminate color="grey lighten-5" />
-                  </v-row>
-                </template>
-                <v-card-actions class="grey darken-3">
-                  <v-checkbox
-                    v-model="selected"
-                    :value="picto.id"
-                    on-icon="mdi-check"
-                    off-icon="mdi-printer"
-                    x-small
-                    color="cyan darken-3"
-                    @change="collectPictos"
-                  />
-                  <v-btn
-                    fab
-                    dark
-                    x-small
-                    icon
-                    color="cyan darken-3"
-                    :value="picto.id"
-                    @click="removePictoFromFolder"
-                  >
-                    <v-icon>
-                      mdi-heart-off
-                    </v-icon>
-                  </v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-col>
-          </v-row>
-          <v-row v-else>
-            <v-card-text class="text-center">
-              <v-alert
-                color="grey darken-1"
-                dark
-                border="bottom"
-                class="text-h6"
-              >
-                Pas encore de pictos dans ce dossier
-              </v-alert>
-            </v-card-text>
-          </v-row>
-        </div>
-      </v-card>
+                <v-btn
+                  fab
+                  dark
+                  x-small
+                  icon
+                  color="cyan darken-3"
+                  :value="picto.id"
+                  @click="removePictoFromFolder"
+                >
+                  <v-icon>
+                    mdi-heart-off
+                  </v-icon>
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-col>
+        </v-row>
+        <v-row v-else>
+          <v-card-text class="text-center">
+            <v-alert
+              color="grey darken-1"
+              dark
+              border="bottom"
+              class="text-h6"
+            >
+              Pas encore de pictos dans ce dossier
+            </v-alert>
+          </v-card-text>
+        </v-row>
+      </v-card-text>
     </v-card>
   </v-dialog>
 </template>
