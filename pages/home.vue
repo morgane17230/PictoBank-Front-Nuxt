@@ -62,7 +62,10 @@
               </v-toolbar>
             </v-card>
           </v-col>
-          <v-col v-if="pictos.length === 0" class="col-6 col-sm-8 col-lg-9 col-xl-12">
+          <v-col
+            v-if="pictos.length === 0"
+            class="col-6 col-sm-8 col-lg-9 col-xl-10"
+          >
             <v-card class="text-h6 text-center py-10 cyan lighten-5">
               Pas de pictos pour le moment
             </v-card>
@@ -75,6 +78,7 @@
             <v-card>
               <v-toolbar color="grey darken-3" dark>
                 <v-chip
+                  v-if="picto"
                   small
                   :class="
                     `${

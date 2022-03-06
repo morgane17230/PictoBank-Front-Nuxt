@@ -65,7 +65,6 @@ const mutations = {
     const index = state.pictos.findIndex(picto => picto.id === payload.id)
     if (index > -1) {
       state.pictos.splice(index, 1)
-      state.foundPictos.splice(index, 1)
     }
   },
 
