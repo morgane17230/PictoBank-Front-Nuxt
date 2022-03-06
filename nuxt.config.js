@@ -99,6 +99,38 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-    extractCSS: true
+    extractCSS: true,
+    optimization: {
+      splitChunks: {
+        cacheGroups: {
+          styles: {
+            name: 'styles',
+            test: /\.(css|vue)$/,
+            chunks: 'all',
+            enforce: true
+          }
+        }
+      }
+    },
+    collapseBooleanAttributes: true,
+    decodeEntities: true,
+    minifyCSS: true,
+    minifyJS: true,
+    processConditionalComments: true,
+    removeEmptyAttributes: true,
+    removeRedundantAttributes: true,
+    trimCustomFragments: true,
+    useShortDoctype: true,
+    minimize: true,
+    minimizer: [
+    // terser-webpack-plugin
+    // optimize-css-assets-webpack-plugin
+    ],
+    splitChunks: {
+      chunks: 'all',
+      automaticNameDelimiter: '.',
+      name: undefined,
+      cacheGroups: {}
+    }
   }
 }
