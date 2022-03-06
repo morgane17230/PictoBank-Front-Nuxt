@@ -2,7 +2,7 @@
   <div>
     <v-app-bar fixed app>
       <v-toolbar-title hidden v-text="title" />
-      <v-img lazy-src="/pikto.png" max-width="10rem" src="/pikto.png" />
+      <v-img lazy-src="/pikto.png" max-width="10rem" src="/pikto.png" alt="logo Pikto" />
       <v-spacer />
       <v-btn v-if="$auth.loggedIn" color="cyan darken-3" icon @click="logout">
         <v-icon>
@@ -10,7 +10,7 @@
         </v-icon>
       </v-btn>
       <div v-else>
-        <v-btn color="cyan darken-3" icon @click="openLoginUserModal">
+        <v-btn color="cyan darken-3" type="button" name="login" icon @click="openLoginUserModal">
           <v-icon>
             mdi-account-circle
           </v-icon>
