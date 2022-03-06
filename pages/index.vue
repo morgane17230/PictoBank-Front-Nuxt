@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div justify="center" align="center">
     <div class="index-bg text-h3">
       Pikto aide les soignants et les proches à renouer le contact...
     </div>
