@@ -12,7 +12,7 @@
       <div v-else>
         <v-btn color="cyan darken-3" icon @click="openLoginUserModal">
           <v-icon>
-            mdi-login
+            mdi-account-circle
           </v-icon>
         </v-btn>
       </div>

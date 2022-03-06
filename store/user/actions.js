@@ -66,7 +66,7 @@ const actions = {
         })
         if (!this.$auth.user) {
           this.$axios
-            .$post(`${process.env.API}/nodemailer`, {
+            .$post('/nodemailer', {
               type: 'confirmResetPassword',
               firstname: response.user.account.firstname,
               lastname: response.user.account.lastname,
@@ -85,7 +85,7 @@ const actions = {
   deleteUser () {
     const { id } = this.$auth.user.account
     this.$axios
-      .$delete(`${process.env.API}/account/${id}`)
+      .$delete(`/account/${id}`)
       .then((response) => {
         this.$notifier.showSnackbar({
           validation: response.validation,
@@ -126,7 +126,7 @@ const actions = {
   sendContact () {
     const { lastname, firstname, email, message } = this.state.user
     this.$axios
-      .$post(`${process.env.API}/nodemailer`, {
+      .$post('/nodemailer', {
         type: 'contact',
         lastname,
         firstname,
@@ -151,7 +151,7 @@ const actions = {
     const { email } = this.state.user
 
     this.$axios
-      .$post(`${process.env.API}/nodemailer`, {
+      .$post('/nodemailer', {
         type: 'resetPassword',
         email
       })

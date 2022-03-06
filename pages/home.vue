@@ -55,9 +55,14 @@
                   </v-icon>
                 </v-btn>
               </v-card-actions>
+              <v-toolbar color="cyan darken-3" dark>
+                <v-card-title class="mx-auto">
+                  Ajouter un picto
+                </v-card-title>
+              </v-toolbar>
             </v-card>
           </v-col>
-          <v-col v-if="pictos.length === 0" class="col-12 col-md">
+          <v-col v-if="pictos.length === 0" class="col-6 col-sm-8 col-lg-9 col-xl-12">
             <v-card class="text-h6 text-center py-10 cyan lighten-5">
               Pas de pictos pour le moment
             </v-card>
