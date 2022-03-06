@@ -102,14 +102,6 @@ export default {
     extractCSS: true,
     optimization: {
       minimize: true,
-      minimizer: [
-        (compiler) => {
-          const TerserPlugin = require('terser-webpack-plugin')
-          new TerserPlugin({
-            minify: TerserPlugin.uglifyJsMinify
-          }).apply(compiler)
-        }
-      ],
       splitChunks: {
         cacheGroups: {
           styles: {
