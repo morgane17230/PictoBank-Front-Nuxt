@@ -44,8 +44,7 @@ export default {
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     '@nuxtjs/auth-next',
-    '@nuxtjs/dotenv',
-    '@nuxt/image'
+    '@nuxtjs/dotenv'
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
