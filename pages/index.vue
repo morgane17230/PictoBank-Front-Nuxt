@@ -1,5 +1,5 @@
 <template>
-  <div justify="center" align="center">
+  <div>
     <div class="index-bg text-h3">
       Pikto aide les soignants et les proches à renouer le contact...
     </div>
@@ -8,6 +8,7 @@
       tile
       block
       color="grey darken-3"
+      aria-label="inscription"
       @click="openRegisterUserModal"
     >
       S'inscrire
