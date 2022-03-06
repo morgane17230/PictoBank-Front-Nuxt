@@ -1,15 +1,13 @@
-import axios from 'axios'
-
 const actions = {
   getFolder ({ commit }, payload) {
-    axios
-      .get(`http://localhost:5000/folder/${payload}`)
+    this.$axios
+      .$get(`/folder/${payload}`)
       .then((response) => {
-        commit('SET_FOLDER', response.data)
+        commit('SET_FOLDER', response)
       })
       .catch((error) => {
         this.$notifier.showSnackbar({
-          validation: error.response.data.validation,
+          validation: error.response.validation,
           snackbar: true
         })
       })
@@ -18,14 +16,14 @@ const actions = {
   getFoldersByOrg ({ commit }) {
     const { id } = this.$auth.user.account
 
-    axios
-      .get(`http://localhost:5000/org/${id}/folders`)
+    this.$axios
+      .$get(`/org/${id}/folders`)
       .then((response) => {
-        commit('SET_FOLDERS', response.data)
+        commit('SET_FOLDERS', response)
       })
       .catch((error) => {
         this.$notifier.showSnackbar({
-          validation: error.response.data.validation,
+          validation: error.response.validation,
           snackbar: true
         })
       })
@@ -40,18 +38,18 @@ const actions = {
     formData.append('foldername', foldername)
     formData.append('account_id', id)
 
-    axios
-      .post('http://localhost:5000/addFolder', formData)
+    this.$axios
+      .$post('/addFolder', formData)
       .then((response) => {
-        commit('ADD_FOLDER', response.data.newFolder)
+        commit('ADD_FOLDER', response.newFolder)
         this.$notifier.showSnackbar({
-          validation: response.data.validation,
+          validation: response.validation,
           snackbar: true
         })
       })
       .catch((error) => {
         this.$notifier.showSnackbar({
-          validation: error.response.data.validation,
+          validation: error.response.validation,
           snackbar: true
         })
       })
@@ -68,36 +66,36 @@ const actions = {
       formData.append('foldername', foldername)
     }
 
-    axios
-      .put(`http://localhost:5000/folder/${payload}`, formData)
+    this.$axios
+      .$put(`/folder/${payload}`, formData)
       .then((response) => {
-        commit('UPDATE_FOLDER', response.data.updatedFolder)
+        commit('UPDATE_FOLDER', response.updatedFolder)
         this.$notifier.showSnackbar({
-          validation: response.data.validation,
+          validation: response.validation,
           snackbar: true
         })
       })
       .catch((error) => {
         this.$notifier.showSnackbar({
-          validation: error.response.data.validation,
+          validation: error.response.validation,
           snackbar: true
         })
       })
   },
 
   deleteFolder ({ commit }, payload) {
-    axios
-      .delete(`http://localhost:5000/folder/${payload}`)
+    this.$axios
+      .$delete(`/folder/${payload}`)
       .then((response) => {
-        commit('DEL_FOLDER', response.data.deletedFolder)
+        commit('DEL_FOLDER', response.deletedFolder)
         this.$notifier.showSnackbar({
-          validation: response.data.validation,
+          validation: response.validation,
           snackbar: true
         })
       })
       .catch((error) => {
         this.$notifier.showSnackbar({
-          validation: error.response.data.validation,
+          validation: error.response.validation,
           snackbar: true
         })
       })
@@ -106,17 +104,17 @@ const actions = {
   addPictoToFolder () {
     const { folderId } = this.state.folder
     const { pictoId } = this.state.picto
-    axios
-      .post(`http://localhost:5000/folder/${folderId}/picto/${pictoId}`)
+    this.$axios
+      .$post(`/folder/${folderId}/picto/${pictoId}`)
       .then((response) => {
         this.$notifier.showSnackbar({
-          validation: response.data.validation,
+          validation: response.validation,
           snackbar: true
         })
       })
       .catch((error) => {
         this.$notifier.showSnackbar({
-          validation: error.response.data.validation,
+          validation: error.response.validation,
           snackbar: true
         })
       })
@@ -124,18 +122,18 @@ const actions = {
 
   removePictoFromFolder ({ commit }, payload) {
     const { pictoId, folderId } = payload
-    axios
-      .delete(`http://localhost:5000/folder/${folderId}/picto/${pictoId}`)
+    this.$axios
+      .$delete(`/folder/${folderId}/picto/${pictoId}`)
       .then((response) => {
         commit('DEL_FROM_FOLDER', payload)
         this.$notifier.showSnackbar({
-          validation: response.data.validation,
+          validation: response.validation,
           snackbar: true
         })
       })
       .catch((error) => {
         this.$notifier.showSnackbar({
-          validation: error.response.data.validation,
+          validation: error.response.validation,
           snackbar: true
         })
       })

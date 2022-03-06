@@ -39,7 +39,7 @@ const mutations = {
   },
 
   DEL_FROM_FOLDER (state, payload) {
-    const index = state.folder.pictos.findIndex(picto => picto.id === payload.id)
+    const index = state.folder.pictos.findIndex(picto => picto.id === payload.pictoId)
     state.folder.pictos.splice(index, 1)
   },
 

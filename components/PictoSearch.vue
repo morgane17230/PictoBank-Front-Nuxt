@@ -30,16 +30,21 @@ export default {
 
   methods: {
     searchPictos () {
-      const queries = this.query.split(' ')
-      const foundPictos = []
-      this.pictos.forEach((picto) => {
-        return queries.forEach((element) => {
-          const index = picto.originalname.indexOf(element)
-          if (index !== -1) { return foundPictos.push(picto) }
+      if (this.query) {
+        const queries = this.query.split(' ')
+        const foundPictos = []
+        this.pictos.forEach((picto) => {
+          return queries.forEach((element) => {
+            const index = picto.originalname.indexOf(element)
+            if (index !== -1) { return foundPictos.push(picto) }
+          })
         })
-      })
-      this.$store.commit('picto/SET_FOUND_PICTOS', [...new Set(foundPictos)])
+        this.$store.commit('picto/SET_FOUND_PICTOS', [...new Set(foundPictos)])
+      } else {
+        this.$store.commit('picto/SET_FOUND_PICTOS', this.pictos)
+      }
     }
   }
+
 }
 </script>

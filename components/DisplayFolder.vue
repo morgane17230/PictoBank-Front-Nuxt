@@ -31,10 +31,10 @@
         <div class="pa-2">
           <v-form
             v-if="openForm"
-            ref="formupdate"
+            ref="form"
             v-model="valid"
             lazy-validation
-            class="d-lg-flex"
+            class="d-sm-flex"
             @submit.prevent="updateFolder"
           >
             <v-text-field
@@ -196,11 +196,11 @@ export default {
     },
 
     updateFolder () {
-      if (this.$refs.formupdate.validate()) {
+      if (this.$refs.form.validate()) {
         this.$store.dispatch('folder/updateFolder', this.folder.id)
       }
       setTimeout(() => {
-        this.$refs.formupdate.reset()
+        this.$refs.form.reset()
         this.openForm = false
       }, 1000)
     },

@@ -1,5 +1,3 @@
-import axios from 'axios'
-
 const actions = {
   addUser () {
     const {
@@ -11,8 +9,8 @@ const actions = {
       isOrganization
     } = this.state.user
 
-    axios
-      .post('http://localhost:5000/addUser', {
+    this.$axios
+      .$post('/addUser', {
         lastname,
         firstname,
         name,
@@ -22,13 +20,13 @@ const actions = {
       })
       .then((response) => {
         this.$notifier.showSnackbar({
-          validation: response.data.validation,
+          validation: response.validation,
           snackbar: true
         })
       })
       .catch((error) => {
         this.$notifier.showSnackbar({
-          validation: error.response.data.validation,
+          validation: error.response.validation,
           snackbar: true
         })
       })
@@ -40,7 +38,7 @@ const actions = {
     if (this.$auth.loggedIn) {
       id = this.$auth.user.id
     } else {
-      id = this.state.user.uuid
+      id = this.state.user.id
     }
 
     const {
@@ -52,8 +50,8 @@ const actions = {
       teamPassword
     } = this.state.user
 
-    axios
-      .put(`http://localhost:5000/user/${id}`, {
+    this.$axios
+      .$put(`/user/${id}`, {
         lastname,
         firstname,
         name,
@@ -63,21 +61,22 @@ const actions = {
       })
       .then((response) => {
         this.$notifier.showSnackbar({
-          validation: response.data.validation,
+          validation: response.validation,
           snackbar: true
         })
         if (!this.$auth.user) {
-          axios.post('http://localhost:5000/nodemailer', {
-            type: 'confirmResetPassword',
-            firstname: response.data.user.account.firstname,
-            lastname: response.data.user.account.lastname,
-            email: response.data.user.account.email
-          })
+          this.$axios
+            .$post(`${process.env.API}/nodemailer`, {
+              type: 'confirmResetPassword',
+              firstname: response.user.account.firstname,
+              lastname: response.user.account.lastname,
+              email: response.user.account.email
+            })
         }
       })
       .catch((error) => {
         this.$notifier.showSnackbar({
-          validation: error.response.data.validation,
+          validation: error.response.validation,
           snackbar: true
         })
       })
@@ -85,17 +84,17 @@ const actions = {
 
   deleteUser () {
     const { id } = this.$auth.user.account
-    axios
-      .delete(`http://localhost:5000/account/${id}`)
+    this.$axios
+      .$delete(`${process.env.API}/account/${id}`)
       .then((response) => {
         this.$notifier.showSnackbar({
-          validation: response.data.validation,
+          validation: response.validation,
           snackbar: true
         })
       })
       .catch((error) => {
         this.$notifier.showSnackbar({
-          validation: error.response.data.validation,
+          validation: error.response.validation,
           snackbar: true
         })
       })
@@ -112,13 +111,13 @@ const actions = {
       })
       .then((response) => {
         this.$notifier.showSnackbar({
-          validation: response.data.validation,
+          validation: response.validation,
           snackbar: true
         })
       })
       .catch((error) => {
         this.$notifier.showSnackbar({
-          validation: error.response.data.validation,
+          validation: error.response.validation,
           snackbar: true
         })
       })
@@ -126,8 +125,8 @@ const actions = {
 
   sendContact () {
     const { lastname, firstname, email, message } = this.state.user
-    axios
-      .post('http://localhost:5000/nodemailer', {
+    this.$axios
+      .$post(`${process.env.API}/nodemailer`, {
         type: 'contact',
         lastname,
         firstname,
@@ -136,13 +135,13 @@ const actions = {
       })
       .then((response) => {
         this.$notifier.showSnackbar({
-          validation: response.data.validation,
+          validation: response.validation,
           snackbar: true
         })
       })
       .catch((error) => {
         this.$notifier.showSnackbar({
-          validation: error.response.data.validation,
+          validation: error.response.validation,
           snackbar: true
         })
       })
@@ -151,20 +150,20 @@ const actions = {
   resetPassword () {
     const { email } = this.state.user
 
-    axios
-      .post('http://localhost:5000/nodemailer', {
+    this.$axios
+      .$post(`${process.env.API}/nodemailer`, {
         type: 'resetPassword',
         email
       })
       .then((response) => {
         this.$notifier.showSnackbar({
-          validation: response.data.validation,
+          validation: response.validation,
           snackbar: true
         })
       })
       .catch((error) => {
         this.$notifier.showSnackbar({
-          validation: error.response.data.validation,
+          validation: error.response.validation,
           snackbar: true
         })
       })

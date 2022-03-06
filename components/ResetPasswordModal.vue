@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="$route.query.uuid" persistent max-width="500px">
+  <v-dialog v-model="$route.query.id" persistent max-width="500px">
     <v-card flat>
       <v-toolbar color="cyan darken-3" dark>
         <v-toolbar-title>Changement de mot de passe</v-toolbar-title>
@@ -88,7 +88,7 @@ export default {
   },
 
   created () {
-    this.$store.commit('user/SET_UUID', this.$route.query.uuid)
+    this.$store.commit('user/SET_ID', this.$route.query.id)
   },
 
   methods: {

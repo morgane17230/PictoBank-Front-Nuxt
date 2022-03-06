@@ -1,5 +1,5 @@
 const state = () => ({
-  uuid: '',
+  id: '',
   lastname: '',
   firstname: '',
   email: '',

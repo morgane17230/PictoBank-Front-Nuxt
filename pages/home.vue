@@ -71,9 +71,15 @@
               <v-toolbar color="grey darken-3" dark>
                 <v-chip
                   small
-                  :class="`${categories.find(cat => cat.id === picto.category_id).color.text}--text`"
+                  :class="
+                    `${
+                      categories.find(cat => cat.id === picto.category_id).color
+                        .text
+                    }--text`
+                  "
                   :color="
-                    categories.find(cat => cat.id === picto.category_id).color.background
+                    categories.find(cat => cat.id === picto.category_id).color
+                      .background
                   "
                   :value="picto.category_id"
                   @click="searchPictosByCategory(picto.category_id)"
@@ -81,7 +87,9 @@
                   {{ picto.originalname.split("-")[0] }}
                 </v-chip>
                 <v-spacer />
-                <span class="white--text end">{{ picto.originalname.split("-")[1] }}</span>
+                <span class="white--text end">{{
+                  picto.originalname.split("-")[1]
+                }}</span>
               </v-toolbar>
               <v-img
                 :src="`${picto.path}`"
@@ -91,11 +99,7 @@
                 @click="$store.commit('picto/SET_PICTO', picto)"
               />
               <template #placeholder>
-                <v-row
-                  class="fill-height ma-0"
-                  align="center"
-                  justify="center"
-                >
+                <v-row class="fill-height ma-0" align="center" justify="center">
                   <v-progress-circular indeterminate color="grey lighten-5" />
                 </v-row>
               </template>
@@ -197,6 +201,7 @@ export default {
 
     deletePicto (e) {
       this.$store.dispatch('picto/deletePicto', e.currentTarget.value)
+      this.$store.commit('picto/SET_FOUND_PICTOS', this.pictos)
     },
 
     collectPictos () {
@@ -218,6 +223,7 @@ export default {
 
     generatePDF () {
       this.$store.dispatch('picto/generatePDF')
+      this.selected = []
     },
 
     getAllPictos () {

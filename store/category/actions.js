@@ -1,10 +1,8 @@
-import axios from 'axios'
-
 const actions = {
   getCategories ({ commit }) {
-    axios
-      .get('http://localhost:5000/category')
-      .then(response => commit('SET_CATEGORIES', response.data))
+    this.$axios
+      .$get('/category')
+      .then(response => commit('SET_CATEGORIES', response))
       .catch((error) => {
         this.$notifier.showSnackbar({
           validation: error.response.data.validation,
@@ -15,20 +13,20 @@ const actions = {
 
   addCategory ({ commit }) {
     const { name } = this.state.category
-    axios
-      .post('http://localhost:5000/category', {
+    this.$axios
+      .$post('/category', {
         name
       })
       .then((response) => {
-        commit('ADD_CATEGORY', response.data.category)
+        commit('ADD_CATEGORY', response.category)
         this.$notifier.showSnackbar({
-          validation: response.data.validation,
+          validation: response.validation,
           snackbar: true
         })
       })
       .catch((error) => {
         this.$notifier.showSnackbar({
-          validation: error.response.data.validation,
+          validation: error.response.validation,
           snackbar: true
         })
       })
