@@ -52,14 +52,6 @@ export default {
     baseURL: process.env.API
   },
 
-  render: {
-    bundleRenderer: {
-      shouldPreload: (file, type) => {
-        return ['script', 'style', 'font'].includes(type)
-      }
-    }
-  },
-
   auth: {
     strategies: {
       local: {
@@ -107,7 +99,9 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-    extractCSS: true,
+    extractCSS: {
+      ignoreOrder: true
+    },
     optimization: {
       minimize: true,
       splitChunks: {
@@ -135,6 +129,19 @@ export default {
         minifyURLs: true,
         removeComments: true,
         removeEmptyElements: true
+      }
+    }
+  },
+
+  render: {
+    bundleRenderer: {
+      shouldPreload: (file, type) => {
+        if (type === 'script' || type === 'style') {
+          return true
+        }
+        if (type === 'font') {
+          return /\.woff$/.test(file)
+        }
       }
     }
   }
