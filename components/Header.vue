@@ -3,21 +3,27 @@
     <v-app-bar fixed app>
       <v-toolbar-title hidden v-text="title" />
       <nuxt-picture
+        preset="cover"
+        provider="static"
+        quality="70"
+        modifiers="rounded"
         legacy-format="png"
         class="mt-3"
-        lazy-src="/pikto.webp"
         width="150px"
         src="/pikto.webp"
         alt="logo Pikto"
       />
       <v-spacer />
       <v-btn v-if="$auth.loggedIn" color="cyan darken-3" icon @click="logout">
-        <v-icon>
-          mdi-logout
-        </v-icon>
+        <v-icon> mdi-logout </v-icon>
       </v-btn>
       <div v-else>
-        <v-btn color="cyan darken-3" aria-label="connexion" icon @click="openLoginUserModal">
+        <v-btn
+          color="cyan darken-3"
+          aria-label="connexion"
+          icon
+          @click="openLoginUserModal"
+        >
           <v-icon size="30">
             mdi-account-circle
           </v-icon>
