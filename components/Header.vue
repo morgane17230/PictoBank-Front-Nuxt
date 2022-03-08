@@ -2,7 +2,14 @@
   <div>
     <v-app-bar fixed app>
       <v-toolbar-title hidden v-text="title" />
-      <v-img class="mt-3" lazy-src="/pikto.png" max-width="10rem" src="/pikto.png" alt="logo Pikto" />
+      <nuxt-picture
+        legacy-format="png"
+        class="mt-3"
+        lazy-src="/pikto.webp"
+        max-width="10rem"
+        src="/pikto.webp"
+        alt="logo Pikto"
+      />
       <v-spacer />
       <v-btn v-if="$auth.loggedIn" color="cyan darken-3" icon @click="logout">
         <v-icon>

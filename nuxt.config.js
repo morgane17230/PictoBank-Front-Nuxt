@@ -44,8 +44,16 @@ export default {
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     '@nuxtjs/auth-next',
-    '@nuxtjs/dotenv'
+    '@nuxtjs/dotenv',
+    '@nuxt/image'
   ],
+
+  image: {
+    domains: [
+      'https://pictos.s3.eu-west-3.amazonaws.com/images',
+      'https://pictos.s3.eu-west-3.amazonaws.com/avatars'
+    ]
+  },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
