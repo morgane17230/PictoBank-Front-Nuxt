@@ -3,8 +3,5 @@
   "builds": [
     { "src": " package.json ", "use": " @vercel/node " },
     { "src": " nuxt.config.js ", "use ": " @nuxtjs/vercel-builder " }
-  ],
-  "resolutions": {
-    "sharp": "latest"
-  }
+  ]
 }
