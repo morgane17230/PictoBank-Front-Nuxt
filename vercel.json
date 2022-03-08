@@ -1,7 +1,7 @@
 {
   "version": 2,
   "builds": [
-    { "src": " package.json ", "use": " @vercel/node " },
-    { "src": " nuxt.config.js ", "use ": " @nuxtjs/vercel-builder " }
+    { "src": " package.json " },
+    { "src": " nuxt.config.js " }
   ]
 }
