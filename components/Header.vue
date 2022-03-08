@@ -3,7 +3,6 @@
     <v-app-bar fixed app>
       <v-toolbar-title hidden v-text="title" />
       <nuxt-picture
-        preset="cover"
         provider="static"
         quality="70"
         modifiers="rounded"
