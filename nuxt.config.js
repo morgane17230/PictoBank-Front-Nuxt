@@ -1,5 +1,4 @@
 import colors from 'vuetify/es5/util/colors'
-
 require('dotenv').config()
 
 export default {
@@ -39,6 +38,7 @@ export default {
     '@nuxtjs/eslint-module',
     // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
+    'nuxt-purgecss',
     ['@nuxtjs/dotenv', { systemvars: true }]
   ],
 
@@ -104,9 +104,6 @@ export default {
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     analyze: true,
-    extractCSS: {
-      ignoreOrder: true
-    },
     optimization: {
       minimize: true,
       splitChunks: {
