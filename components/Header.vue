@@ -3,8 +3,6 @@
     <v-app-bar fixed app>
       <v-toolbar-title hidden v-text="title" />
       <nuxt-picture
-        quality="70"
-        modifiers="rounded"
         legacy-format="png"
         class="mt-3"
         width="150px"
