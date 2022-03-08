@@ -4,9 +4,10 @@
       <v-toolbar-title hidden v-text="title" />
       <nuxt-picture
         legacy-format="png"
+        provider="static"
         class="mt-3"
         lazy-src="/pikto.webp"
-        max-width="10rem"
+        width="150px"
         src="/pikto.webp"
         alt="logo Pikto"
       />

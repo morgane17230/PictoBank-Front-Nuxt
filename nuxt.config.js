@@ -48,12 +48,7 @@ export default {
     '@nuxt/image'
   ],
 
-  image: {
-    domains: [
-      'https://pictos.s3.eu-west-3.amazonaws.com/images',
-      'https://pictos.s3.eu-west-3.amazonaws.com/avatars'
-    ]
-  },
+  target: 'static',
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
