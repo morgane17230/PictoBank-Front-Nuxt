@@ -6,7 +6,7 @@
         legacy-format="png"
         class="mt-3"
         width="150px"
-        src="/pikto.webp"
+        src="/static/pikto.webp"
         alt="logo Pikto"
       />
       <v-spacer />

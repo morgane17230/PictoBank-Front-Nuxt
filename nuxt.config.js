@@ -1,4 +1,5 @@
 import colors from 'vuetify/es5/util/colors'
+
 require('dotenv').config()
 
 export default {
@@ -102,6 +103,7 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+    analyze: true,
     extractCSS: {
       ignoreOrder: true
     },
