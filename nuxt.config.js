@@ -37,7 +37,8 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/auth-next',
     '@nuxtjs/dotenv',
-    '@nuxt/image'
+    '@nuxt/image',
+    'nuxt-purgecss'
   ],
 
   axios: {
@@ -108,6 +109,47 @@ export default {
         }
       }
     }
+  },
+
+  purgeCSS: {
+    mode: 'webpack',
+    enabled: true,
+    paths: [
+      'components/**/*.vue',
+      'layouts/**/*.vue',
+      'pages/**/*.vue',
+      'plugins/**/*.js',
+      './node_modules/vuetify/dist/*.js',
+      './node_modules/vuetify/dist/*.css',
+      './node_modules/vuetify/src/**/*.ts',
+      './node_modules/@mdi/fonts/*'
+    ],
+    styleExtensions: ['.css'],
+    // whitelist: ['body', 'html', 'nuxt-progress', ''],
+
+    whitelist: ['v-application', 'v-application--wrap', 'layout', 'row', 'col'],
+    whitelistPatterns: [
+      /^v-((?!application).)*$/,
+      /^theme--*/,
+      /.*-transition/,
+      /^justify-*/,
+      /^p*-[0-9]/,
+      /^m*-[0-9]/,
+      /^text--*/,
+      /--text$/,
+      /^row-*/,
+      /^col-*/,
+      /leaflet/,
+      /marker/
+    ],
+    whitelistPatternsChildren: [/^v-((?!application).)*$/, /^theme--*/],
+
+    extractors: [
+      {
+        extractor: content => content.match(/[A-z0-9-:\\/]+/g) || [],
+        extensions: ['html', 'vue', 'js']
+      }
+    ]
   },
 
   render: {
