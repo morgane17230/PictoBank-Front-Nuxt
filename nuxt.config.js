@@ -108,5 +108,18 @@ export default {
         }
       }
     }
+  },
+
+  render: {
+    bundleRenderer: {
+      shouldPreload: (file, type) => {
+        if (type === 'script' || type === 'style') {
+          return true
+        }
+        if (type === 'font') {
+          return /\.woff$/.test(file)
+        }
+      }
+    }
   }
 }
