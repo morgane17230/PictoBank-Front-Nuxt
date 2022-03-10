@@ -52,8 +52,7 @@
                     Ajouter une catégorie
                   </v-btn>
                 </v-list-item-content>
-              </v-list-item>
-              <v-divider class="mt-2" />
+              </v-list-item><v-divider class="mt-2" />
             </template>
           </v-autocomplete>
           <v-text-field

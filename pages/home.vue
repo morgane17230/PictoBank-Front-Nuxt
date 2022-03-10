@@ -156,14 +156,14 @@
         </v-row>
       </v-col>
     </v-row>
-    <ZoomModal />
-    <Toast />
-    <Profile />
-    <AddPictosModal />
-    <AddFolderModal />
     <AddCategoryModal />
+    <AddFolderModal />
+    <AddPictosModal />
     <AddPictosToFolder />
     <DisplayFolder />
+    <Profile />
+    <Toast />
+    <ZoomModal />
   </v-container>
 </template>
 
