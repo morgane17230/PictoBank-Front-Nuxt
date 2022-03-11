@@ -6,7 +6,7 @@
         <v-spacer />
         <v-btn depressed color="transparent" @click="closeUpdateUserModal">
           <v-icon>
-            mdi-close
+            {{ svgClose }}
           </v-icon>
         </v-btn>
       </v-toolbar>
@@ -22,7 +22,13 @@
 
 <script>
 import { mapState } from 'vuex'
+import { mdiClose } from '@mdi/js'
 export default {
+  data () {
+    return {
+      svgClose: mdiClose
+    }
+  },
   computed: {
     ...mapState({
       updateUserModal: state => state.global.updateUserModal

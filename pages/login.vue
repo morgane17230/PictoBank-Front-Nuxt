@@ -4,7 +4,7 @@
       <v-row>
         <v-btn depressed color="transparent" @click="closeLoginUserModal">
           <v-icon color="cyan darken-3">
-            mdi-close
+            {{ svgClose }}
           </v-icon>
         </v-btn>
       </v-row>
@@ -52,11 +52,13 @@
 
 <script>
 import { mapMutations, mapState } from 'vuex'
+import { mdiClose } from '@mdi/js'
 export default {
   middleware: 'auth',
   auth: 'guest',
   data () {
     return {
+      svgClose: mdiClose,
       valid: false,
       nameRules: [v => !!v || 'Le champs est requis'],
       passwordRules: {

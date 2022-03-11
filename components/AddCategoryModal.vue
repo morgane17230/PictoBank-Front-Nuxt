@@ -6,7 +6,7 @@
         <v-spacer />
         <v-btn depressed color="transparent" @click="closeAddCategoryModal">
           <v-icon>
-            mdi-close
+            {{ svgClose }}
           </v-icon>
         </v-btn>
       </v-toolbar>
@@ -55,13 +55,15 @@
 
 <script>
 import { mapMutations, mapState } from 'vuex'
+import { mdiClose } from '@mdi/js'
 export default {
   middleware: 'auth',
   data () {
     return {
       show: false,
       valid: false,
-      nameRules: [v => !!v || 'Le champs est requis']
+      nameRules: [v => !!v || 'Le champs est requis'],
+      svgClose: mdiClose
     }
   },
 

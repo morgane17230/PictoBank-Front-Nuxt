@@ -5,7 +5,7 @@
         <v-spacer />
         <v-btn @click="closeZoom">
           <v-icon>
-            mdi-close
+            {{ svgClose }}
           </v-icon>
         </v-btn>
       </v-card-title>
@@ -16,9 +16,14 @@
 
 <script>
 import { mapState } from 'vuex'
+import { mdiClose } from '@mdi/js'
 export default {
   middleware: 'auth',
-
+  data () {
+    return {
+      svgClose: mdiClose
+    }
+  },
   computed: {
     ...mapState({
       picto: state => state.picto.picto,

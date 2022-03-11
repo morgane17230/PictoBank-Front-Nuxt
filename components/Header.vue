@@ -9,7 +9,7 @@
       />
       <v-spacer />
       <v-btn v-if="$auth.loggedIn" color="cyan darken-3" icon @click="logout">
-        <v-icon> mdi-logout </v-icon>
+        <v-icon> {{ svgLogout }} </v-icon>
       </v-btn>
       <div v-else>
         <v-btn
@@ -19,7 +19,7 @@
           @click="openLoginUserModal"
         >
           <v-icon size="30">
-            mdi-account-circle
+            {{ svgAccount }}
           </v-icon>
         </v-btn>
       </div>
@@ -33,11 +33,13 @@
 
 <script>
 import { mapState } from 'vuex'
-
+import { mdiAccountCircle, mdiLogout } from '@mdi/js'
 export default {
   data () {
     return {
-      title: 'Pikto'
+      title: 'Pikto',
+      svgAccount: mdiAccountCircle,
+      svgLogout: mdiLogout
     }
   },
   computed: {

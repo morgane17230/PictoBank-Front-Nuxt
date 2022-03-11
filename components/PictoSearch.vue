@@ -4,7 +4,7 @@
     placeholder="Chercher un picto..."
     label="Chercher un picto..."
     color="cyan darken-3"
-    prepend-inner-icon="mdi-magnify"
+    :prepend-inner-icon="svgMagnify"
     clearable
     outlined
     @input="searchPictos"
@@ -13,12 +13,13 @@
 
 <script>
 import { mapState } from 'vuex'
-
+import { mdiMagnify } from '@mdi/js'
 export default {
   middleware: 'auth',
   data () {
     return {
-      query: ''
+      query: '',
+      svgMagnify: mdiMagnify
     }
   },
 

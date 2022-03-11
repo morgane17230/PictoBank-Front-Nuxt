@@ -16,19 +16,19 @@
           </span>
           <v-btn icon @click="openForm = true">
             <v-icon color="green">
-              mdi-pen
+              {{ svgPen }}
             </v-icon>
           </v-btn>
           <v-btn icon @click="deleteFolder">
             <v-icon color="red">
-              mdi-delete
+              {{ svgDelete }}
             </v-icon>
           </v-btn>
         </v-toolbar-title>
         <v-spacer />
         <v-btn depressed color="transparent" @click="closeDisplayFolder">
           <v-icon>
-            mdi-close
+            {{ svgClose }}
           </v-icon>
         </v-btn>
       </v-toolbar>
@@ -56,7 +56,7 @@
             color="cyan darken-3"
             accept="image/*"
             label="photo"
-            prepend-icon="mdi-camera"
+            :prepend-icon="svgCamera"
             :rules="pictoRules"
             :value="photo"
             @change="photoChange"
@@ -64,12 +64,12 @@
           <div class="text-center d-flex align-center">
             <v-btn icon type="submit">
               <v-icon color="green">
-                mdi-check
+                {{ svgCheck }}
               </v-icon>
             </v-btn>
             <v-btn icon @click="openForm = false">
               <v-icon color="red">
-                mdi-close
+                {{ svgClose }}
               </v-icon>
             </v-btn>
           </div>
@@ -84,14 +84,12 @@
               <v-toolbar color="grey darken-3" dark>
                 <v-chip
                   small
-                  :class="
-                    `${
-                      categories.find(cat => cat.id === picto.category_id)
-                        .color.text
-                    }--text`
-                  "
+                  :class="`${
+                    categories.find((cat) => cat.id === picto.category_id).color
+                      .text
+                  }--text`"
                   :color="
-                    categories.find(cat => cat.id === picto.category_id).color
+                    categories.find((cat) => cat.id === picto.category_id).color
                       .background
                   "
                 >
@@ -110,11 +108,7 @@
                 @click="$store.commit('picto/SET_PICTO', picto)"
               />
               <template #placeholder>
-                <v-row
-                  class="fill-height ma-0"
-                  align="center"
-                  justify="center"
-                >
+                <v-row class="fill-height ma-0" align="center" justify="center">
                   <v-progress-circular indeterminate color="grey lighten-5" />
                 </v-row>
               </template>
@@ -122,8 +116,8 @@
                 <v-checkbox
                   v-model="selected"
                   :value="picto.id"
-                  on-icon="mdi-check"
-                  off-icon="mdi-printer"
+                  :on-icon="svgCheck"
+                  :off-icon="svgPrinter"
                   x-small
                   color="cyan darken-3"
                   @change="collectPictos"
@@ -138,7 +132,7 @@
                   @click="removePictoFromFolder"
                 >
                   <v-icon>
-                    mdi-heart-off
+                    {{ svgHeartOff }}
                   </v-icon>
                 </v-btn>
               </v-card-actions>
@@ -147,12 +141,7 @@
         </v-row>
         <v-row v-else>
           <v-card-text class="text-center">
-            <v-alert
-              color="grey darken-1"
-              dark
-              border="bottom"
-              class="text-h6"
-            >
+            <v-alert color="grey darken-1" dark border="bottom" class="text-h6">
               Pas encore de pictos dans ce dossier
             </v-alert>
           </v-card-text>
@@ -164,11 +153,27 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex'
+import {
+  mdiClose,
+  mdiPrinter,
+  mdiHeartOff,
+  mdiCheck,
+  mdiDelete,
+  mdiPen,
+  mdiCamera
+} from '@mdi/js'
 export default {
   middleware: 'auth',
   data () {
     return {
       lang: 'fr',
+      svgClose: mdiClose,
+      svgPrinter: mdiPrinter,
+      svgHeartOff: mdiHeartOff,
+      svgCheck: mdiCheck,
+      svgDelete: mdiDelete,
+      svgPen: mdiPen,
+      svgCamera: mdiCamera,
       selected: [],
       openForm: false,
       valid: false,

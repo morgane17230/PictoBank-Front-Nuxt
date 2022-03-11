@@ -6,7 +6,7 @@
         <v-spacer />
         <v-btn depressed color="transparent" @click="closePictosToFolderModal">
           <v-icon>
-            mdi-close
+            {{ svgClose }}
           </v-icon>
         </v-btn>
       </v-toolbar>
@@ -62,6 +62,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import { mdiClose } from '@mdi/js'
 export default {
   middleware: 'auth',
   data () {
@@ -69,6 +70,7 @@ export default {
       valid: false,
       lang: 'fr',
       pictoId: null,
+      svgClose: mdiClose,
       categoryName: '',
       addCategoryModal: false,
       nameRules: [v => !!v || 'Veuillez choisir un dossier']

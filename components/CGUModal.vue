@@ -6,7 +6,7 @@
         <v-spacer />
         <v-btn depressed color="transparent" @click="closeCGUModal">
           <v-icon>
-            mdi-close
+            {{ svgClose }}
           </v-icon>
         </v-btn>
       </v-toolbar>
@@ -58,7 +58,11 @@
 
 <script>
 import { mapState } from 'vuex'
+import { mdiClose } from '@mdi/js'
 export default {
+  data: () => ({
+    svgClose: mdiClose
+  }),
   computed: {
     ...mapState({
       cguModal: state => state.global.cguModal

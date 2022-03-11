@@ -6,7 +6,7 @@
         <v-spacer />
         <v-btn depressed color="transparent" @click="closeAddPictosModal">
           <v-icon>
-            mdi-close
+            {{ svgClose }}
           </v-icon>
         </v-btn>
       </v-toolbar>
@@ -101,7 +101,7 @@
                     @click="selectedFile.rotate(-1)"
                   >
                     <v-icon color="grey" dark v-bind="attrs" v-on="on">
-                      mdi-rotate-left
+                      {{ svgRotateLeft }}
                     </v-icon>
                   </v-btn>
                 </template>
@@ -116,7 +116,7 @@
                     @click="selectedFile.rotate()"
                   >
                     <v-icon color="grey" dark v-bind="attrs" v-on="on">
-                      mdi-rotate-right
+                      {{ svgRotateRight }}
                     </v-icon>
                   </v-btn>
                 </template>
@@ -126,7 +126,7 @@
                 <template #activator="{ on, attrs }">
                   <v-btn text fab>
                     <v-icon color="grey" dark v-bind="attrs" v-on="on">
-                      mdi-drag-variant
+                      {{ svgDrag }}
                     </v-icon>
                   </v-btn>
                 </template>
@@ -136,7 +136,7 @@
                 <template #activator="{ on, attrs }">
                   <v-btn text fab>
                     <v-icon color="grey" dark v-bind="attrs" v-on="on">
-                      mdi-magnify-plus
+                      {{ svgMagnifyPlus }}
                     </v-icon>
                   </v-btn>
                 </template>
@@ -152,7 +152,7 @@
                     @click="onFileChanged"
                   >
                     <v-icon color="grey" dark v-bind="attrs" v-on="on">
-                      mdi-check
+                      {{ svgCheck }}
                     </v-icon>
                   </v-btn>
                 </template>
@@ -194,7 +194,7 @@
                 </v-list-item-content>
                 <v-list-item-action>
                   <v-btn icon @click.stop="removeFile(item.name)">
-                    <v-icon> mdi-close-circle </v-icon>
+                    <v-icon> {{ svgClose }} </v-icon>
                   </v-btn>
                 </v-list-item-action>
               </v-list-item>
@@ -209,6 +209,7 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex'
+import { mdiCloseCircle, mdiRotateRight, mdiRotateLeft, mdiCheck, mdiMagnifyPlus, mdiDragVariant } from '@mdi/js'
 import Vue from 'vue'
 import Croppa from 'vue-croppa'
 import 'vue-croppa/dist/vue-croppa.css'
@@ -218,6 +219,12 @@ export default {
   data: () => ({
     selectedFile: {},
     selected: [],
+    svgClose: mdiCloseCircle,
+    svgRotateRight: mdiRotateRight,
+    svgRotateLeft: mdiRotateLeft,
+    svgMagnifyPlus: mdiMagnifyPlus,
+    svgCheck: mdiCheck,
+    svgDrag: mdiDragVariant,
     valid: false,
     pictoRules: [
       v => !v || v.size < 5000000 || 'Image should be less than 5MB'

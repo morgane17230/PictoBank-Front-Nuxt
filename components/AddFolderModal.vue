@@ -6,7 +6,7 @@
         <v-spacer />
         <v-btn depressed color="transparent" @click="closeAddFolderModal">
           <v-icon>
-            mdi-close
+            {{ svgClose }}
           </v-icon>
         </v-btn>
       </v-toolbar>
@@ -36,7 +36,7 @@
               color="cyan darken-3"
               accept="image/*"
               label="photo"
-              prepend-icon="mdi-camera"
+              :prepend-icon="svgCamera"
               required
               :rules="pictoRules"
               :value="photo"
@@ -69,10 +69,13 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex'
+import { mdiClose, mdiCamera } from '@mdi/js'
 export default {
   middleware: 'auth',
   data: () => ({
     valid: false,
+    svgClose: mdiClose,
+    svgCamera: mdiCamera,
     pictoRules: [
       v => !v || v.size < 5000000 || 'Image should be less than 5MB'
     ],

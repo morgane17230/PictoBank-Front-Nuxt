@@ -10,7 +10,7 @@
           @click="closeResetPasswordConfirmation"
         >
           <v-icon>
-            mdi-close
+            {{ svgClose }}
           </v-icon>
         </v-btn>
       </v-toolbar>
@@ -53,12 +53,13 @@
 
 <script>
 import { mapMutations, mapState } from 'vuex'
-
+import { mdiClose } from '@mdi/js'
 export default {
   auth: 'guest',
   data () {
     return {
       valid: false,
+      svgClose: mdiClose,
       emailRules: [
         v => !!v || 'Un email est requis',
         v => /.+@.+/.test(v) || "L'email doit être valide"

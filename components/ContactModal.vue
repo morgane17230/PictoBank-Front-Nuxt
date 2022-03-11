@@ -6,7 +6,7 @@
         <v-spacer />
         <v-btn depressed color="transparent" @click="closeContactModal">
           <v-icon>
-            mdi-close
+            {{ svgClose }}
           </v-icon>
         </v-btn>
       </v-toolbar>
@@ -71,9 +71,11 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex'
+import { mdiClose } from '@mdi/js'
 export default {
   data: () => ({
     valid: false,
+    svgClose: mdiClose,
     nameRules: [v => !!v || 'Le champs est requis'],
     emailRules: [
       v => !!v || 'E-mail is required',

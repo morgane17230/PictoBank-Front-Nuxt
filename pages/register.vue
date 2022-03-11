@@ -4,7 +4,7 @@
       <v-row align="center">
         <v-btn depressed color="transparent" @click="closeRegisterUserModal">
           <v-icon color="cyan darken-3">
-            mdi-close
+            {{ svgClose }}
           </v-icon>
         </v-btn>
       </v-row>
@@ -73,7 +73,7 @@
               @change="emailChange"
             />
             <v-text-field
-              :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+              :append-icon="show ? svgEye : svgEyeOff"
               :rules="[passwordRules.required, passwordRules.min]"
               :type="show ? 'text' : 'password'"
               color="cyan darken-3"
@@ -113,10 +113,14 @@
 
 <script>
 import { mapMutations, mapState } from 'vuex'
+import { mdiClose, mdiEye, mdiEyeOff } from '@mdi/js'
 export default {
   auth: 'guest',
   data () {
     return {
+      svgClose: mdiClose,
+      svgEye: mdiEye,
+      svgEyeOff: mdiEyeOff,
       show: false,
       valid: false,
       switch1: false,

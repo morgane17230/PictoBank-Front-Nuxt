@@ -39,7 +39,7 @@
       @change="emailChange"
     />
     <v-text-field
-      :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+      :append-icon="show1 ? svgEye : svgEyeOff"
       :rules="[passwordRules.min]"
       :type="show1 ? 'text' : 'password'"
       color="cyan darken-3"
@@ -53,7 +53,7 @@
       @change="passwordChange"
     />
     <v-text-field
-      :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
+      :append-icon="show2 ? svgEye : svgEyeOff"
       :rules="[passwordRules.min]"
       :type="show2 ? 'text' : 'password'"
       color="cyan darken-3"
@@ -83,10 +83,13 @@
 
 <script>
 import { mapMutations, mapState } from 'vuex'
+import { mdiEye, mdiEyeOff } from '@mdi/js'
 export default {
   middleware: 'auth',
   data () {
     return {
+      svgEye: mdiEye,
+      svgEyeOff: mdiEyeOff,
       show1: false,
       show2: false,
       valid: false,

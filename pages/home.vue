@@ -51,7 +51,7 @@
                   @click="openAddPictosModal"
                 >
                   <v-icon color="cyan darken-3" size="150">
-                    mdi-plus
+                    {{ svgPlus }}
                   </v-icon>
                 </v-btn>
               </v-card-actions>
@@ -115,8 +115,8 @@
               <v-card-actions class="grey darken-3">
                 <v-checkbox
                   v-model="selected"
-                  on-icon="mdi-check"
-                  off-icon="mdi-printer"
+                  :on-icon="svgCheck"
+                  :off-icon="svgPrinter"
                   x-small
                   :value="picto.id"
                   color="cyan darken-3"
@@ -132,7 +132,7 @@
                   @click="pictoIdChange"
                 >
                   <v-icon dark>
-                    mdi-heart-plus
+                    {{ svgHeartPlus }}
                   </v-icon>
                 </v-btn>
 
@@ -147,7 +147,7 @@
                   @click="deletePicto"
                 >
                   <v-icon dark>
-                    mdi-delete
+                    {{ svgDelete }}
                   </v-icon>
                 </v-btn>
               </v-card-actions>
@@ -169,10 +169,16 @@
 
 <script>
 import { mapState } from 'vuex'
+import { mdiPlus, mdiCheck, mdiPrinter, mdiHeartPlus, mdiDelete } from '@mdi/js'
 export default {
   middleware: 'auth',
   data () {
     return {
+      svgPlus: mdiPlus,
+      svgCheck: mdiCheck,
+      svgPrinter: mdiPrinter,
+      svgHeartPlus: mdiHeartPlus,
+      svgDelete: mdiDelete,
       query: '',
       valid: false,
       lang: 'fr',

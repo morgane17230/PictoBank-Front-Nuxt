@@ -7,16 +7,12 @@
         </span>
 
         <v-icon small>
-          mdi-phone-outline
+          {{ svgPhone }}
         </v-icon>
       </v-btn>
 
       <v-btn>
-        <span>PictoBank - {{ new Date().getFullYear() }}</span>
-
-        <v-icon small>
-          mdi-copyright
-        </v-icon>
+        <span>&copy;PictoBank - {{ new Date().getFullYear() }}</span>
       </v-btn>
 
       <v-btn value="cgu" @click="openCGUModal">
@@ -25,7 +21,7 @@
         </span>
 
         <v-icon small>
-          mdi-handshake-outline
+          {{ svgHandshake }}
         </v-icon>
       </v-btn>
     </v-bottom-navigation>
@@ -36,7 +32,14 @@
 
 <script>
 import { mapState } from 'vuex'
+import { mdiPhoneOutline, mdiHandshakeOutline } from '@mdi/js'
 export default {
+  data () {
+    return {
+      svgPhone: mdiPhoneOutline,
+      svgHandshake: mdiHandshakeOutline
+    }
+  },
   computed: {
     ...mapState({
       contactModal: state => state.global.contactModal,

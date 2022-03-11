@@ -79,7 +79,15 @@ export default {
 
   vuetify: {
     treeShake: true,
-    customVariables: ['~/assets/variables.scss', '~/assets/main.scss']
+    customVariables: ['~/assets/variables.scss', '~/assets/main.scss'],
+    defaultAssets: {
+      font: {
+        family: 'Roboto'
+      },
+      icons: {
+        iconfont: 'mdiSvg'
+      }
+    }
   },
 
   build: {
@@ -124,7 +132,7 @@ export default {
       './node_modules/vuetify/src/**/*.ts',
       './node_modules/@mdi/fonts/*'
     ],
-    styleExtensions: ['.css'],
+    styleExtensions: ['.scss', '.css'],
     // whitelist: ['body', 'html', 'nuxt-progress', ''],
 
     whitelist: ['v-application', 'v-application--wrap', 'layout', 'row', 'col'],
