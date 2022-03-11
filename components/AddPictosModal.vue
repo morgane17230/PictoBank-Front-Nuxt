@@ -210,7 +210,7 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex'
-import { mdiCloseCircle, mdiRotateRight, mdiRotateLeft, mdiCheck, mdiMagnifyPlus, mdiDragVariant, mdiChevronDown } from '@mdi/js'
+import { mdiClose, mdiRotateRight, mdiRotateLeft, mdiCheck, mdiMagnifyPlus, mdiDragVariant, mdiChevronDown } from '@mdi/js'
 import Vue from 'vue'
 import Croppa from 'vue-croppa'
 import 'vue-croppa/dist/vue-croppa.css'
@@ -221,7 +221,7 @@ export default {
     selectedFile: {},
     selected: [],
     svgChevronDown: mdiChevronDown,
-    svgClose: mdiCloseCircle,
+    svgClose: mdiClose,
     svgRotateRight: mdiRotateRight,
     svgRotateLeft: mdiRotateLeft,
     svgMagnifyPlus: mdiMagnifyPlus,
