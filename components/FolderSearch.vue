@@ -6,6 +6,7 @@
     item-text="foldername"
     item-value="id"
     label="Vos dossiers"
+    :append-icon="svgChevronDown"
     outlined
     full-width
     persistent-hint
@@ -46,9 +47,11 @@
 
 <script>
 import { mapState } from 'vuex'
+import { mdiChevronDown } from '@mdi/js'
 export default {
   middleware: 'auth',
   data: () => ({
+    svgChevronDown: mdiChevronDown,
     selectedItem: null
   }),
 
