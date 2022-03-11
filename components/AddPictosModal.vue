@@ -276,7 +276,7 @@ export default {
         this.$store.commit('picto/SET_CATEGORY_COLOR', filtered.color)
         this.selectedFile.generateBlob((blob) => {
           this.$store.commit('picto/SET_UPLOADED_FILES', blob)
-        })
+        }, 'image/webp', 0.8)
         this.selected = 0
         this.selectedFile.remove()
       }
