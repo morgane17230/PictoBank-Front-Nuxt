@@ -21,6 +21,7 @@
           <v-autocomplete
             v-model="selected"
             :items="categories"
+            :append-icon="svgChevronDown"
             color="cyan darken-3"
             item-text="name"
             item-value="id"
@@ -209,7 +210,7 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex'
-import { mdiCloseCircle, mdiRotateRight, mdiRotateLeft, mdiCheck, mdiMagnifyPlus, mdiDragVariant } from '@mdi/js'
+import { mdiCloseCircle, mdiRotateRight, mdiRotateLeft, mdiCheck, mdiMagnifyPlus, mdiDragVariant, mdiChevronDown } from '@mdi/js'
 import Vue from 'vue'
 import Croppa from 'vue-croppa'
 import 'vue-croppa/dist/vue-croppa.css'
@@ -219,6 +220,7 @@ export default {
   data: () => ({
     selectedFile: {},
     selected: [],
+    svgChevronDown: mdiChevronDown,
     svgClose: mdiCloseCircle,
     svgRotateRight: mdiRotateRight,
     svgRotateLeft: mdiRotateLeft,
