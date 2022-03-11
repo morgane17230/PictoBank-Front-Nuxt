@@ -21,6 +21,7 @@
             <v-select
               :items="folders"
               :rules="nameRules"
+              :append-icon="svgChevronDown"
               item-text="foldername"
               label="Choisir un dossier"
               item-value="id"
@@ -62,7 +63,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import { mdiClose } from '@mdi/js'
+import { mdiClose, mdiChevronDown } from '@mdi/js'
 export default {
   middleware: 'auth',
   data () {
@@ -71,6 +72,7 @@ export default {
       lang: 'fr',
       pictoId: null,
       svgClose: mdiClose,
+      svgChevronDown: mdiChevronDown,
       categoryName: '',
       addCategoryModal: false,
       nameRules: [v => !!v || 'Veuillez choisir un dossier']
