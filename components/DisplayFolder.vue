@@ -15,12 +15,12 @@
             {{ folder.foldername }}
           </span>
           <v-btn icon @click="openForm = true">
-            <v-icon color="green">
+            <v-icon color="white">
               {{ svgPen }}
             </v-icon>
           </v-btn>
           <v-btn icon @click="deleteFolder">
-            <v-icon color="red">
+            <v-icon color="white">
               {{ svgDelete }}
             </v-icon>
           </v-btn>
@@ -81,7 +81,7 @@
             class="col-6 col-sm-4 col-lg-3 col-xl-2"
           >
             <v-card>
-              <v-toolbar color="grey darken-3" dark>
+              <v-toolbar>
                 <v-chip
                   small
                   :class="`${
@@ -96,7 +96,7 @@
                   {{ picto.originalname.split("-")[0] }}
                 </v-chip>
                 <v-spacer />
-                <span class="white--text end">{{
+                <span class="end">{{
                   picto.originalname.split("-")[1]
                 }}</span>
               </v-toolbar>
@@ -112,7 +112,8 @@
                   <v-progress-circular indeterminate color="grey lighten-5" />
                 </v-row>
               </template>
-              <v-card-actions class="grey darken-3">
+              <v-divider class="mx-4" />
+              <v-card-actions>
                 <v-checkbox
                   v-model="selected"
                   :value="picto.id"
