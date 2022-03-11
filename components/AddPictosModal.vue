@@ -68,7 +68,7 @@
             <v-col class="col-12 col-sm-6">
               <croppa
                 v-model="selectedFile"
-                canvas-color="blue-grey lighten-5"
+                canvas-color="#e2e2e2"
                 :width="290"
                 :height="290"
                 :placeholder="
