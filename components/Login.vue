@@ -106,6 +106,7 @@ export default {
 
     loginUser () {
       if (this.$refs.formaLog.validate()) {
+        this.$store.commit('global/SET_SUBMITTED', true)
         this.$store.dispatch('user/login')
         this.$store.commit('global/SET_USER_LOGIN_MODAL', false)
       }
