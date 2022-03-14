@@ -22,19 +22,19 @@
             v-if="$auth.user.role === 'admin'"
             block
             color="cyan darken-3"
-            class="white--text mb-2"
-            @click="openUpdateUserModal"
-          >
-            Modifier le profil
-          </v-btn>
-          <v-btn
-            v-if="$auth.user.role === 'admin'"
-            block
-            color="cyan darken-3"
             class="white--text"
             @click="getAllPictos"
           >
             Voir tous les pictos
+          </v-btn>
+          <v-btn
+            v-if="$auth.user.role === 'admin'"
+            block
+            color="grey darken-3"
+            class="white--text mt-2"
+            @click="openUpdateUserModal"
+          >
+            Modifier le profil
           </v-btn>
         </div>
       </v-col>

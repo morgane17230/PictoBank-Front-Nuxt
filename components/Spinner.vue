@@ -24,7 +24,8 @@ export default {
       this.overlay = false
     },
     fail (error) {
-      console.log(error)
+      // eslint-disable-next-line no-console
+      console.trace(error)
     },
     increase (num) {
       // console.log(num)
