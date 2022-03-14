@@ -14,8 +14,7 @@ const state = () => ({
   addPictosToFolderModal: false,
   contactModal: false,
   cguModal: false,
-  zoomModal: false,
-  submitted: false
+  zoomModal: false
 })
 
 export default state

@@ -109,12 +109,6 @@ const actions = {
           password
         }
       })
-      .then((response) => {
-        this.$notifier.showSnackbar({
-          validation: response.validation,
-          snackbar: true
-        })
-      })
       .catch((error) => {
         this.$notifier.showSnackbar({
           validation: error.response.validation,

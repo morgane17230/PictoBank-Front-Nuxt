@@ -62,10 +62,6 @@ const mutations = {
 
   SET_ZOOM_MODAL (state, payload) {
     state.zoomModal = payload
-  },
-
-  SET_SUBMITTED (state, payload) {
-    state.submitted = payload
   }
 }
 

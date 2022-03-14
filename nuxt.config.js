@@ -25,7 +25,7 @@ export default {
 
   components: true,
   target: 'static',
-  loading: true,
+  loading: '~/components/Spinner.vue',
 
   buildModules: [
     '@nuxtjs/eslint-module',

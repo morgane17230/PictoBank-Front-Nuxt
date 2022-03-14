@@ -41,28 +41,15 @@
         </v-card>
       </v-col>
     </v-row>
-    <v-progress-circular
-      v-if="submitted && $auth.user === null"
-      :size="70"
-      :width="7"
-      color="purple"
-      indeterminate
-    />
     <Toast />
     <ResetPasswordModal />
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
 export default {
   middleware: 'auth',
   auth: 'guest',
-  computed: {
-    ...mapState({
-      submitted: state => state.global.submitted
-    })
-  },
 
   methods: {
     openRegisterUserModal () {
