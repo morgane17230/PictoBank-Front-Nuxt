@@ -4,10 +4,10 @@
       <v-toolbar-title hidden v-text="title" />
       <nuxt-img
         class="mt-4"
-        sizes="sm:30vw md:25vw lg:10vw"
-        src="pikto.webp"
-        fit="contain"
+        width="150"
         format="webp"
+        src="/pikto.png"
+        fit="contain"
         alt="logo Pikto"
       />
       <v-spacer />

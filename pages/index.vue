@@ -1,7 +1,7 @@
 <template>
   <v-container fluid>
     <v-row class="index-row" align="center" justify="center">
-      <nuxt-img src="background.webp" format="webp" fit="contain" class="index-bg" />
+      <nuxt-img format="webp" src="/background.jpg" fit="contain" class="index-bg" />
       <p class="text-h4 index-txt text-center">
         Pikto aide les soignants et les proches à renouer le contact...
       </p>
@@ -19,7 +19,7 @@
       </v-btn>
       <v-col class="col-12 col-lg-4">
         <v-card flat tile justify="center" align="center">
-          <nuxt-img src="image-multiple-outline.svg" width="100" />
+          <nuxt-img src="/image-multiple-outline.svg" width="100" />
           <v-card-text class="text-subtitle-1">
             Accédez à une bibliothèque de pictogrammes en libre service et
             alimentez le stock de pictogrammes disponibles
@@ -28,7 +28,7 @@
       </v-col>
       <v-col class="col-12 col-lg-4 py-5">
         <v-card flat tile justify="center" align="center">
-          <nuxt-img src="printer-outline.svg" width="100" />
+          <nuxt-img src="/printer-outline.svg" width="100" />
           <v-card-text class="text-subtitle-1">
             Sélectionnez et imprimez vos planches de pictogrammes déjà
             dimensionnés
@@ -37,7 +37,7 @@
       </v-col>
       <v-col class="col-12 col-lg-4 py-5" justify="center" align="center">
         <v-card flat tile justify="center" align="center">
-          <nuxt-img src="account-group-outline.svg" width="100" />
+          <nuxt-img src="/account-group-outline.svg" width="100" />
           <v-card-text class="text-subtitle-1">
             Profitez de Pikto que vous soyez particuliers ou établissement
           </v-card-text>
