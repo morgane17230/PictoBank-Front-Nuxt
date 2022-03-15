@@ -6,19 +6,10 @@
   cursor: pointer;
 }
 
-.index {
-  &-txt {
-    position: absolute;
-    background-color: rgba(149, 187, 187, 0.452);
-    padding: 3rem;
-    margin: 1rem;
-    border-radius: 20px;
-    z-index: 1;
-  }
-  &-bottom {
-    position: relative;
-    z-index: 1;
-    background-color: white;
-    width: 100vw;
-  }
+.index-bg {
+  background-image: url("/background.jpg");
+  background-image: -webkit-image-set(url('/background.webp') 1x);
+  height: 60vh;
+  background-position: center;
+  background-size: cover;
 }
