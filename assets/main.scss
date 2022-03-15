@@ -1,19 +1,32 @@
-.backgroundcustom {
-  background-color: #08636d5e;
-}
-
 .contrast {
   filter: contrast(200%);
 }
 
-.pointer
- {
-   cursor: pointer;
- }
+.pointer {
+  cursor: pointer;
+}
 
- .index-bg {
-   background-image: url('/background1.jpg');
-   height: 60vh;
-   background-position: center;
-   background-size: cover;
- }
+.index {
+  &-row {
+    height: 60vh;
+  }
+  &-txt {
+    position: absolute;
+    background-color: rgba(149, 187, 187, 0.452);
+    padding: 3rem;
+    margin: 1rem;
+    border-radius: 20px;
+    z-index: 1;
+  }
+  &-bg {
+    position: absolute;
+    z-index: 0;
+    width: 100%;
+  }
+  &-bottom {
+    position: relative;
+    z-index: 10;
+    background-color: white;
+    width: 100vw;
+  }
+}

@@ -2,9 +2,12 @@
   <div>
     <v-app-bar fixed app>
       <v-toolbar-title hidden v-text="title" />
-      <v-img
-        max-width="10rem"
-        src="/pikto.webp"
+      <nuxt-img
+        class="mt-4"
+        sizes="sm:30vw md:25vw lg:10vw"
+        src="/pikto.png"
+        fit="contain"
+        format="webp"
         alt="logo Pikto"
       />
       <v-spacer />
