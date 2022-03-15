@@ -1,7 +1,7 @@
 <template>
   <v-container fluid>
     <v-row class="index-row" align="center" justify="center">
-      <nuxt-img src="background.jpg" format="webp" fit="contain" class="index-bg" />
+      <nuxt-img src="background.webp" format="webp" fit="contain" class="index-bg" />
       <p class="text-h4 index-txt text-center">
         Pikto aide les soignants et les proches à renouer le contact...
       </p>

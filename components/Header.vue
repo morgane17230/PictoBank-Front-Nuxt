@@ -5,7 +5,7 @@
       <nuxt-img
         class="mt-4"
         sizes="sm:30vw md:25vw lg:10vw"
-        src="pikto.png"
+        src="pikto.webp"
         fit="contain"
         format="webp"
         alt="logo Pikto"
