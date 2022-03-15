@@ -30,6 +30,9 @@ export default {
   buildModules: [
     '@nuxtjs/eslint-module',
     '@nuxtjs/vuetify',
+    ['@nuxt/image', {
+      provider: 'static'
+    }],
     ['@nuxtjs/dotenv', { systemvars: true }]
   ],
 
