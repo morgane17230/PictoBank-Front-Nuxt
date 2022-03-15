@@ -10,7 +10,11 @@ export default {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' },
+      {
+        hid: 'description',
+        name: 'description',
+        content: 'Pikto s\'adresse aux établissements et aux aidants qui sont en contact avec des personnes autistes ou atteintes de troubles cognitifs nécessitants une aide visuelle à la communication'
+      },
       { name: 'format-detection', content: 'telephone=no' }
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
@@ -30,9 +34,7 @@ export default {
   buildModules: [
     '@nuxtjs/eslint-module',
     '@nuxtjs/vuetify',
-    ['@nuxt/image', {
-      provider: 'static'
-    }],
+    '@nuxt/image',
     ['@nuxtjs/dotenv', { systemvars: true }]
   ],
 

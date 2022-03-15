@@ -7,9 +7,6 @@
 }
 
 .index {
-  &-row {
-    height: 60vh;
-  }
   &-txt {
     position: absolute;
     background-color: rgba(149, 187, 187, 0.452);
@@ -17,11 +14,6 @@
     margin: 1rem;
     border-radius: 20px;
     z-index: 1;
-  }
-  &-bg {
-    position: absolute;
-    z-index: 0;
-    width: 100%;
   }
   &-bottom {
     position: relative;
