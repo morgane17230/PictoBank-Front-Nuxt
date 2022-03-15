@@ -6,8 +6,7 @@
         preload
         class="mt-4"
         width="150"
-        format="webp"
-        src="/pikto.png"
+        src="/pikto.webp"
         fit="contain"
         alt="logo Pikto"
       />
