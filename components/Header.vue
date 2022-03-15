@@ -3,6 +3,7 @@
     <v-app-bar fixed app>
       <v-toolbar-title hidden v-text="title" />
       <nuxt-img
+        preload
         class="mt-4"
         width="150"
         format="webp"
