@@ -29,7 +29,7 @@ export default {
 
   components: true,
   target: 'static',
-  loading: '~/components/Spinner.vue',
+  loading: true,
 
   buildModules: [
     '@nuxtjs/eslint-module',
@@ -45,6 +45,10 @@ export default {
     '@nuxt/image',
     'nuxt-purgecss'
   ],
+
+  image: {
+    domains: ['https://pictos.s3.eu-west-3.amazonaws.com/images']
+  },
 
   axios: {
     baseURL: process.env.API

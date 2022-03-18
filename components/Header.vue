@@ -7,7 +7,7 @@
         provider="static"
         class="mt-4"
         width="150"
-        src="pikto.webp"
+        src="/pikto.webp"
         fit="contain"
         alt="logo Pikto"
       />

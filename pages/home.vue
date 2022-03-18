@@ -80,14 +80,12 @@
                 <v-chip
                   v-if="picto"
                   small
-                  :class="
-                    `${
-                      categories.find(cat => cat.id === picto.category_id).color
-                        .text
-                    }--text`
-                  "
+                  :class="`${
+                    categories.find((cat) => cat.id === picto.category_id).color
+                      .text
+                  }--text`"
                   :color="
-                    categories.find(cat => cat.id === picto.category_id).color
+                    categories.find((cat) => cat.id === picto.category_id).color
                       .background
                   "
                   :value="picto.category_id"
@@ -96,15 +94,13 @@
                   {{ picto.originalname.split("-")[0] }}
                 </v-chip>
                 <v-spacer />
-                <span class="end">{{
-                  picto.originalname.split("-")[1]
-                }}</span>
+                <span class="end">{{ picto.originalname.split("-")[1] }}</span>
               </v-toolbar>
-              <v-img
-                :src="`${picto.path}`"
-                :lazy-src="`${picto.path}`"
-                aspect-ratio="1"
-                class="grey lighten-2 ma-2 pointer"
+              <nuxt-img
+                :src="picto.path"
+                format="webp"
+                fit="cover"
+                class="grey lighten-2 ma-2 pointer picto"
                 @click="$store.commit('picto/SET_PICTO', picto)"
               />
               <template #placeholder>
@@ -170,7 +166,13 @@
 
 <script>
 import { mapState } from 'vuex'
-import { mdiPlus, mdiCheck, mdiPrinter, mdiHeartPlus, mdiDelete } from '@mdi/js'
+import {
+  mdiPlus,
+  mdiCheck,
+  mdiPrinter,
+  mdiHeartPlus,
+  mdiDelete
+} from '@mdi/js'
 export default {
   middleware: 'auth',
   data () {
