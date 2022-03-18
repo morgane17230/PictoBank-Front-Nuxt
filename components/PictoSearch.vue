@@ -5,6 +5,7 @@
     label="Chercher un picto..."
     color="cyan darken-3"
     :prepend-inner-icon="svgMagnify"
+    :clear-icon="svgClear"
     clearable
     outlined
     @input="searchPictos"
@@ -13,13 +14,14 @@
 
 <script>
 import { mapState } from 'vuex'
-import { mdiMagnify } from '@mdi/js'
+import { mdiMagnify, mdiClose } from '@mdi/js'
 export default {
   middleware: 'auth',
   data () {
     return {
       query: '',
-      svgMagnify: mdiMagnify
+      svgMagnify: mdiMagnify,
+      svgClear: mdiClose
     }
   },
 
@@ -32,11 +34,11 @@ export default {
   methods: {
     searchPictos () {
       if (this.query) {
-        const queries = this.query.split(' ')
+        const queries = this.query.toLowerCase().split(' ')
         const foundPictos = []
         this.pictos.forEach((picto) => {
           return queries.forEach((element) => {
-            const index = picto.originalname.indexOf(element)
+            const index = picto.originalname.toLowerCase().indexOf(element)
             if (index !== -1) { return foundPictos.push(picto) }
           })
         })
