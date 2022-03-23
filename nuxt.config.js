@@ -13,7 +13,8 @@ export default {
       {
         hid: 'description',
         name: 'description',
-        content: 'Pikto s\'adresse aux établissements et aux aidants qui sont en contact avec des personnes autistes ou atteintes de troubles cognitifs nécessitants une aide visuelle à la communication'
+        content:
+          "Pikto s'adresse aux établissements et aux aidants qui sont en contact avec des personnes autistes ou atteintes de troubles cognitifs nécessitants une aide visuelle à la communication"
       },
       { name: 'format-detection', content: 'telephone=no' }
     ],
@@ -43,7 +44,9 @@ export default {
     '@nuxtjs/auth-next',
     '@nuxtjs/dotenv',
     '@nuxt/image',
-    'nuxt-purgecss'
+    'nuxt-purgecss',
+    '@nuxtjs/onesignal',
+    '@nuxtjs/pwa'
   ],
 
   image: {
