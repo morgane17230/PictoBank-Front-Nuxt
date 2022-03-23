@@ -44,9 +44,7 @@ export default {
     '@nuxtjs/auth-next',
     '@nuxtjs/dotenv',
     '@nuxt/image',
-    'nuxt-purgecss',
-    '@nuxtjs/onesignal',
-    '@nuxtjs/pwa'
+    'nuxt-purgecss'
   ],
 
   image: {
