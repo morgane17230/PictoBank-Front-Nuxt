@@ -97,8 +97,8 @@
                 <span class="end">{{ picto.originalname.split("-")[1] }}</span>
               </v-toolbar>
               <nuxt-img
-                :src="`${picto.path}`"
-                :lazy-src="`${picto.path}`"
+                :src="picto.path"
+                alt="picto"
                 class="grey lighten-2 ma-2 pointer picto"
                 @click="$store.commit('picto/SET_PICTO', picto)"
               />
