@@ -13,11 +13,11 @@ const actions = {
       })
   },
 
-  getFoldersByOrg ({ commit }) {
+  getFoldersByAccount ({ commit }) {
     const { id } = this.$auth.user.account
 
     this.$axios
-      .$get(`/org/${id}/folders`)
+      .$get(`/account/${id}/folders`)
       .then((response) => {
         commit('SET_FOLDERS', response)
       })

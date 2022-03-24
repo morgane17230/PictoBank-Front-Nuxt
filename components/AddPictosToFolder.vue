@@ -89,7 +89,7 @@ export default {
   },
 
   mounted () {
-    this.$store.dispatch('folder/getFoldersByOrg')
+    this.$store.dispatch('folder/getFoldersByAccount')
   },
 
   methods: {

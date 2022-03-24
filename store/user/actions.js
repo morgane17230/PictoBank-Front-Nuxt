@@ -1,13 +1,7 @@
 const actions = {
   addUser () {
-    const {
-      lastname,
-      firstname,
-      name,
-      email,
-      password,
-      isOrganization
-    } = this.state.user
+    const { lastname, firstname, name, email, password, isOrganization } =
+      this.state.user
 
     this.$axios
       .$post('/addUser', {
@@ -41,14 +35,8 @@ const actions = {
       id = this.state.user.id
     }
 
-    const {
-      lastname,
-      firstname,
-      name,
-      email,
-      password,
-      teamPassword
-    } = this.state.user
+    const { lastname, firstname, name, email, password, teamPassword } =
+      this.state.user
 
     this.$axios
       .$put(`/user/${id}`, {
@@ -65,13 +53,12 @@ const actions = {
           snackbar: true
         })
         if (!this.$auth.user) {
-          this.$axios
-            .$post('/nodemailer', {
-              type: 'confirmResetPassword',
-              firstname: response.user.account.firstname,
-              lastname: response.user.account.lastname,
-              email: response.user.account.email
-            })
+          this.$axios.$post('/nodemailer', {
+            type: 'confirmResetPassword',
+            firstname: response.user.account.firstname,
+            lastname: response.user.account.lastname,
+            email: response.user.account.email
+          })
         }
       })
       .catch((error) => {
@@ -108,6 +95,12 @@ const actions = {
           username,
           password
         }
+      })
+      .then((response) => {
+        this.$notifier.showSnackbar({
+          validation: response.data.validation,
+          snackbar: true
+        })
       })
       .catch((error) => {
         this.$notifier.showSnackbar({
