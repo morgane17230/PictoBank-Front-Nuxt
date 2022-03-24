@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "nuxt",
-    "vercel-build": "yarn global add node-gyp sharp --legacy-peer-deps",
+    "vercel-build": "yarn global add node-gyp sharp",
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
