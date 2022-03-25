@@ -36,7 +36,10 @@
       <v-list-item-content>
         <v-list-item-title class="d-flex justify-space-between align-center">
           <v-avatar>
-            <img :src="item.path">
+            <nuxt-img
+              :src="item.path"
+              :alt="item.foldername"
+            />
           </v-avatar>
           {{ item.foldername }}
         </v-list-item-title>

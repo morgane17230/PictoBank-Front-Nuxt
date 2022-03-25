@@ -9,7 +9,12 @@
       <v-toolbar class="mb-3" color="cyan darken-3" dark>
         <v-toolbar-title>
           <v-avatar left>
-            <v-img :src="folder.path" />
+            <nuxt-img
+              preload
+              :src="`${folder.path}`"
+              :alt="folder.foldername"
+              fit="cover"
+            />
           </v-avatar>
           <span>
             {{ folder.foldername }}

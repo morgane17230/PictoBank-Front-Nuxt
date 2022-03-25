@@ -48,7 +48,10 @@ export default {
   ],
 
   image: {
-    domains: ['nuxtjs.org']
+    domains: [
+      'https://pictos.s3.eu-west-3.amazonaws.com/images/',
+      'https://pictos.s3.eu-west-3.amazonaws.com/avatars/'
+    ]
   },
 
   axios: {

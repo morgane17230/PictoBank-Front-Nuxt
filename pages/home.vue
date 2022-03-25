@@ -98,7 +98,7 @@
               </v-toolbar>
               <nuxt-img
                 :src="picto.path"
-                alt="picto"
+                :alt="picto.originalname"
                 class="grey lighten-2 ma-2 pointer picto"
                 @click="$store.commit('picto/SET_PICTO', picto)"
               />

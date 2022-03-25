@@ -37,6 +37,7 @@
               accept="image/*"
               label="photo"
               :prepend-icon="svgCamera"
+              :clear-icon="svgClose"
               required
               :rules="pictoRules"
               :value="photo"
