@@ -31,6 +31,7 @@ export default {
   components: true,
   loading: true,
   target: 'static',
+  buildDir: 'dist',
 
   buildModules: [
     '@nuxtjs/eslint-module',
