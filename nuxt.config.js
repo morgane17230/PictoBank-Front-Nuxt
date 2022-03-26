@@ -53,8 +53,8 @@ export default {
     provider: 'ipx',
     dir: './static/',
     domains: [
-      'https://pictos.s3.eu-west-3.amazonaws.com/images',
-      'https://pictos.s3.eu-west-3.amazonaws.com/avatars'
+      'https://pictos.s3.eu-west-3.amazonaws.com/images/',
+      'https://pictos.s3.eu-west-3.amazonaws.com/avatars/'
     ],
     ipx: { }
   },
