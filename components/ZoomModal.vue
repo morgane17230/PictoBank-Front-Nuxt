@@ -12,6 +12,7 @@
       <v-card-text>
         <nuxt-img
           v-if="picto"
+          preload
           :src="picto.path"
           :alt="picto.originalname"
           class="grey lighten-2 pointer zoom"

@@ -97,6 +97,7 @@
                 <span class="end">{{ picto.originalname.split("-")[1] }}</span>
               </v-toolbar>
               <nuxt-img
+                preload
                 :src="picto.path"
                 :alt="picto.originalname"
                 class="grey lighten-2 ma-2 pointer picto"
