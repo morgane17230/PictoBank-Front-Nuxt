@@ -47,7 +47,7 @@ export default {
     'nuxt-purgecss'
   ],
 
-  serverMiddleware: { '/_ipx': '~/server/middleware/ipx.js' },
+  // serverMiddleware: { '/_ipx': '~/server/middleware/ipx.js' },
 
   image: {
     provider: 'ipx',
