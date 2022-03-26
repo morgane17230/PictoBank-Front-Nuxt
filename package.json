@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "nuxt",
-    "vercel-build": "yarn global add prebuild-install",
+    "vercel-build": "yarn global add prebuild-install --output dist",
     "build": "nuxt build --output dist",
     "start": "nuxt start",
     "generate": "nuxt generate",
