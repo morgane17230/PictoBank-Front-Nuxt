@@ -1,11 +1,12 @@
 {
-  "builds" : [
-   { "src" : " nuxt.config.js " ,
-      "use" : " @nuxtjs/vercel-builder " ,
-      "config" : {
-        "serverFiles" : [ " server-middleware/** " ],
-        "generateStaticRoutes" : true
-     }
-   }
- ]
+  "version": 2,
+  "builds": [
+    {
+      "src": "nuxt.config.js",
+      "use": "@nuxtjs/vercel-builder",
+      "config": {
+        "serverFiles": ["server/middleware/**"]
+      }
+    }
+  ]
 }
