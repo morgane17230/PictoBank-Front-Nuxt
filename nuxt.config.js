@@ -47,8 +47,6 @@ export default {
     'nuxt-purgecss'
   ],
 
-  // serverMiddleware: { '/_ipx': '~/server/middleware/ipx.js' },
-
   image: {
     domains: [
       'https://pictos.s3.eu-west-3.amazonaws.com/images/',

@@ -3,13 +3,21 @@
     <v-card>
       <v-card-title>
         <v-spacer />
-        <v-btn @click="closeZoom">
+        <v-btn depressed text @click="closeZoom">
           <v-icon>
             {{ svgClose }}
           </v-icon>
         </v-btn>
       </v-card-title>
-      <v-img v-if="picto !== null" :src="picto.path" />
+      <v-card-text>
+        <nuxt-img
+          v-if="picto"
+          :src="picto.path"
+          :alt="picto.originalname"
+          class="grey lighten-2 pointer zoom"
+          @click="$store.commit('picto/SET_PICTO', picto)"
+        />
+      </v-card-text>
     </v-card>
   </v-dialog>
 </template>
