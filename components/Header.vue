@@ -4,7 +4,6 @@
       <v-toolbar-title hidden v-text="title" />
       <nuxt-img
         preload
-        provider="static"
         class="mt-4"
         width="150"
         src="/pikto.webp"

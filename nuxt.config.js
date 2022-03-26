@@ -29,8 +29,8 @@ export default {
   ],
 
   components: true,
-  target: 'static',
   loading: true,
+  target: 'static',
 
   buildModules: [
     '@nuxtjs/eslint-module',
@@ -47,11 +47,13 @@ export default {
     'nuxt-purgecss'
   ],
 
+  serverMiddleware: {
+    '/_ipx': '~/server/middleware/ipx.js'
+  },
+
   image: {
-    domains: [
-      'https://pictos.s3.eu-west-3.amazonaws.com/images/',
-      'https://pictos.s3.eu-west-3.amazonaws.com/avatars/'
-    ]
+    provider: 'ipx',
+    ipx: { }
   },
 
   axios: {
