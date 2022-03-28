@@ -61,6 +61,7 @@
             color="cyan darken-3"
             accept="image/*"
             label="photo"
+            :clear-icon="svgClose"
             :prepend-icon="svgCamera"
             :rules="pictoRules"
             :value="photo"

@@ -4,7 +4,7 @@
       <v-toolbar color="cyan darken-3" dark>
         <v-toolbar-title>Ajouter une nouvelle catégorie</v-toolbar-title>
         <v-spacer />
-        <v-btn depressed color="transparent" @click="closeAddCategoryModal">
+        <v-btn name="close" depressed color="transparent" @click="closeAddCategoryModal">
           <v-icon>
             {{ svgClose }}
           </v-icon>
@@ -32,6 +32,7 @@
           </v-card-text>
           <v-card-actions class="justify-center">
             <v-btn
+              name="close"
               color="cyan darken-3"
               small
               outlined

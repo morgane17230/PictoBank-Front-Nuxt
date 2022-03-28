@@ -32,6 +32,7 @@ const actions = {
   addFolder ({ commit }) {
     const { foldername, photo } = this.state.folder
     const { id } = this.$auth.user.account
+
     const formData = new FormData()
 
     formData.append('path', photo)
