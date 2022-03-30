@@ -1,6 +1,7 @@
+import { defineNuxtConfig } from '@nuxt/bridge'
 require('dotenv').config()
 
-export default {
+export default defineNuxtConfig({
   head: {
     titleTemplate: '%s',
     title: 'Pikto',
@@ -36,7 +37,9 @@ export default {
     '@nuxtjs/eslint-module',
     '@nuxtjs/vuetify',
     '@nuxt/image',
-    ['@nuxtjs/dotenv', { systemvars: true }]
+    'nuxt-purgecss',
+    ['@nuxtjs/dotenv', { systemvars: true }],
+    '@nuxtjs/pwa'
   ],
 
   modules: [
@@ -44,7 +47,8 @@ export default {
     '@nuxtjs/auth-next',
     '@nuxtjs/dotenv',
     '@nuxt/image',
-    'nuxt-purgecss'
+    'nuxt-purgecss',
+    '@nuxtjs/pwa'
   ],
 
   image: {
@@ -185,4 +189,4 @@ export default {
       }
     }
   }
-}
+})

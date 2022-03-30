@@ -1,7 +1,9 @@
 <template>
   <v-container fluid>
-    <v-row class="index-bg text-h3" align="center" justify="center">
-      Pikto aide les soignants et les proches à renouer le contact...
+    <v-row class="index-bg text-h3 text-center" align="center" justify="center">
+      <div class="cyan darken-3 pa-6 rounded-xl">
+        Pikto aide les soignants et les proches à renouer le contact...
+      </div>
     </v-row>
     <v-row>
       <v-btn
