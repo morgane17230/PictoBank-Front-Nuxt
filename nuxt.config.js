@@ -44,6 +44,7 @@ export default {
     '@nuxtjs/auth-next',
     '@nuxtjs/dotenv',
     '@nuxt/image',
+    '@nuxtjs/pwa',
     'nuxt-purgecss',
     'nuxt-webfontloader'
   ],
