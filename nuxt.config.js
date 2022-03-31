@@ -46,7 +46,8 @@ export default {
     '@nuxt/image',
     '@nuxtjs/pwa',
     'nuxt-purgecss',
-    'nuxt-webfontloader'
+    'nuxt-webfontloader',
+    '@nuxtjs/robots'
   ],
 
   image: {
@@ -58,6 +59,11 @@ export default {
 
   axios: {
     baseURL: process.env.API
+  },
+
+  robots: {
+    UserAgent: '*',
+    Allow: '/'
   },
 
   auth: {
