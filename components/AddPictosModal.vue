@@ -179,7 +179,11 @@
             <template #default="{ item }">
               <v-list-item :key="item.name">
                 <v-list-item-avatar class="profile">
-                  <v-img :src="item.url" />
+                  <nuxt-img
+                    preload
+                    :src="item.url"
+                    :alt="item.originalname"
+                  />
                 </v-list-item-avatar>
                 <v-list-item-content>
                   <v-list-item-title>

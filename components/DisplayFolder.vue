@@ -106,11 +106,11 @@
                   picto.originalname.split("-")[1]
                 }}</span>
               </v-toolbar>
-              <v-img
-                :src="`${picto.path}`"
-                :lazy-src="`${picto.path}`"
-                aspect-ratio="1"
-                class="grey lighten-2 ma-2 pointer"
+              <nuxt-img
+                preload
+                :src="picto.path"
+                :alt="picto.originalname"
+                class="grey lighten-2 ma-2 pointer picto"
                 @click="$store.commit('picto/SET_PICTO', picto)"
               />
               <template #placeholder>

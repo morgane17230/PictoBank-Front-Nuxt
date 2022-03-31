@@ -192,5 +192,27 @@ export default {
         }
       }
     }
+  },
+
+  pwa: {
+    icon: {
+      source: '~/static/icon.png',
+      sizes: [64, 120, 144, 152, 192, 384, 512],
+      targetDir: 'icons',
+      purpose: 'maskable'
+    },
+    meta: {
+      viewport: 'width=device-width, initial-scale=1',
+      mobileApp: 'mobile-web-app-capable',
+      mobileAppIOS: 'apple-mobile-web-app-capable',
+      favicon: 'shortcut icon + apple-touch-icon',
+      author: 'Morgane Gambis',
+      lang: 'fr'
+    },
+    manifest: {
+      name: 'Pikto',
+      lang: 'fr',
+      useWebmanifestExtension: false
+    }
   }
 }

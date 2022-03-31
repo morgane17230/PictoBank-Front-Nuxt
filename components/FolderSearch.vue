@@ -37,6 +37,7 @@
         <v-list-item-title class="d-flex justify-space-between align-center">
           <v-avatar>
             <nuxt-img
+              preload
               :src="item.path"
               :alt="item.foldername"
             />
