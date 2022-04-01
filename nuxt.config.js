@@ -45,7 +45,6 @@ export default {
     '@nuxtjs/auth-next',
     '@nuxtjs/dotenv',
     '@nuxt/image',
-    '@nuxtjs/pwa',
     'nuxt-purgecss',
     'nuxt-webfontloader',
     '@nuxtjs/robots'
@@ -224,6 +223,7 @@ export default {
     },
     manifest: {
       name: 'Pikto',
+      short_name: 'Pikto',
       lang: 'fr',
       dir: 'ltr',
       useWebmanifestExtension: false,
