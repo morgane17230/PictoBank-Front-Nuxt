@@ -36,6 +36,7 @@ export default {
     '@nuxtjs/eslint-module',
     '@nuxtjs/vuetify',
     '@nuxt/image',
+    '@nuxtjs/pwa',
     ['@nuxtjs/dotenv', { systemvars: true }]
   ],
 
@@ -110,49 +111,19 @@ export default {
     }
   },
 
-  generate: {
-    devtools: true,
-    ignore: [
-      '.nuxt',
-      'static',
-      'dist',
-      'node_modules',
-      '.**/*',
-      '.*',
-      'README.md'
-    ],
-    html: {
-      minifier: {
-        collapseBooleanAttributes: true,
-        decodeEntities: true,
-        minifyCSS: true,
-        minifyJS: true,
-        processConditionalComments: true,
-        removeEmptyAttributes: true,
-        removeRedundantAttributes: true,
-        trimCustomFragments: true,
-        useShortDoctype: true
-      }
-    }
-  },
-
-  buildDir: 'dist',
-
   build: {
     extractCSS: { ignoreOrder: true },
-    maxChunkSize: 300000,
-    optimization: {
-      minimize: true,
-      splitChunks: {
-        chunks: 'all'
-      }
-    },
     splitChunks: {
       pages: true,
       vendor: true,
       commons: true,
       runtime: true,
       layouts: true
+    },
+    optimization: {
+      splitChunks: {
+        name: false
+      }
     },
     terser: {
       parallel: true,
@@ -227,8 +198,7 @@ export default {
     meta: {
       title: 'Pikto',
       author: 'Morgane Gambis',
-      description:
-        "Pikto s'adresse aux établissements et aux aidants qui sont en contact avec des personnes autistes ou atteintes de troubles cognitifs nécessitants une aide visuelle à la communication",
+      description: "Pikto s'adresse aux établissements et aux aidants qui sont en contact avec des personnes autistes ou atteintes de troubles cognitifs nécessitants une aide visuelle à la communication",
       lang: 'fr',
       viewport: 'width=device-width, initial-scale=1',
       mobileApp: 'mobile-web-app-capable',
@@ -239,8 +209,7 @@ export default {
       ogType: 'website',
       ogSiteName: 'Pikto',
       ogTitle: 'Pikto',
-      ogDescription:
-        "Pikto s'adresse aux établissements et aux aidants qui sont en contact avec des personnes autistes ou atteintes de troubles cognitifs nécessitants une aide visuelle à la communication",
+      ogDescription: "Pikto s'adresse aux établissements et aux aidants qui sont en contact avec des personnes autistes ou atteintes de troubles cognitifs nécessitants une aide visuelle à la communication",
       ogHost: 'https://pikto.fr',
       ogUrl: 'https://pikto.fr',
       nativeUI: true
