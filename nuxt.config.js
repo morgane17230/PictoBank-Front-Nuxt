@@ -221,6 +221,7 @@ export default {
       dir: 'ltr',
       theme_color: '#49b9c5',
       background_color: '#fff',
+      useWebmanifestExtension: true,
       display: 'standalone'
     },
     workbox: {}
