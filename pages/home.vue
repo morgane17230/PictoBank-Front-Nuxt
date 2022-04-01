@@ -99,7 +99,7 @@
               </v-toolbar>
               <nuxt-img
                 preload
-                width="100%"
+                width="5vw"
                 :src="picto.path"
                 :alt="picto.originalname"
                 class="grey lighten-2 ma-2 pointer picto"
