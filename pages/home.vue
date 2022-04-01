@@ -100,6 +100,7 @@
               <nuxt-img
                 preload
                 width="5vw"
+                height="auto"
                 :src="picto.path"
                 :alt="picto.originalname"
                 class="grey lighten-2 ma-2 pointer picto"
