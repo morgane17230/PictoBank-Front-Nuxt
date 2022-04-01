@@ -20,7 +20,14 @@
     <v-row class="py-5">
       <v-col class="col-12 col-lg-4">
         <v-card flat tile justify="center" align="center">
-          <nuxt-img preload alt="icone images multiples" format="webp" src="/images/image-multiple-outline.svg" width="100" />
+          <nuxt-img
+            preload
+            alt="icone images multiples"
+            format="webp"
+            src="/images/image-multiple-outline.svg"
+            width="100"
+            height="100"
+          />
           <v-card-text class="text-subtitle-1">
             Accédez à une bibliothèque de pictogrammes en libre service et
             alimentez le stock de pictogrammes disponibles

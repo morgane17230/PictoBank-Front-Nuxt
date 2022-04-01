@@ -36,6 +36,7 @@ export default {
     '@nuxtjs/eslint-module',
     '@nuxtjs/vuetify',
     '@nuxt/image',
+    '@nuxtjs/pwa',
     ['@nuxtjs/dotenv', { systemvars: true }]
   ],
 
