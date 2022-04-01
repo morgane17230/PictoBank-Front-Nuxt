@@ -11,14 +11,13 @@
         alt="logo Pikto"
       />
       <v-spacer />
-      <v-btn v-if="$auth.loggedIn" name="logout" color="cyan darken-3" icon @click="logout">
+      <v-btn v-if="$auth.loggedIn" aria-label="déconnexion" color="cyan darken-3" icon @click="logout">
         <v-icon> {{ svgLogout }} </v-icon>
       </v-btn>
       <div v-else>
         <v-btn
           color="cyan darken-3"
           aria-label="connexion"
-          name="login"
           icon
           @click="openLoginUserModal"
         >

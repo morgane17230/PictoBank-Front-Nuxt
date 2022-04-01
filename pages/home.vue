@@ -48,6 +48,7 @@
                   class="d-flex"
                   width="200"
                   height="200"
+                  aria-label="ajouter un picto"
                   @click="openAddPictosModal"
                 >
                   <v-icon color="cyan darken-3" size="150">
@@ -98,6 +99,7 @@
               </v-toolbar>
               <nuxt-img
                 preload
+                width="100%"
                 :src="picto.path"
                 :alt="picto.originalname"
                 class="grey lighten-2 ma-2 pointer picto"
@@ -114,7 +116,7 @@
                   v-model="selected"
                   :on-icon="svgCheck"
                   :off-icon="svgPrinter"
-                  :aria-label="`print-${picto.id}`"
+                  :aria-label="`imprimer-${picto.originalname}`"
                   class="mx-2"
                   :value="picto.id"
                   color="cyan darken-3"
@@ -125,7 +127,7 @@
                   dark
                   icon
                   small
-                  name="favorite"
+                  aria-label="favoris"
                   color="cyan darken-3"
                   :value="picto.id"
                   @click="pictoIdChange"
@@ -141,7 +143,7 @@
                   dark
                   icon
                   small
-                  name="delete"
+                  aria-label="supprimer"
                   color="cyan darken-3"
                   :value="picto.id"
                   @click="deletePicto"
