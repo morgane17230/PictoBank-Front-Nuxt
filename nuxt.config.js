@@ -214,16 +214,11 @@ export default {
       ogUrl: 'https://pikto.fr',
       nativeUI: true
     },
-    icon: {
-      sizes: [64, 120, 144, 152, 192, 384, 512],
-      targetDir: 'icons'
-    },
     manifest: {
       name: 'Pikto',
       short_name: 'Pikto',
       lang: 'fr',
       dir: 'ltr',
-      useWebmanifestExtension: false,
       theme_color: '#49b9c5',
       background_color: '#fff',
       display: 'standalone'
