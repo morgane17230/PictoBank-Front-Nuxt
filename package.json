@@ -3,12 +3,12 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "nuxt",
-    "build": "nuxt build & nuxt generate",
-    "generate": "nuxt generate",
-    "start": "nuxt start",
+    "lint": "yarn lint:js",
     "lint:js": "eslint --ext \".js,.vue\" --ignore-path .gitignore .",
-    "lint": "yarn lint:js"
+    "dev": "nuxt",
+    "generate": "rm -r /node_modules/.cache/pwa/icon && nuxt generate",
+    "build": "nuxt build",
+    "start": "nuxt start"
   },
   "dependencies": {
     "@mdi/js": "^6.5.95",
