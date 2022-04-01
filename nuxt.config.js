@@ -121,6 +121,7 @@ export default {
       layouts: true
     },
     optimization: {
+      minimize: true,
       splitChunks: {
         name: false
       }
