@@ -227,7 +227,8 @@ export default {
       lang: 'fr',
       dir: 'ltr',
       useWebmanifestExtension: false,
-      theme_color: 'theme_color',
+      theme_color: '#49b9c5',
+      background_color: '#fff',
       display: 'standalone'
     },
     workbox: {}
