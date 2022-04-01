@@ -114,7 +114,8 @@
                   v-model="selected"
                   :on-icon="svgCheck"
                   :off-icon="svgPrinter"
-                  x-small
+                  :aria-label="`print-${picto.id}`"
+                  class="mx-2"
                   :value="picto.id"
                   color="cyan darken-3"
                   @change="collectPictos"
@@ -122,8 +123,9 @@
                 <v-btn
                   fab
                   dark
-                  x-small
                   icon
+                  small
+                  name="favorite"
                   color="cyan darken-3"
                   :value="picto.id"
                   @click="pictoIdChange"
@@ -137,8 +139,9 @@
                   v-if="picto.account_id === $auth.user.account.id"
                   fab
                   dark
-                  x-small
                   icon
+                  small
+                  name="delete"
                   color="cyan darken-3"
                   :value="picto.id"
                   @click="deletePicto"
