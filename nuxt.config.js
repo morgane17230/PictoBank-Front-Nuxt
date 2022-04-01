@@ -196,24 +196,39 @@ export default {
   },
 
   pwa: {
+    meta: {
+      title: 'Pikto',
+      author: 'Morgane Gambis',
+      description: "Pikto s'adresse aux établissements et aux aidants qui sont en contact avec des personnes autistes ou atteintes de troubles cognitifs nécessitants une aide visuelle à la communication",
+      lang: 'fr',
+      viewport: 'width=device-width, initial-scale=1',
+      mobileApp: 'mobile-web-app-capable',
+      charset: 'utf-8',
+      mobileAppIOS: 'apple-mobile-web-app-capable',
+      appleStatusBarStyle: 'default',
+      favicon: true,
+      ogType: 'website',
+      ogSiteName: 'Pikto',
+      ogTitle: 'Pikto',
+      ogDescription: "Pikto s'adresse aux établissements et aux aidants qui sont en contact avec des personnes autistes ou atteintes de troubles cognitifs nécessitants une aide visuelle à la communication",
+      ogHost: 'https://pikto.fr',
+      ogUrl: 'https://pikto.fr',
+      nativeUI: true
+    },
     icon: {
       source: '~/static/icon.png',
       sizes: [64, 120, 144, 152, 192, 384, 512],
       targetDir: 'icons',
       purpose: 'maskable'
     },
-    meta: {
-      viewport: 'width=device-width, initial-scale=1',
-      mobileApp: 'mobile-web-app-capable',
-      mobileAppIOS: 'apple-mobile-web-app-capable',
-      favicon: 'shortcut icon + apple-touch-icon',
-      author: 'Morgane Gambis',
-      lang: 'fr'
-    },
     manifest: {
       name: 'Pikto',
       lang: 'fr',
-      useWebmanifestExtension: false
-    }
+      dir: 'ltr',
+      useWebmanifestExtension: false,
+      theme_color: 'theme_color',
+      display: 'standalone'
+    },
+    workbox: {}
   }
 }
