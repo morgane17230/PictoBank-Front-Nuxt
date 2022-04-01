@@ -36,6 +36,7 @@ export default {
     '@nuxtjs/eslint-module',
     '@nuxtjs/vuetify',
     '@nuxt/image',
+    '@nuxtjs/pwa',
     ['@nuxtjs/dotenv', { systemvars: true }]
   ],
 
@@ -44,7 +45,7 @@ export default {
     '@nuxtjs/auth-next',
     '@nuxtjs/dotenv',
     '@nuxt/image',
-    '@nuxtjs/pwa',
+
     'nuxt-purgecss',
     'nuxt-webfontloader',
     '@nuxtjs/robots'
