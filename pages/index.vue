@@ -20,7 +20,7 @@
     <v-row class="py-5">
       <v-col class="col-12 col-lg-4">
         <v-card flat tile justify="center" align="center">
-          <nuxt-img preload src="/image-multiple-outline.svg" width="100" />
+          <nuxt-img preload src="/images/image-multiple-outline.svg" width="100" />
           <v-card-text class="text-subtitle-1">
             Accédez à une bibliothèque de pictogrammes en libre service et
             alimentez le stock de pictogrammes disponibles
@@ -29,7 +29,7 @@
       </v-col>
       <v-col class="col-12 col-lg-4">
         <v-card flat tile justify="center" align="center">
-          <nuxt-img preload src="/printer-outline.svg" width="100" />
+          <nuxt-img preload src="/images/printer-outline.svg" width="100" />
           <v-card-text class="text-subtitle-1">
             Sélectionnez et imprimez vos planches de pictogrammes déjà
             dimensionnés
@@ -38,7 +38,7 @@
       </v-col>
       <v-col class="col-12 col-lg-4">
         <v-card flat tile justify="center" align="center">
-          <nuxt-img preload src="/account-group-outline.svg" width="100" />
+          <nuxt-img preload src="/images/account-group-outline.svg" width="100" />
           <v-card-text class="text-subtitle-1">
             Profitez de Pikto que vous soyez particuliers ou établissement
           </v-card-text>
