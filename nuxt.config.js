@@ -219,7 +219,7 @@ export default {
       sizes: [64, 120, 144, 152, 192, 384, 512],
       targetDir: 'icons',
       fileName: 'icon.png',
-      purpose: 'maskable'
+      purpose: 'any'
     },
     manifest: {
       name: 'Pikto',
