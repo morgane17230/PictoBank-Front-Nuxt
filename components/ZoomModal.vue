@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="zoomModal" max-width="600px">
+  <v-dialog v-model="zoomModal" max-width="600px" @click:outside="closeZoom">
     <v-card>
       <v-card-title>
         <v-spacer />
