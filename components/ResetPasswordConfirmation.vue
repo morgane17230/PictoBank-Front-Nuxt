@@ -87,10 +87,9 @@ export default {
     resetPassword () {
       if (this.$refs.forma.validate()) {
         this.$store.dispatch('user/resetPassword')
+        this.$store.commit('global/SET_RESET_PASSWORD_MODAL', false)
+        this.$store.commit('global/SET_USER_LOGIN_MODAL', false)
       }
-      setTimeout(() => {
-        this.$store.commit('global/SET_RESET_PASSWORD_CONFIRMATION', false)
-      }, 2000)
     }
   }
 }
