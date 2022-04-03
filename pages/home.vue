@@ -64,7 +64,7 @@
             </v-card>
           </v-col>
           <v-col
-            v-if="pictos.length === 0"
+            v-if="foundPictos.length === 0"
             class="col-12 col-sm-8 col-lg-9 col-xl-10"
           >
             <v-card class="text-h6 text-center py-10 cyan lighten-5">
