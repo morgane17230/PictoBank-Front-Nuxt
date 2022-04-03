@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="$route.query.modal" persistent max-width="500px">
+  <v-dialog v-show="$route.query.modal" persistent max-width="500px">
     <v-card flat>
       <v-toolbar color="cyan darken-3" dark>
         <v-toolbar-title>Changement de mot de passe</v-toolbar-title>
