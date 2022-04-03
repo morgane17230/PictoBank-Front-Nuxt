@@ -290,7 +290,6 @@ export default {
       if (this.$refs.forma.validate()) {
         this.$store.dispatch('picto/addPictos')
         this.$store.commit('global/SET_ADD_PICTOS_MODAL', false)
-        location.reload(true)
       }
     }
   }
