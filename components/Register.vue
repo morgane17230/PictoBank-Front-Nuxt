@@ -81,6 +81,7 @@
               label="Mot de passe"
               hint="Minimum 8 caractères"
               counter
+              autocomplete
               :value="password"
               @click:append="show = !show"
               @change="passwordChange"
@@ -88,12 +89,13 @@
             <v-text-field
               :rules="[
                 passwordConfirmRules.required,
-                passwordConfirmRules.match
+                passwordConfirmRules.match,
               ]"
               type="password"
               color="cyan darken-3"
               name="passwordConfirm"
               label="Retaper le mot de passe"
+              autocomplete
               :value="passwordConfirm"
             />
           </v-card-text>
