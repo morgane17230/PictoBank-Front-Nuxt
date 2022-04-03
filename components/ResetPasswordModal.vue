@@ -110,7 +110,7 @@ export default {
       if (this.$refs.forma.validate()) {
         this.$store.dispatch('user/updateUser')
         this.$store.commit('global/SET_RESET_PASSWORD_MODAL', false)
-        location.reload(true)
+        this.$router.push('/')
       }
     }
   }
