@@ -34,6 +34,7 @@ const actions = {
             snackbar: true
           })
         })
+        .then(() => location.reload())
         .then(commit('INITIALIZE_UPLOADED_FILES'))
         .catch((error) => {
           this.$notifier.showSnackbar({

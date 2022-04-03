@@ -19,7 +19,7 @@
             Télécharger les pictos
           </v-btn>
           <v-btn
-            v-if="$auth.user.role === 'admin'"
+            v-if="$auth.user.role === 'admin' || 'isOwner'"
             block
             color="cyan darken-3"
             class="white--text"
@@ -28,7 +28,7 @@
             Voir tous les pictos
           </v-btn>
           <v-btn
-            v-if="$auth.user.role === 'admin'"
+            v-if="$auth.user.role === 'admin' || 'isOwner'"
             block
             color="grey darken-3"
             class="white--text mt-2"
@@ -64,7 +64,7 @@
             </v-card>
           </v-col>
           <v-col
-            v-if="foundPictos.length === 0"
+            v-if="pictos.length === 0"
             class="col-12 col-sm-8 col-lg-9 col-xl-10"
           >
             <v-card class="text-h6 text-center py-10 cyan lighten-5">
@@ -233,6 +233,7 @@ export default {
     },
 
     searchPictosByCategory (e) {
+      this.$store.dispatch('category/getCategories')
       this.categories.forEach((category) => {
         if (category.id === e) {
           this.$store.commit('picto/SET_FOUND_PICTOS', category.pictos)
