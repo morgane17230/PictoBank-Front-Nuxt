@@ -61,6 +61,14 @@
 export default {
   middleware: 'auth',
   auth: 'guest',
+  created () {
+    if (this.$route.query.modal === true) {
+      this.$store.commit('global/SET_RESET_PASSWORD_MODAL', true)
+    } else if (this.$route.query.login === true) {
+      this.$store.commit('global/SET_USER_LOGIN_MODAL', true)
+    }
+  },
+
   methods: {
     openRegisterUserModal () {
       this.$store.commit('global/SET_USER_REGISTER_MODAL', true)

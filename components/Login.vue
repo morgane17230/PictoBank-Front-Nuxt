@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-show="$route.query.login" persistent max-width="500px">
+  <v-dialog v-model="loginUserModal" persistent max-width="500px">
     <v-card flat>
       <v-toolbar color="cyan darken-3" dark>
         <v-toolbar-title>Connexion</v-toolbar-title>

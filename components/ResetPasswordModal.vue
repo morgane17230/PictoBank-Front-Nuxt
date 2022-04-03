@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-show="$route.query.modal" persistent max-width="500px">
+  <v-dialog v-model="resetPasswordModal" persistent max-width="500px">
     <v-card flat>
       <v-toolbar color="cyan darken-3" dark>
         <v-toolbar-title>Changement de mot de passe</v-toolbar-title>
@@ -101,13 +101,13 @@ export default {
     }),
 
     closeResetPasswordModal () {
-      this.$router.push('/')
+      this.$store.commit('global/SET_RESET_PASSWORD_MODAL', false)
     },
 
     changePassword () {
       if (this.$refs.forma.validate()) {
         this.$store.dispatch('user/updateUser')
-        this.$router.push('/')
+        this.$store.commit('global/SET_RESET_PASSWORD_MODAL', false)
       }
     }
   }
