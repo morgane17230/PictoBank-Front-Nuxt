@@ -10,7 +10,6 @@
         <v-toolbar-title>
           <v-avatar left>
             <nuxt-img
-              preload
               :src="`${folder.path}`"
               :alt="folder.foldername"
               fit="cover"

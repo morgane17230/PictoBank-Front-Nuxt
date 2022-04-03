@@ -61,6 +61,7 @@
       label="Mot de passe de l'équipe"
       hint="Minimum 8 caractères"
       counter
+      autocomplete="new-password"
       :value="teamPassword"
       @click:append="show2 = !show2"
       @change="teamPasswordChange"

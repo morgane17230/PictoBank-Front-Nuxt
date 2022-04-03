@@ -19,7 +19,6 @@
             Télécharger les pictos
           </v-btn>
           <v-btn
-            v-if="$auth.user.role === 'admin' || 'isOwner'"
             block
             color="cyan darken-3"
             class="white--text"
@@ -28,7 +27,7 @@
             Voir tous les pictos
           </v-btn>
           <v-btn
-            v-if="$auth.user.role === 'admin' || 'isOwner'"
+            v-if="$auth.user.role === 'admin' || $auth.user.role === 'isOwner'"
             block
             color="grey darken-3"
             class="white--text mt-2"
@@ -98,7 +97,6 @@
                 <span class="end">{{ picto.originalname.split("-")[1] }}</span>
               </v-toolbar>
               <nuxt-img
-                preload
                 width="5vw"
                 height="auto"
                 :src="picto.path"
