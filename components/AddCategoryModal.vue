@@ -23,7 +23,6 @@
               label="Intitulé de la catégorie"
               name="name"
               color="cyan darken-3"
-              autofocus
               required
               :rules="nameRules"
               :value="name"
@@ -88,6 +87,7 @@ export default {
       if (this.$refs.formaLog.validate()) {
         this.$store.dispatch('category/addCategory')
         this.$store.commit('global/SET_ADD_CATEGORY_MODAL', false)
+        location.reload(true)
       }
     }
   }

@@ -125,14 +125,15 @@
                   :value="picto.id"
                   :on-icon="svgCheck"
                   :off-icon="svgPrinter"
-                  x-small
+                  class="mx-2"
+                  :aria-label="`imprimer-${picto.originalname}`"
                   color="cyan darken-3"
                   @change="collectPictos"
                 />
                 <v-btn
                   fab
                   dark
-                  x-small
+                  small
                   icon
                   color="cyan darken-3"
                   :value="picto.id"
