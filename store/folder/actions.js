@@ -7,7 +7,7 @@ const actions = {
       })
       .catch((error) => {
         this.$notifier.showSnackbar({
-          validation: error.response.validation,
+          validation: error.response.data.message,
           snackbar: true
         })
       })
@@ -23,7 +23,7 @@ const actions = {
       })
       .catch((error) => {
         this.$notifier.showSnackbar({
-          validation: error.response.validation,
+          validation: error.response.data.message,
           snackbar: true
         })
       })
@@ -50,7 +50,7 @@ const actions = {
       })
       .catch((error) => {
         this.$notifier.showSnackbar({
-          validation: error.response.validation,
+          validation: error.response.data.message,
           snackbar: true
         })
       })
@@ -78,7 +78,7 @@ const actions = {
       })
       .catch((error) => {
         this.$notifier.showSnackbar({
-          validation: error.response.validation,
+          validation: error.response.data.message,
           snackbar: true
         })
       })
@@ -96,7 +96,7 @@ const actions = {
       })
       .catch((error) => {
         this.$notifier.showSnackbar({
-          validation: error.response.validation,
+          validation: error.response.data.message,
           snackbar: true
         })
       })
@@ -115,7 +115,7 @@ const actions = {
       })
       .catch((error) => {
         this.$notifier.showSnackbar({
-          validation: error.response.validation,
+          validation: error.response.data.message,
           snackbar: true
         })
       })
@@ -134,7 +134,7 @@ const actions = {
       })
       .catch((error) => {
         this.$notifier.showSnackbar({
-          validation: error.response.validation,
+          validation: error.response.data.message,
           snackbar: true
         })
       })

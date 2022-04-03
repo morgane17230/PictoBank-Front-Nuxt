@@ -5,7 +5,7 @@ const actions = {
       .then(response => commit('SET_CATEGORIES', response))
       .catch((error) => {
         this.$notifier.showSnackbar({
-          validation: error.response.data.validation,
+          validation: error.response.data.message,
           snackbar: true
         })
       })
@@ -26,7 +26,7 @@ const actions = {
       })
       .catch((error) => {
         this.$notifier.showSnackbar({
-          validation: error.response.validation,
+          validation: error.response.data.message,
           snackbar: true
         })
       })

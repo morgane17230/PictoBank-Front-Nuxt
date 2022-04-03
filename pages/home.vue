@@ -2,6 +2,10 @@
   <v-container fluid>
     <v-row>
       <v-col cols="12" md="3" class="border-end">
+        <div class="mb-3 text-h6">
+          <span v-if="$auth.user.role === 'admin' || $auth.user.role === 'isOwner'">{{ `Bonjour ${$auth.user.account.firstname} ${$auth.user.account.lastname}` }}</span>
+          <span v-else>{{ `Bonjour ${$auth.user.username.toUpperCase()}` }}</span>
+        </div>
         <div class="mb-2">
           <FolderSearch />
         </div>

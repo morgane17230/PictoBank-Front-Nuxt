@@ -34,6 +34,7 @@
               color="cyan darken-3"
               name="password"
               label="Mot de passe"
+              autocomplete="current-password"
               hint="Minimum 8 caractères"
               :value="password"
               @change="passwordChange"
