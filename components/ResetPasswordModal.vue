@@ -26,6 +26,7 @@
               name="password"
               label="Mot de passe"
               hint="Minimum 8 caractères"
+              autocomplete
               counter
               :value="password"
               @click:append="show = !show"
@@ -37,6 +38,7 @@
                 passwordConfirmRules.match
               ]"
               type="password"
+              autocomplete
               color="cyan darken-3"
               name="passwordConfirm"
               label="Retaper le mot de passe"

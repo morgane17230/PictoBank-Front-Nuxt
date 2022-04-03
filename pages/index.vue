@@ -36,7 +36,13 @@
       </v-col>
       <v-col class="col-12 col-lg-4">
         <v-card flat tile justify="center" align="center">
-          <nuxt-img preload alt="icone imprimante" format="webp" src="/imprimante.webp" width="100" />
+          <nuxt-img
+            preload
+            alt="icone imprimante"
+            format="webp"
+            src="/imprimante.webp"
+            width="100"
+          />
           <v-card-text class="text-subtitle-1">
             Sélectionnez et imprimez vos planches de pictogrammes déjà
             dimensionnés
@@ -45,7 +51,13 @@
       </v-col>
       <v-col class="col-12 col-lg-4">
         <v-card flat tile justify="center" align="center">
-          <nuxt-img preload alt="icone personnes multiples" format="webp" src="/persons.webp" width="100" />
+          <nuxt-img
+            preload
+            alt="icone personnes multiples"
+            format="webp"
+            src="/persons.webp"
+            width="100"
+          />
           <v-card-text class="text-subtitle-1">
             Profitez de Pikto que vous soyez particuliers ou établissement
           </v-card-text>
@@ -61,11 +73,15 @@
 export default {
   middleware: 'auth',
   auth: 'guest',
-  created () {
-    if (this.$route.query.modal === true) {
-      this.$store.commit('global/SET_RESET_PASSWORD_MODAL', true)
-    } else if (this.$route.query.login === true) {
-      this.$store.commit('global/SET_USER_LOGIN_MODAL', true)
+
+  mounted () {
+    if (this.$route.query.modal) {
+      this.$store.commit(
+        'global/SET_RESET_PASSWORD_MODAL',
+        this.$route.query.modal
+      )
+    } else if (this.$route.query.login) {
+      this.$store.commit('global/SET_USER_LOGIN_MODAL', this.$route.query.login)
     }
   },
 
