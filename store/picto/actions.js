@@ -35,7 +35,6 @@ const actions = {
           })
         })
         .then(commit('INITIALIZE_UPLOADED_FILES'))
-        .then(location.reload(true))
         .catch((error) => {
           this.$notifier.showSnackbar({
             validation: error.response.validation,
