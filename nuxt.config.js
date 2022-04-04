@@ -214,7 +214,8 @@ export default {
       nativeUI: true
     },
     icon: {
-      source: '~/static/icon.png'
+      source: '~/static/icon.png',
+      fileName: 'icon.png'
     },
     manifest: {
       name: 'Pikto',
