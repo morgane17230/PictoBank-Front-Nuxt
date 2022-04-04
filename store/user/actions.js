@@ -14,13 +14,13 @@ const actions = {
       })
       .then((response) => {
         this.$notifier.showSnackbar({
-          validation: response.validation,
+          message: response.message,
           snackbar: true
         })
       })
       .catch((error) => {
         this.$notifier.showSnackbar({
-          validation: error.response.data.message,
+          message: error.response.data.message,
           snackbar: true
         })
       })
@@ -49,7 +49,7 @@ const actions = {
       })
       .then((response) => {
         this.$notifier.showSnackbar({
-          validation: response.validation,
+          message: response.message,
           snackbar: true
         })
         if (!this.$auth.user) {
@@ -63,7 +63,7 @@ const actions = {
       })
       .catch((error) => {
         this.$notifier.showSnackbar({
-          validation: error.response.data.message,
+          message: error.response.data.message,
           snackbar: true
         })
       })
@@ -75,13 +75,13 @@ const actions = {
       .$delete(`/account/${id}`)
       .then((response) => {
         this.$notifier.showSnackbar({
-          validation: response.validation,
+          message: response.message,
           snackbar: true
         })
       })
       .catch((error) => {
         this.$notifier.showSnackbar({
-          validation: error.response.data.message,
+          message: error.response.data.message,
           snackbar: true
         })
       })
@@ -98,13 +98,13 @@ const actions = {
       })
       .then((response) => {
         this.$notifier.showSnackbar({
-          validation: response.data.validation,
+          message: response.data.message,
           snackbar: true
         })
       })
       .catch((error) => {
         this.$notifier.showSnackbar({
-          validation: error.response.data.message,
+          message: error.response.data.message,
           snackbar: true
         })
       })
@@ -122,13 +122,13 @@ const actions = {
       })
       .then((response) => {
         this.$notifier.showSnackbar({
-          validation: response.validation,
+          message: response.message,
           snackbar: true
         })
       })
       .catch((error) => {
         this.$notifier.showSnackbar({
-          validation: error.response.data.message,
+          message: error.response.data.message,
           snackbar: true
         })
       })
@@ -144,13 +144,13 @@ const actions = {
       })
       .then((response) => {
         this.$notifier.showSnackbar({
-          validation: response.validation,
+          message: response.message,
           snackbar: true
         })
       })
       .catch((error) => {
         this.$notifier.showSnackbar({
-          validation: error.response.data.message,
+          message: error.response.data.message,
           snackbar: true
         })
       })

@@ -30,7 +30,12 @@ export default {
   ],
 
   components: true,
-  loading: true,
+  loading: {
+    continuous: true,
+    color: '#565656',
+    height: '10px',
+    failedColor: 'red'
+  },
   target: 'static',
 
   buildModules: [
@@ -216,6 +221,9 @@ export default {
       ogHost: 'https://pikto.fr',
       ogUrl: 'https://pikto.fr',
       nativeUI: true
+    },
+    icon: {
+      source: '~/static/icon.png'
     },
     manifest: {
       name: 'Pikto',

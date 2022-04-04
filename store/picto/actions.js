@@ -9,7 +9,7 @@ const actions = {
       })
       .catch((error) => {
         this.$notifier.showSnackbar({
-          validation: error.response.data.message,
+          message: error.response.data.message,
           snackbar: true
         })
       })
@@ -29,16 +29,12 @@ const actions = {
         .$post('/picto', formData)
         .then((response) => {
           commit('ADD_PICTOS', response.newPictos)
-          this.$notifier.showSnackbar({
-            validation: response.validation,
-            snackbar: true
-          })
         })
         .then(() => location.reload())
         .then(commit('INITIALIZE_UPLOADED_FILES'))
         .catch((error) => {
           this.$notifier.showSnackbar({
-            validation: error.response.data.message,
+            message: error.response.data.message,
             snackbar: true
           })
         })
@@ -51,13 +47,13 @@ const actions = {
       .then((response) => {
         commit('DEL_PICTO', response.deletedPicto)
         this.$notifier.showSnackbar({
-          validation: response.validation,
+          message: response.message,
           snackbar: true
         })
       })
       .catch((error) => {
         this.$notifier.showSnackbar({
-          validation: error.response.data.message,
+          message: error.response.data.message,
           snackbar: true
         })
       })
@@ -70,13 +66,13 @@ const actions = {
       .then((response) => {
         commit('DEL_PICTOS', response.data.deletedPictos)
         this.$notifier.showSnackbar({
-          validation: response.data.validation,
+          message: response.data.validation,
           snackbar: true
         })
       })
       .catch((error) => {
         this.$notifier.showSnackbar({
-          validation: error.response.data.message,
+          message: error.response.data.message,
           snackbar: true
         })
       })
@@ -90,7 +86,7 @@ const actions = {
       })
       .catch((error) => {
         this.$notifier.showSnackbar({
-          validation: error.response.data.message,
+          message: error.response.data.message,
           snackbar: true
         })
       })
@@ -121,7 +117,7 @@ const actions = {
       )
       .catch((error) => {
         this.$notifier.showSnackbar({
-          validation: error.response.data.message,
+          message: error.response.data.message,
           snackbar: true
         })
       })

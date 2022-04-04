@@ -1,5 +1,5 @@
 const state = () => ({
-  validation: '',
+  message: '',
   updateUserModal: false,
   deleteUserModal: false,
   loginUserModal: false,

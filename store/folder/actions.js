@@ -7,7 +7,7 @@ const actions = {
       })
       .catch((error) => {
         this.$notifier.showSnackbar({
-          validation: error.response.data.message,
+          message: error.response.data.message,
           snackbar: true
         })
       })
@@ -23,7 +23,7 @@ const actions = {
       })
       .catch((error) => {
         this.$notifier.showSnackbar({
-          validation: error.response.data.message,
+          message: error.response.data.message,
           snackbar: true
         })
       })
@@ -44,13 +44,13 @@ const actions = {
       .then((response) => {
         commit('ADD_FOLDER', response.newFolder)
         this.$notifier.showSnackbar({
-          validation: response.validation,
+          message: response.message,
           snackbar: true
         })
       })
       .catch((error) => {
         this.$notifier.showSnackbar({
-          validation: error.response.data.message,
+          message: error.response.data.message,
           snackbar: true
         })
       })
@@ -72,13 +72,13 @@ const actions = {
       .then((response) => {
         commit('UPDATE_FOLDER', response.updatedFolder)
         this.$notifier.showSnackbar({
-          validation: response.validation,
+          message: response.message,
           snackbar: true
         })
       })
       .catch((error) => {
         this.$notifier.showSnackbar({
-          validation: error.response.data.message,
+          message: error.response.data.message,
           snackbar: true
         })
       })
@@ -90,13 +90,13 @@ const actions = {
       .then((response) => {
         commit('DEL_FOLDER', response.deletedFolder)
         this.$notifier.showSnackbar({
-          validation: response.validation,
+          message: response.message,
           snackbar: true
         })
       })
       .catch((error) => {
         this.$notifier.showSnackbar({
-          validation: error.response.data.message,
+          message: error.response.data.message,
           snackbar: true
         })
       })
@@ -109,13 +109,13 @@ const actions = {
       .$post(`/folder/${folderId}/picto/${pictoId}`)
       .then((response) => {
         this.$notifier.showSnackbar({
-          validation: response.validation,
+          message: response.message,
           snackbar: true
         })
       })
       .catch((error) => {
         this.$notifier.showSnackbar({
-          validation: error.response.data.message,
+          message: error.response.data.message,
           snackbar: true
         })
       })
@@ -128,13 +128,13 @@ const actions = {
       .then((response) => {
         commit('DEL_FROM_FOLDER', payload)
         this.$notifier.showSnackbar({
-          validation: response.validation,
+          message: response.message,
           snackbar: true
         })
       })
       .catch((error) => {
         this.$notifier.showSnackbar({
-          validation: error.response.data.message,
+          message: error.response.data.message,
           snackbar: true
         })
       })

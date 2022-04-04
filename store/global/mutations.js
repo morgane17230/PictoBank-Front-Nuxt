@@ -1,6 +1,6 @@
 const mutations = {
-  SET_VALIDATION (state, payload) {
-    state.validation = payload.validation
+  SET_MESSAGE (state, payload) {
+    state.message = payload.message
     state.snackbar = payload.snackbar
   },
 
