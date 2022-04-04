@@ -136,7 +136,8 @@ export default {
       svgEye: mdiEye,
       svgEyeOff: mdiEyeOff,
       passwordConfirm: '',
-      nameRules: [v => !!v || 'Le champs est requis'],
+      nameRules: [v => !!v || 'Le champs est requis', v => (v.split(' ').length <= 1) ||
+    'Aucun espace autorisé (utiliser -, /  ou _ )'],
       passwordRules: {
         required: value => !!value || 'Requis.',
         min: v => v.length >= 8
