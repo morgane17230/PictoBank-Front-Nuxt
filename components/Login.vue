@@ -30,13 +30,14 @@
             />
             <v-text-field
               :rules="[passwordRules.required]"
-              type="password"
+              :append-icon="show ? svgEye : svgEyeOff"
               color="cyan darken-3"
               name="password"
               label="Mot de passe"
               autocomplete="current-password"
-              hint="Minimum 8 caractères"
+              :type="show ? 'text' : 'password'"
               :value="password"
+              @click:append="show = !show"
               @change="passwordChange"
             />
             <a type="button" @click="openResetPasswordModal">
@@ -68,14 +69,17 @@
 
 <script>
 import { mapMutations, mapState } from 'vuex'
-import { mdiClose } from '@mdi/js'
+import { mdiClose, mdiEye, mdiEyeOff } from '@mdi/js'
 export default {
   middleware: 'auth',
   auth: 'guest',
   data () {
     return {
       valid: false,
+      show: false,
       svgClose: mdiClose,
+      svgEye: mdiEye,
+      svgEyeOff: mdiEyeOff,
       nameRules: [v => !!v || 'Le champs est requis'],
       passwordRules: {
         required: value => !!value || 'Le champs est requis.'
